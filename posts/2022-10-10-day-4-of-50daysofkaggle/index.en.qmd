@@ -1,0 +1,140 @@
+---
+title: 'Day 4 of #50daysofkaggle'
+author: 'Me'
+date: '2022-10-10'
+slug: day-4-of-50daysofkaggle
+categories: [kaggle]
+tags: [50daysofkaggle, kaggle, machinelearning, python]
+authors: [Me]
+lastmod: '2022-10-10T11:28:37+05:30'
+featured: no
+projects: []
+format:
+  html:
+    code-fold: true
+    code-block-border-left: true
+    toc: true
+---
+
+# Day 4: The Titanic Dataset
+
+Previously I managed to download the titanic zip file using the kaggle api and extract two datasets `train` and `test` .
+
+## Importing libraries and reading the data
+
+```{python}
+import requests
+import numpy as np
+import pandas as pd
+import kaggle 
+import zipfile 
+
+kaggle.api.authenticate()
+
+kaggle.api.competition_download_files("titanic", path = ".")
+
+zf = zipfile.ZipFile("titanic.zip")
+train = pd.read_csv(zf.open("train.csv"))
+test = pd.read_csv(zf.open("test.csv"))
+```
+
+## Rearranging `train` dataset
+
+Lets see what we have here in the `train` data
+
+```{python}
+train.head()
+```
+
+Checking more details on `train` columns.
+
+```{python}
+train.info()
+```
+
+`PassengerID` is the unique identifier for each row while `Survived` is the column to be predicted. Finding only the numeric columns and dropping the above two (ref - [this link](https://thispointer.com/python-how-to-remove-multiple-elements-from-list/#:~:text=Remove%20Multiple%20elements%20from%20list%20by%20index%20range%20using%20del,can%20use%20del%20keyword%20i.e.&text=It%20will%20delete%20the%20elements,from%20index1%20to%20index2%20%E2%80%93%201.))
+
+```{python}
+num_col = train.select_dtypes(include=np.number).columns.tolist()
+
+del num_col[0:2] #.remove() can remove only 1 item. so for more than 1, use for loop 
+select_col = num_col
+```
+
+Among the string columns, only `Sex` and `Embarked` are relevant for our analysis. [Ref - selecting columns by intersection](https://stackoverflow.com/questions/40636514/selecting-columns-by-list-and-columns-are-subset-of-list)
+
+```{python}
+str_col= ["Sex", "Embarked", "Survived"]
+str_col
+
+
+select_col.extend(str_col)
+select_col
+
+train_eda= train[train.columns.intersection(select_col)]
+
+train_eda.info()
+```
+
+## EDA
+
+Seems like the older folks were luckier than the younger ones
+
+```{python}
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+sns.catplot(data = train_eda, x = "Age", y = "Fare", hue = "Survived")
+            
+plt.show()
+```
+
+Distinction between Class 1 and Class 3 is clear - poorer folks in Class 3 were younger (mean being just under 30 years) than the richer folks in Class 1
+
+```{python}
+plt.clf()
+sns.boxplot(data = train_eda, y = "Age", x = "Pclass", hue = "Survived")
+plt.show()
+```
+
+Below graph shows us that among the survivors, there were a lot more women than men survived the disaster.
+
+```{python}
+plt.clf()
+plot = sns.FacetGrid(data = train_eda, col = "Survived", hue = "Sex", col_wrap = 2)
+plot.map(sns.scatterplot, "Age", "Fare")
+plot.axes[-1].legend()
+plt.show()
+```
+
+We continue to notice the clearer skew towards Class 1 (richer) compared to Class 3 (poorer)
+
+```{python}
+plt.clf()
+plot = sns.FacetGrid(data = train_eda, col = "Survived", hue = "Pclass", col_wrap = 2)
+plot.map(sns.scatterplot, "Age", "Fare")
+plot.axes[-1].legend()
+plt.show()
+```
+
+```{python}
+
+plt.clf()
+plot = sns.FacetGrid(data = train_eda, col = "Survived", hue = "SibSp", col_wrap = 2)
+plot.map(sns.scatterplot, "Age", "Fare")
+plot.axes[-1].legend()
+plt.show()
+```
+
+## roughspace
+
+```{python}
+
+
+train_df = pd.get_dummies(train_eda, columns = ["Sex", "Embarked"])
+
+train_df.info()
+```
+
+And day 2 comes to an end🤷‍♂️
