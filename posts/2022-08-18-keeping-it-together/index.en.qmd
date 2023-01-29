@@ -3,23 +3,18 @@ title: Keeping it together
 author: ''
 date: '2022-08-18'
 slug: keeping-it-together
-categories:
-  - personal
-tags:
-  - private
-  - personal
-  - blog
-subtitle: 'What *really* happens after getting laid off'
-summary: 'This is a private post to remind myself of what it feels like'
-authors: []
+categories: [personal]
+tags: [private, personal, blog]
+authors: [Me]
 lastmod: '2022-08-18T12:36:34+05:30'
 featured: no
-image:
-  caption: ''
-  focal_point: ''
-  preview_only: no
-projects: []
+projects: [Personal, journal]
 draft: true
+format:
+  html:
+    code-fold: true
+    code-block-border-left: true
+    toc: true
 ---
 
 # Private post (stop reading!)
@@ -42,7 +37,7 @@ This period is the worst for anyone who's a social media addict. I'm a classic l
 
 Isn't it sad how we are always projecting such a immaculate version of ourselves to the larger public? So much care is taken to cover up even the slightest of mistake and appear to be *always winning*! But what to do when you've actually lost? How do you protect yourself from that?
 
-## Moving on? 
+## Moving on?
 
 Sometimes, I try to look ahead. Not think about the bad stuff and just push myself. The first week was horrible and mentally exhausting. I just refused to think about what happened. Honestly it was the only way I could stop myself from feeling worse. It took around 7 days for me to pick up the pieces and start planning on the next steps. Very gradually I started reaching out to few friends and explaining that I'm desperate to find a job.
 
@@ -50,13 +45,13 @@ Today I'm distraught because I've been rejected by Samsung R&D. This was special
 
 None of the MAANG interviews resulted in anything. Whatever they see me as, is not a fit for them. Have no idea how to correct this and at this time in my career I think it may be too late.
 
-## What is my future? 
+## What is my future?
 
 I've got three distinct phases in my career
 
-1.  Broadcast experience @ Sony
-2.  Growth marketing experience @ Viu
-3.  Content Analysis @ MX
+1.  Broadcast experience \@ Sony
+2.  Growth marketing experience \@ Viu
+3.  Content Analysis \@ MX
 
 There's one part of me that tells me to pursue data science. But I know I suck at it. So I'm possibly going to have to settle for just some kind of strategy related role. Neither budget facing nor market facing. Irrespective of whether I was laid off or not, the entire tenure at MX has been extremely non-productive to my career. I found some joy in the last few weeks after joining the Data team but that dream died instantly.
 
@@ -66,7 +61,7 @@ The one active conversation that is open right now is with JioTV. It will be a C
 
 The only thing that I feel good about. Waking up and running. Its my way of feeling confident. I still smoke and wish I didn't. 2-3 times in a week I wake up early and sweat it out for 45 minutes. That's one way to shake up the body and "feel good". The plan is to aim for the 21k in Jan'23. Don't want to go wrong with that. My only silver lining from 2022.
 
-## What they don't tell you about 
+## What they don't tell you about
 
 -   Check your finances immediately. I removed all market facing instruments and stuffed my monthly SIP into fixed deposits. With a volatile market, its always good to shore up some funds for the short-term (3-6 month horizon)
 -   Watch out for your mental health. The signs are easy to spot. Do whatever it takes to stop being unhappy. By not addressing the sadness and letting it fester you are harming yourself and those around you. Realise that you are feeling sad and try to distract yourself immediately.
