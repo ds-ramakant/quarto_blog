@@ -1,5 +1,5 @@
 ---
-title: "quarto_blog"
+title: "The Null Hypothesis"
 listing:
   contents: posts
   sort: "date desc"
@@ -10,3 +10,11 @@ listing:
 page-layout: full
 title-block-banner: true
 ---
+
+Hi there 👋🏼 My name is Ramakant and I am a consumer marketing enthusiast with a natural curiosity towards data and technology. I started this blog as a way to sharpen my data science skills and occasionally pour those creative juices.
+
+## Get In Touch ✍️
+
+I'm always on the lookout for a good conversation. Feel free to mail me at `d.s.ramakant@gmail.com` or check out my [Linkedin profile](https://www.linkedin.com/in/dsramakant/)
+
+## Blog Posts

@@ -1,19 +1,18 @@
 ---
-title: "About"
+title: "D.S.Ramakant Raju"
 image: profile.jpg
 about:
-  template: jolla
+  template: solana #https://quarto.org/docs/websites/website-about.html#templates
   links:
     - icon: twitter
       text: Twitter
-      href: https://twitter.com
+      href: https://twitter.com/ds_ramakant
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
+      href: https://www.linkedin.com/in/dsramakant/
     - icon: github
       text: Github
-      href: https://github.com
-
+      href: https://github.com/ds-ramakant
 ---
 
 About this blog

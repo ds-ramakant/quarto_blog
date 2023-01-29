@@ -2,17 +2,17 @@ project:
   type: website
 
 website:
-  title: "quarto_blog"
+  title: "The Null Hypothesis"
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+        href: https://github.com/ds-ramakant
+      - icon: linkedin
+        href: https://www.linkedin.com/in/dsramakant/
 format:
   html:
-    theme: cosmo
+    theme: journal
     css: styles.css
 
 editor: visual
