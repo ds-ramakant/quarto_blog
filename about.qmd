@@ -1,5 +1,5 @@
 ---
-title: "D.S.Ramakant Raju"
+title: "About Me"
 image: profile.jpg
 about:
   template: solana #https://quarto.org/docs/websites/website-about.html#templates
@@ -15,4 +15,4 @@ about:
       href: https://github.com/ds-ramakant
 ---
 
-About this blog
+Page that gives more information about me

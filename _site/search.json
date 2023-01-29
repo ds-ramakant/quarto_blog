@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About Me",
+    "section": "",
+    "text": "Page that gives more information about me"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "The Null Hypothesis",
+    "section": "",
+    "text": "Hi there 👋🏼 My name is Ramakant and I am a consumer marketing enthusiast with a natural curiosity towards data and technology. I started this blog as a way to sharpen my data science skills and occasionally pour those creative juices."
+  },
+  {
+    "objectID": "index.html#get-in-touch",
+    "href": "index.html#get-in-touch",
+    "title": "The Null Hypothesis",
+    "section": "Get In Touch ✍️",
+    "text": "Get In Touch ✍️\nI’m always on the lookout for a good conversation. Feel free to mail me at d.s.ramakant@gmail.com or check out my Linkedin profile\n\nLink to my resume (broken for now) 📃"
+  },
+  {
+    "objectID": "index.html#blog-posts",
+    "href": "index.html#blog-posts",
+    "title": "The Null Hypothesis",
+    "section": "Blog Posts",
+    "text": "Blog Posts"
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  }
+]
