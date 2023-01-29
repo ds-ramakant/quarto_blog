@@ -11,6 +11,11 @@ lastmod: '2022-04-05T16:15:24+05:30'
 featured: no
 image: "Wordle Sample Share.jpg"
 projects: []
+format:
+  html:
+    code-fold: true
+    code-block-border-left: true
+    toc: true
 ---
 
 Who ever thought that a bunch of [black and green boxes](https://www.nytimes.com/games/wordle/index.html) would bring out the logophile in us all? With friends and family groups sharing their progress, I find this to be an entertaining mind-puzzle to kickstart the day.
