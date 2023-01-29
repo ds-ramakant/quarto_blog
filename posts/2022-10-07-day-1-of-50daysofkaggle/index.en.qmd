@@ -1,0 +1,82 @@
+---
+title: 'day 1 of #50daysofkaggle'
+author: ''
+date: '2022-10-07'
+slug: day-1-of-50daysofkaggle
+categories: [kaggle]
+tags: [kaggle, 50daysofkaggle, python, machinelearning]
+authors: [Me]
+lastmod: '2022-10-07T15:32:49+05:30'
+featured: no
+projects: []
+format:
+  html:
+    code-fold: true
+    code-block-border-left: true
+    toc: true
+---
+
+Introducing my own personal sprint training [[[**"50 Days of Kaggle"**]{.underline}]{.smallcaps}](https://www.kaggle.com/dsramakant)
+
+The task is simple:
+
+1.  Improve Kaggle score by the end of 50 days
+2.  Work on ML models daily. Try interacting on the portal as much as possible.
+3.  Keep ISLR notes handy. Blog over here for revision
+4.  Use Python. Or else use R Tidymodels. (neither of which I am currently proficient in)
+
+I'd want to use this blog to journal my progress. Hopefully by 26th Nov'22, I'd have improved from where I'm starting out.
+
+So what do we have for Day 1?
+
+# [The Titanic Dataset](https://www.kaggle.com/competitions/titanic/overview "Baby Step #1")
+
+Everyone's first starting point. And I'm slowly starting to appreciate why. Lets see if we can read the data directly into this notebook
+
+## Reading the data
+
+First things first, import libraries
+
+```{python}
+import requests
+import numpy as np
+import pandas as pd
+import kaggle
+
+kaggle.api.authenticate()
+```
+
+*Note to self:* below command did not work
+
+```{python}
+#kaggle.api.dataset_download_files("titanic", path = ".", unzip = True)
+```
+
+However, this one does as per this link <https://www.kaggle.com/general/138914>
+
+```{python}
+kaggle.api.competition_download_files("titanic", path = ".")
+```
+
+This pulls the .zip file in the local folder. because this is a zip file, we need package called `zipfile`(note to self: don't forget the console command `reticulate::py_install("zipfile")`)
+
+<https://stackoverflow.com/a/56786517/7938068>
+
+Reading and checking the first rows of `train`
+
+```{python}
+import zipfile
+
+zf = zipfile.ZipFile("titanic.zip")
+train = pd.read_csv(zf.open("train.csv"))
+test = pd.read_csv(zf.open("test.csv"))
+train.head()
+```
+
+Checking the first rows of `test`
+
+```{python}
+test.head()
+```
+
+This took me a whole day to figure out. End of Day1 🤷‍♂️
