@@ -3,7 +3,8 @@
     "listing": "/index.html",
     "items": [
       "/posts/post-with-code/index.html",
-      "/posts/welcome/index.html"
+      "/posts/welcome/index.html",
+      "/posts/2022-01-14-hello-world2/index.en.html"
     ]
   }
 ]

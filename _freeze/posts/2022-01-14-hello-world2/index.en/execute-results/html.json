@@ -1,0 +1,16 @@
+{
+  "hash": "98c28fcbe996aff820a5b4c381cdb2e3",
+  "result": {
+    "markdown": "---\ntitle: Hello World2\nauthor: Ramakant\ndate: '2022-01-14'\ncategories: []\ntags: []\nsubtitle: ''\nsummary: ''\nauthors: []\nlastmod: '2022-01-14T17:51:55+05:30'\nfeatured: no\nprojects: []\ndraft: false\n---\n\n\nA lot of this is courtesy of Apres Hill's blog\n\nhttps://www.apreshill.com/blog/2020-12-new-year-new-blogdown/#step-1-create-repo\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](index.en_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "index.en_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

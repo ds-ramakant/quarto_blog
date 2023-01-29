@@ -40,5 +40,12 @@
     "title": "Welcome To My Blog",
     "section": "",
     "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "posts/2022-01-14-hello-world2/index.en.html",
+    "href": "posts/2022-01-14-hello-world2/index.en.html",
+    "title": "Hello World2",
+    "section": "",
+    "text": "A lot of this is courtesy of Apres Hill’s blog\nhttps://www.apreshill.com/blog/2020-12-new-year-new-blogdown/#step-1-create-repo"
   }
 ]
