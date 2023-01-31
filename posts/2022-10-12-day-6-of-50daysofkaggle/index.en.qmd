@@ -9,13 +9,15 @@ summary: 'Classification using KNN'
 authors: [Me]
 lastmod: "2022-10-12T15:38:17+05:30"
 featured: no
-image: titanic.jpg
+image: titanic_KNN.jpg
 projects: [50daysofkaggle]
 format:
   html:
     code-fold: true
     code-block-border-left: true
     toc: true
+execute: 
+  warning: false
 ---
 
 # Day 6: The Titanic Dataset
