@@ -1,0 +1,16 @@
+---
+title: To Do (Private post)
+date: '2022-10-27'
+slug: to-do-private-post
+categories: [draft]
+authors: [Me]
+lastmod: '2022-10-27T13:31:10+05:30'
+featured: no
+draft: true
+---
+
+# Ideas for blog post
+
+1.  #dataisbeautiful style. Line graph with avg HR on y-axis, date on x-axis. circular marks indicating the distance run. vertical ticks indicating the date of layoff and therapy start. Title = impact of physical and mental training on my avg HR
+2.  sankey diagram for job application
+3.  sankey diagram for RRR movie budget

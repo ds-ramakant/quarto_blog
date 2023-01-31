@@ -1,0 +1,24 @@
+---
+title: 'Holiday break for #50daysofkaggle '
+date: '2022-10-27'
+slug: holiday-break-for-50daysofkaggle
+categories: [kaggle]
+authors: [Me]
+lastmod: '2022-10-27T11:14:52+05:30'
+featured: no
+---
+
+# Diwali is here
+
+Its festive season and I've been really tied up with a bunch of things
+
+-   4 day long weekend where it was just about family and festivities. frankly one of the most rejuvenating and happy experiences to spend time with my daughter. She's at the stage where she's old enough to keep herself occupied alone. Its a pleasure to just watch her paint, draw, sing, role-play, read and whatever it is she loves doing.
+
+-   Job hunting has been taken up by a notch. Four major initiatives:
+
+    1.  applying more aggresively on applying to more companies in a day (spread across sites such as linkedin, iimjobs and naukri)
+    2.  Opening up the longlist to include SEA markets (Phillipines, Vietnam, Singapore, Indonesia)
+    3.  volunteered to take up a course at FLAME starting in December. Its a 30 hour course that's going to be quite gruelling to deliver. So will need to really start preparing as early as possible
+    4.  building longlist of contacts for outreach. Downloaded LinkedIn contacts lists and sorted in order of priority
+
+Currently pausing blog related updates to focus on picking up the job hunt search. Hopefully, post-Diwali there will be some action once people are back in offices!
