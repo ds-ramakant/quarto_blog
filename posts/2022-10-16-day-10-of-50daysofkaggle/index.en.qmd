@@ -3,25 +3,25 @@ title: 'Day 10 of #50daysofkaggle'
 author: ''
 date: "2022-10-16"
 slug: "day-10-of-50daysofkaggle"
-categories: kaggle
-tags:
-- 50daysofkaggle
-- kaggle
-- machinelearning
-- python
+categories: [kaggle]
 subtitle: Support Vector Machines
 summary: Classification through SVM
-authors: []
+authors: [Me]
 lastmod: "2022-10-18T10:40:27+05:30"
 featured: no
-image:
-  caption: ''
-  focal_point: ''
-  preview_only: no
-projects: []
+image: titanic_SVM.jpg
+#removes warning messages
+execute: 
+  warning: true
+#enabling folding code blocks, title of contents on upper-right & left border for code
+format: 
+  html: 
+    code-fold: true
+    code-block-border-left: true
+    toc: true
 ---
-# Day 10: Titanic Dataset
 
+# Day 10: Titanic Dataset
 
 Part of an ongoing series to [familiarise working on kaggle](https://www.ds-ramakant.com/tag/50daysofkaggle/)
 
@@ -31,22 +31,20 @@ Progress till date:
 -   Rearranging the data
 -   EDA (including plots and finding survival rate using `.groupby()`)
 -   Modelling
-  -  Data preparation
-    -  one-hot encoding the `Sex`, `Pclass` & `Embarked` columns
-    -  appending these to the numerical columns
-    -  normalising the data
-    -  splitting between `train` into `X_train`, `y_train`, `X_test`, `y_test`
-  - Applying KNN algo
-    -  finding the right K based on accuracy. (best at K = 7)
-    -  Calculating the accuracy based on `test`
-  - Applying Decision Trees algo
-    -  with `criterion = entropy` and `max_depth = 3` 
-    -  sligthly better accuracy in prediction than KNN
-    
-To do today:
-- classification using Support Vector Machines algo
+-   Data preparation - one-hot encoding the `Sex`, `Pclass` & `Embarked` columns - appending these to the numerical columns - normalising the data - splitting between `train` into `X_train`, `y_train`, `X_test`, `y_test`
+-   Applying KNN algo
+    -   finding the right K based on accuracy. (best at K = 7)
+    -   Calculating the accuracy based on `test`
+-   Applying Decision Trees algo
+    -   with `criterion = entropy` and `max_depth = 3`
+    -   sligthly better accuracy in prediction than KNN
+
+To do today: - classification using Support Vector Machines algo
 
 ## Reading the data
+
+Reading and printing the top 5 rows
+
 ```{python}
 import numpy as np
 import pandas as pd
@@ -66,48 +64,45 @@ select_col = num_col
 
 #remaining columns
 str_col= ["Sex", "Embarked", "Survived"]
-str_col
-
 #Adding more elements into a list using `extend` and not `append`
 select_col.extend(str_col)
-select_col
 
 train_eda= train[train.columns.intersection(select_col)]
 train_eda
 ```
 
-
-  
 ## Cleaning up the data
 
-**Sidenote**: Was getting a wierd warning (`SettingWithCopyWarning`) while using `.fillna()` to replace na with the median values. Turns out there's a between calling a view or a copy. One way of avoiding this error is to use `train_eda.loc[:,"Age"]` instead of `train_eda["Age"]`. This is because `.loc` returns the view (original) while using subsets. [Elegant explanation here](https://stackoverflow.com/a/54914752/7938068 "Stockoverflow solution"). Below code will not throw up a warning. 
+Checking all `na` values in the existing dataset.
+
 ```{python}
 train_eda.isna().sum().sort_values()
+```
+
+Replacing empty cells with median age (28)
+
+```{python}
 median_age = train_eda.Age.median() #28
 train_eda.loc[train_eda.Age.isna(), "Age"] = median_age #.loc returns the view and doesn't throw warning msg
 train_eda.isna().sum().sort_values()
 ```
 
 ## Model Building
+
 Seperating X & y
+
 ```{python}
 train_eda = train_eda.dropna(axis = 0) #removing all rows with NA
 
 X = train_eda[["Age", "SibSp", "Parch", "Fare"]]
-X
-
 X = pd.concat([X,pd.get_dummies(data = train_eda[["Sex", "Embarked", "Pclass"]], columns = ["Sex", "Embarked", "Pclass"])], axis = 1)
 
-X.head()
-
 y = train_eda["Survived"].values
-y[0:5]
-
-len(y) #889 after filling up the NA. previously 712
-X.shape #(889, 12)
-
 ```
+
 ### Normalising the data
+
+Transform `X` and printing the first 5 datapoints
 
 ```{python}
 from sklearn import preprocessing
@@ -117,6 +112,8 @@ X[0:5]
 ```
 
 ### Splitting into Test & Train data
+
+Splitting into `test` & `train` data and comparing the dimensions.
 
 ```{python}
 
@@ -130,6 +127,8 @@ print ('Train set\t :', X_train.shape,  y_train.shape,
 
 ## Support Vector Machines
 
+Lets check the classification results using SVM. First 10 are as follows:
+
 ```{python}
 from sklearn import svm
 clf = svm.SVC(kernel='rbf')
@@ -140,6 +139,7 @@ yhat_svm = clf.predict(X_test)
 print("First 10 actual\t\t:", y_test[0:10],"\nFirst 10 predicted\t:", yhat_svm[0:10])
 
 ```
+
 ### Confusion matrix using SVM
 
 ```{python}
@@ -153,21 +153,14 @@ np.set_printoptions(precision=2)
 print (classification_report(y_test, yhat_svm))
 ```
 
+### Checking the accuracy
 
 ```{python}
 from sklearn import metrics
 
-print("SVM Accuracy\t:", metrics.accuracy_score(y_test, yhat_svm),"\nRMSE\t\t:", metrics.mean_squared_error(y_test,yhat_svm),"\nNormalised RMSE\t:", metrics.mean_squared_error(y_test,yhat_svm)/np.std(y_test))
+print("SVM Accuracy\t:", metrics.accuracy_score(y_test, yhat_svm),"\nRMSE\t\t\t:", metrics.mean_squared_error(y_test,yhat_svm),"\nNormalised RMSE\t:", metrics.mean_squared_error(y_test,yhat_svm)/np.std(y_test))
 ```
+
 Achieved **81%** accuracy using SVM with **RMSE of 0.1911**. This is is not as good as Decision Trees which resulted in [RMSE of 0.168](https://www.ds-ramakant.com/post/day-8-of-kaggle/)
 
-Therefore after 10 days of struggle, I have come to the conclusion that Decision Trees is a good classification algorithm for the Titanic dataset. 
-
-```{python junk code, eval=FALSE, include=FALSE}
-train_eda.loc[:,"Age"]
-median_age
-
-train_eda.loc[train_eda.Age.isna(), "Age"] = median_age
-
-```
-
+Therefore after 10 days of struggle, I have come to the conclusion that Decision Trees is a good classification algorithm for the Titanic dataset.

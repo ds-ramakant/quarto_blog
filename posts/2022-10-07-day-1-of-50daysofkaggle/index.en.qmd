@@ -14,6 +14,7 @@ format:
     code-fold: true
     code-block-border-left: true
     toc: true
+image: titanic.jpg
 ---
 
 Introducing my own personal sprint training [[[**"50 Days of Kaggle"**]{.underline}]{.smallcaps}](https://www.kaggle.com/dsramakant)

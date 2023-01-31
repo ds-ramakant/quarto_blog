@@ -6,15 +6,18 @@ slug: day-8-of-kaggle
 categories: [kaggle]
 subtitle: 'Decision Tree'
 summary: 'Classification through Decision Trees'
-authors: []
+authors: [Me]
 lastmod: '2022-10-14T09:32:49+05:30'
 featured: no
 image: titanic_DT.jpg
 projects: [50daysofkaggle]
+
+#removes warning messages
 execute: 
   warning: true
-format:
-  html:
+#enabling folding code blocks, title of contents on upper-right & left border for code
+format: 
+  html: 
     code-fold: true
     code-block-border-left: true
     toc: true
