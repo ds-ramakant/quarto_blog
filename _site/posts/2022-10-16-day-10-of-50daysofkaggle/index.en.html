@@ -284,7 +284,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>train_eda<span class="op">=</span> train[train.columns.intersection(select_col)]</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>train_eda</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="1">
 
 <div>
 
@@ -439,7 +439,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>train_eda.isna().<span class="bu">sum</span>().sort_values()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>Survived      0
 Pclass        0
 Sex           0
@@ -459,7 +459,7 @@ dtype: int64</code></pre>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>train_eda.loc[train_eda.Age.isna(), <span class="st">"Age"</span>] <span class="op">=</span> median_age <span class="co">#.loc returns the view and doesn't throw warning msg</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>train_eda.isna().<span class="bu">sum</span>().sort_values()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>Survived    0
 Pclass      0
 Sex         0
@@ -497,17 +497,22 @@ dtype: int64</code></pre>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>X<span class="op">=</span> preprocessing.StandardScaler().fit(X).transform(X)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>X[<span class="dv">0</span>:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="14">
-<pre><code>array([[-0.56,  0.43, -0.47, -0.5 , -0.74,  0.74, -0.48, -0.31,  0.62,
-        -0.56, -0.51,  0.9 ],
-       [ 0.67,  0.43, -0.47,  0.79,  1.36, -1.36,  2.07, -0.31, -1.62,
-         1.78, -0.51, -1.11],
-       [-0.26, -0.48, -0.47, -0.49,  1.36, -1.36, -0.48, -0.31,  0.62,
-        -0.56, -0.51,  0.9 ],
-       [ 0.44,  0.43, -0.47,  0.42,  1.36, -1.36, -0.48, -0.31,  0.62,
-         1.78, -0.51, -1.11],
-       [ 0.44, -0.48, -0.47, -0.48, -0.74,  0.74, -0.48, -0.31,  0.62,
-        -0.56, -0.51,  0.9 ]])</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>array([[-0.56367407,  0.43135024, -0.47432585, -0.50023975, -0.73534203,
+         0.73534203, -0.48271079, -0.30794088,  0.61679395, -0.56306042,
+        -0.51087465,  0.90032807],
+       [ 0.66921696,  0.43135024, -0.47432585,  0.78894661,  1.35991138,
+        -1.35991138,  2.07163382, -0.30794088, -1.62128697,  1.77600834,
+        -0.51087465, -1.11070624],
+       [-0.25545131, -0.47519908, -0.47432585, -0.48664993,  1.35991138,
+        -1.35991138, -0.48271079, -0.30794088,  0.61679395, -0.56306042,
+        -0.51087465,  0.90032807],
+       [ 0.43804989,  0.43135024, -0.47432585,  0.42286111,  1.35991138,
+        -1.35991138, -0.48271079, -0.30794088,  0.61679395,  1.77600834,
+        -0.51087465, -1.11070624],
+       [ 0.43804989, -0.47519908, -0.47432585, -0.4841333 , -0.73534203,
+         0.73534203, -0.48271079, -0.30794088,  0.61679395, -0.56306042,
+        -0.51087465,  0.90032807]])</code></pre>
 </div>
 </div>
 </section>

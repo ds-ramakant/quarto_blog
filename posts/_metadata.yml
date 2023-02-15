@@ -6,3 +6,20 @@ freeze: true
 
 # Enable banner style title blocks
 title-block-banner: true
+
+#removes warning messages
+execute: 
+  warning: true
+
+#enabling folding code blocks, title of contents on upper-right & left border for code
+format: 
+  html: 
+    code-fold: true
+    code-block-border-left: true
+    toc: true
+
+#authors
+author:
+  name: Ramakant
+  url: https://www.ds-ramakant.com/about.html
+ 
