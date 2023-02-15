@@ -25,7 +25,7 @@ In statistics, the null hypothesis conjecture is the first step to begin any inf
 
 ## Skills
 
-::: column-body-outset
+::: {.column-body-outset style="border: none"}
 +:-----------------------------------:+:--------------------------------:+:-----------------------------:+
 | {{< fa brands r-project size=2x >}} | {{< fa brands python size=2x >}} | {{< fa chart-line size=2x >}} |
 |                                     |                                  |                               |
@@ -37,16 +37,29 @@ In statistics, the null hypothesis conjecture is the first step to begin any inf
 +-------------------------------------+----------------------------------+-------------------------------+
 :::
 
+## Qualifications
 
 ::: panel-tabset
 ### Work Experience
- - Director, Consumer Insights & Strategy 
- - MX Player
- - Feb 2020 - Oct 2022
- 
+
+**MX Player** *(Feb '20 - Oct '22)*
+
+[Director, Consumer Insights & Strategy]{.underline}
+
+-   [Heading the Consumer Insights division and leading a team of data scientists/analysts to centralize all data requirements across departments (such as SVOD, Marketing, Content & Product) 
+
+-   Doubled the platform share of acquired shows and drove launch strategy of 35+ acquired shows cross-functionally with Product, Programming and Marketing teams
+
+-   Devised 5x growth of International dubbed category MX VDESI; responsible for GTM strategies that led to growth in user retention & consumption]{.fontsize:x-small}
+
+**Viu India** *(Sep '16 - Feb '20)*
+
+Associate Director, Growth Marketing
+
 ### Education
- - Post Graduate Diploma in Communications, 2008
-    MICA (Mudra Institute of Communications, Ahmedabad)
- - B.E (Computer Science & Engineering), 2006
-    Vasavi College of Engineering, Hyderabad
+
+-   Post Graduate Diploma in Communications, 2008 MICA (Mudra Institute of Communications, Ahmedabad)
+-   B.E (Computer Science & Engineering), 2006 Vasavi College of Engineering, Hyderabad
+
+### Certifications
 :::
