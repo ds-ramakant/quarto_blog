@@ -43,7 +43,7 @@ In statistics, the null hypothesis conjecture is the first step to begin any inf
 ## Qualifications
 
 ::: panel-tabset
-### Work Experience
+### Work
 
 **MX Player** *(Feb '20 - Oct '22)*
 
@@ -83,4 +83,9 @@ In statistics, the null hypothesis conjecture is the first step to begin any inf
 -   [Machine learning, Feb '21 \n(Stanford University)](https://www.coursera.org/account/accomplishments/verify/NX376JHV6LGQ)\
 -   [Executive Program in Strategic Digital Marketing, Dec'19 \n(University of Cambridge Judge Business School)](https://www.credential.net/b90ce3dd-94e9-4eca-bcf0-6afa245888d6#gs.pom30y)
 -   [Professional Certificate Programme in Business Negotiation, Feb '22 \n (SP Jain Institute of Management & Research)](https://verification.spjimr.org/verify/mdp/2022/b0140e8d-b2f1-4db1-be35-adce62c6b061)
+
+### Teaching
+
+Visiting Faculty at Flame University, Pune
+
 :::
