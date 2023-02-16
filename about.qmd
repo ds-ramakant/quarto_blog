@@ -46,15 +46,27 @@ In statistics, the null hypothesis conjecture is the first step to begin any inf
 
 [Director, Consumer Insights & Strategy]{.underline}
 
--   [Heading the Consumer Insights division and leading a team of data scientists/analysts to centralize all data requirements across departments (such as SVOD, Marketing, Content & Product) 
-
--   Doubled the platform share of acquired shows and drove launch strategy of 35+ acquired shows cross-functionally with Product, Programming and Marketing teams
-
--   Devised 5x growth of International dubbed category MX VDESI; responsible for GTM strategies that led to growth in user retention & consumption]{.fontsize:x-small}
+-   [Heading the Consumer Insights division and leading a team of data scientists/analysts to centralize all data requirements across departments (such as SVOD, Marketing, Content & Product)]{style="font-family: serif; font-size: 14px"}
+-   [Doubled the platform share of acquired shows and drove launch strategy of 35+ acquired shows cross-functionally with Product, Programming and Marketing teams]{style="font-family: serif; font-size: 14px"}
+-   [Devised 5x growth of International dubbed category MX VDESI; responsible for GTM strategies that led to growth in user retention & consumption]{style="font-family: serif; font-size: 14px"}
 
 **Viu India** *(Sep '16 - Feb '20)*
 
-Associate Director, Growth Marketing
+[Associate Director, Growth Marketing]{.underline}
+
+-   [Spearheaded the platform growth with 6x increase in user base & 7x increase in app installs. Managing annual marketing budgets and building the OTT audience acquisition models]{style="font-family: serif; font-size: 14px"}.
+-   [Developed Marketing Measurement Model to optimize TV GRP-to-new installs. This modelling mix was increased marketing efficiencies by 15% ]{style="font-family: serif; font-size: 14px"}
+-   [20% reduction in marketing costs by geo-mapping user consumption density at zip-code level thereby building more focused media plan for Telugu markets]{style="font-family: serif; font-size: 14px"}
+
+**Viu India** (Sep '16 - Feb '20)
+
+[Associate Director, Growth Marketing]{.underline}
+
+-   Spearheaded the platform growth with 6x increase in user base & 7x increase in app installs. Managing annual marketing budgets and building the OTT audience acquisition models.
+
+-   Developed Marketing Measurement Model to optimize TV GRP-to-new installs. This modelling mix was increased marketing efficiencies by 15%
+
+-   20% reduction in marketing costs by geo-mapping user consumption density at zip-code level thereby building more focused media plan for Telugu markets
 
 ### Education
 
