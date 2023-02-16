@@ -13,7 +13,12 @@ about:
     - icon: github
       text: Github
       href: https://github.com/ds-ramakant
+output:
+  quarto::html_document:
+    css: TRUE
 ---
+
+[test text]{style = "font-size: 12px"}
 
 I am a media professional with a natural curiosity towards media and technology. I've worked across broadcast and OTT companies since 2008 with a wide experience across Content, Business & Marketing. In my last role at MX Player, I work on cross-functional initiatives to help boost platform growth and engagement. I am fluent in English, Hindi & Telugu. My favourite weekend activity is to switch off the laptop and listen to vinyls with my 5-year old daughter 👨‍👩‍👧
 
@@ -46,27 +51,23 @@ In statistics, the null hypothesis conjecture is the first step to begin any inf
 
 [Director, Consumer Insights & Strategy]{.underline}
 
--   [Heading the Consumer Insights division and leading a team of data scientists/analysts to centralize all data requirements across departments (such as SVOD, Marketing, Content & Product)]{style="font-family: serif; font-size: 14px"}
--   [Doubled the platform share of acquired shows and drove launch strategy of 35+ acquired shows cross-functionally with Product, Programming and Marketing teams]{style="font-family: serif; font-size: 14px"}
--   [Devised 5x growth of International dubbed category MX VDESI; responsible for GTM strategies that led to growth in user retention & consumption]{style="font-family: serif; font-size: 14px"}
+-   [Heading the Consumer Insights division and leading a team of data scientists/analysts to centralize all data requirements across departments (such as SVOD, Marketing, Content & Product)]{.my-jobexp}
+-   [Doubled the platform share of acquired shows and drove launch strategy of 35+ acquired shows cross-functionally with Product, Programming and Marketing teams]{.my-jobexp}
+-   [Devised 5x growth of International dubbed category MX VDESI; responsible for GTM strategies that led to growth in user retention & consumption]{.my-jobexp}
 
 **Viu India** *(Sep '16 - Feb '20)*
 
 [Associate Director, Growth Marketing]{.underline}
 
--   [Spearheaded the platform growth with 6x increase in user base & 7x increase in app installs. Managing annual marketing budgets and building the OTT audience acquisition models]{style="font-family: serif; font-size: 14px"}.
--   [Developed Marketing Measurement Model to optimize TV GRP-to-new installs. This modelling mix was increased marketing efficiencies by 15% ]{style="font-family: serif; font-size: 14px"}
--   [20% reduction in marketing costs by geo-mapping user consumption density at zip-code level thereby building more focused media plan for Telugu markets]{style="font-family: serif; font-size: 14px"}
+-   [Spearheaded the platform growth with 6x increase in user base & 7x increase in app installs. Managing annual marketing budgets and building the OTT audience acquisition models]{.my-jobexp}
+-   [Developed Marketing Measurement Model to optimize TV GRP-to-new installs. This modelling mix was increased marketing efficiencies by 15%]{.my-jobexp}
+-   [20% reduction in marketing costs by geo-mapping user consumption density at zip-code level thereby building more focused media plan for Telugu markets]{.my-jobexp}
 
-**Viu India** (Sep '16 - Feb '20)
+**Sony Pictures Network India** (Jun '08 - Sep '15)
 
-[Associate Director, Growth Marketing]{.underline}
+[Managment Trainee to Sr. Manager]{.underline}
 
--   Spearheaded the platform growth with 6x increase in user base & 7x increase in app installs. Managing annual marketing budgets and building the OTT audience acquisition models.
-
--   Developed Marketing Measurement Model to optimize TV GRP-to-new installs. This modelling mix was increased marketing efficiencies by 15%
-
--   20% reduction in marketing costs by geo-mapping user consumption density at zip-code level thereby building more focused media plan for Telugu markets
+- [Multiple roles in the company with wide experience across Strategy, Research, Marketing, Revenue Planning and Content Acquisition]{.my-jobexp}
 
 ### Education
 
@@ -74,4 +75,6 @@ In statistics, the null hypothesis conjecture is the first step to begin any inf
 -   B.E (Computer Science & Engineering), 2006 Vasavi College of Engineering, Hyderabad
 
 ### Certifications
+
+
 :::
