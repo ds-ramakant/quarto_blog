@@ -6,6 +6,8 @@ categories: [kaggle]
 authors: [Me]
 lastmod: '2022-10-27T11:14:52+05:30'
 featured: no
+comments:
+  hypothesis: true
 ---
 
 # Diwali is here
@@ -22,3 +24,5 @@ Its festive season and I've been really tied up with a bunch of things
     4.  building longlist of contacts for outreach. Downloaded LinkedIn contacts lists and sorted in order of priority
 
 Currently pausing blog related updates to focus on picking up the job hunt search. Hopefully, post-Diwali there will be some action once people are back in offices!
+
+*edit: enabled comments using [hypothes.is](https://web.hypothes.is/#) as enabling Disqus is going to take some more effort*
