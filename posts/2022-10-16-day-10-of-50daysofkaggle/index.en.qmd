@@ -5,7 +5,7 @@ date: "2022-10-16"
 slug: "day-10-of-50daysofkaggle"
 categories: [kaggle]
 subtitle: Support Vector Machines
-summary: Classification through SVM
+description: Classification through SVM
 authors: [Me]
 lastmod: "2022-10-18T10:40:27+05:30"
 featured: no

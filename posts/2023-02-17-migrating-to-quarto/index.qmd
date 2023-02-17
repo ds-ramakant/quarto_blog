@@ -1,0 +1,8 @@
+---
+title: "Migrating to Quarto"
+date: '2022-02-17'
+categories: [personal]
+featured: no
+comments:
+  hypothesis: true
+---
