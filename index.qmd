@@ -13,10 +13,12 @@ title-block-banner: true
 
 Hi there 👋🏼 My name is Ramakant and I am a consumer marketing enthusiast with a natural curiosity towards data and technology. I started this blog as a way to sharpen my data science skills and occasionally pour those creative juices.
 
+If you'd like to read more about me, please continue to the [About Me page](https://www.ds-ramakant.com/about.html)
+
 ## Get In Touch ✍️
 
 I'm always on the lookout for a good conversation. Feel free to mail me at `d.s.ramakant@gmail.com` or check out my [Linkedin profile](https://www.linkedin.com/in/dsramakant/)
 
-### Link to my resume (broken for now) 📃
+### 
 
 ## Blog Posts

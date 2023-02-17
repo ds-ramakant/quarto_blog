@@ -16,6 +16,8 @@ about:
 output:
   quarto::html_document:
     css: styles.css
+commments:
+  hypothesis: true
 ---
 
 I am a media professional with a natural curiosity towards media and technology. I've worked across broadcast and OTT companies since 2008 with a wide experience across Content, Business & Marketing. In my last role at MX Player, I work on cross-functional initiatives to help boost platform growth and engagement. I am fluent in English, Hindi & Telugu. My favourite weekend activity is to switch off the laptop and listen to vinyls with my 5-year old daughter 👨‍👩‍👧
@@ -25,6 +27,8 @@ I am a media professional with a natural curiosity towards media and technology.
 British Nobel-laureate Ronald Coase famously said **"If you torture the data long enough, it will confess to anything."** True words that ring loudly in any digital-first company. As someone who's cut their teeth in quantitative research, I firmly it is consumer behaviour & insight that is sacred and we must seek it out with the help of data (big or small).
 
 In statistics, the null hypothesis conjecture is the first step to begin any inferential analysis. Similarly, I begin every growth project with a null hypothesis to help me understand consumer behaviour better. In some ways this blog is an attempt at trying a growth hack on myself. I've been passionately teaching myself new tools to make more meaningful impact towards business. I hope to document and share my learnings through this journal.
+
+Feel free to leave a message using the tab on the right👉🏼
 
 ## Skills
 
@@ -69,13 +73,13 @@ In statistics, the null hypothesis conjecture is the first step to begin any inf
 
 ### Education
 
-{{< fa graduation-cap >}} Post Graduate Diploma in Communications, 2008 
+{{< fa graduation-cap >}} Post Graduate Diploma in Communications, 2008
 
-  - [MICA (Mudra Institute of Communications, Ahmedabad)]{.my-jobexp}
+-   [MICA (Mudra Institute of Communications, Ahmedabad)]{.my-jobexp}
 
 {{< fa graduation-cap >}} B.E (Computer Science & Engineering), 2006
 
-  - [Vasavi College of Engineering (affiliated to Osmania University), Hyderabad]{.my-jobexp}
+-   [Vasavi College of Engineering (affiliated to Osmania University), Hyderabad]{.my-jobexp}
 
 ### Certifications
 
@@ -87,5 +91,4 @@ In statistics, the null hypothesis conjecture is the first step to begin any inf
 ### Teaching
 
 Visiting Faculty at Flame University, Pune
-
 :::
