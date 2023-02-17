@@ -1,8 +1,46 @@
 ---
 title: "Migrating to Quarto"
-date: '2022-02-17'
-categories: [personal]
+authors: 
+description: "Housekeeping changes"
+date: '2023-02-17'
+categories: [personal, Quarto]
 featured: no
-comments:
-  hypothesis: true
+image: quarto.jpg
 ---
+
+# Moving to Quarto
+
+![](quarto.jpg){style="fig-align: center; width:20%; float: right" width="20%"}
+
+The blog now takes a new look. Finally bought myself a ticket on Quarto hype-train and must say it seems quite interesting. Hopefully there'll be a separate blog with the nuts and bolts details about how I got this far. For now let me attempt to address why I did this.
+
+Python code using blogdown/Hugo was not performing consistently. I've not been able to duplicate the errors, but they would happen once in a while. Visualisations not rendering in HTML, random crashes and occasional kernel errors.
+
+To be fair, the issue could not have been due to just the blogdown framework. Part of my research led me to read up about Quarto that was introduced in early 2022. At that time, I figured with my non-existent tech skills, I'd be better off focussing on what I started with.
+
+By 13th Feb, I had pretty much exhausted all my interview processes. So while I was just sitting tight waiting for that **one company** to revert, I figured this Quarto migration might be a good project to warm-up towards blogging. That turned out smoother than I imagined.
+
+## Initial thoughts
+
+Very early thoughts about what I'm seeing:
+
+1.  Looks far more neater
+2.  no glitches as far as code is concerned
+3.  Deploying and customisation is super smooth. Documentation has it all covered.
+4.  Loving the new file structure which makes it so much more easier to keep track of changes
+5.  User comments now appear on the right hand side instead of page bottom
+6.  still have to get used to the inline CSS/ HTML commands. This was frustrating in the beginning.
+
+## Next steps
+
+Couple of tracks that I'd like to double down on:
+
+1.  Marketing Analytics projects using R, Python
+    -   Market Mix Modelling using Kaggle
+    -   building plotly and shiny dashboards
+2.  revise and blog about Quant research concepts from Pearson 7e (Malhotra/Dash)
+3.  Target for daily check-ins all thru Feb
+4.  Learning path towards MLOps.
+5.  Research & academic articles in the field of digital marketing/ marketing analytics??🤔
+
+As always, please share feedback and inputs using comments tab on the right 👉🏼

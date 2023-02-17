@@ -24,4 +24,8 @@ format:
 author:
   name: Ramakant
   url: https://www.ds-ramakant.com/about.html
- 
+  
+#trying to enable css in metadata as its not working on the invidual post page
+output: 
+  quarto::html_document:
+    css: true
