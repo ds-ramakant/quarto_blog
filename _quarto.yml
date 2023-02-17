@@ -10,6 +10,8 @@ website:
         href: https://github.com/ds-ramakant
       - icon: linkedin
         href: https://www.linkedin.com/in/dsramakant/
+  google-analytics: "G-T5T39KBDW1"
+  
 format:
   html:
     theme: journal
