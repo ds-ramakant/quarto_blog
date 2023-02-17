@@ -17,6 +17,8 @@ format:
     code-fold: true
     code-block-border-left: true
     toc: true
+    comments:
+      hypothesis: true
 
 #authors
 author:
