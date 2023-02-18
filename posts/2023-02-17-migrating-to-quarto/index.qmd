@@ -10,7 +10,7 @@ image: quarto.jpg
 
 # Moving to Quarto
 
-![](quarto.jpg){style="fig-align: center; width:20%; float: right" width="20%"}
+![](quarto.jpg){style="fig-align: center;  float: right" width="40%"}
 
 The blog now takes a new look. Finally bought myself a ticket on Quarto hype-train and must say it seems quite interesting. Hopefully there'll be a separate blog with the nuts and bolts details about how I got this far. For now let me attempt to address why I did this.
 
@@ -35,12 +35,15 @@ Very early thoughts about what I'm seeing:
 
 Couple of tracks that I'd like to double down on:
 
-1.  Marketing Analytics projects using R, Python
+1.  Solving exercises in Introduction to Statistical Learning in R v2 (PDF)
+2.  Solving exercises in "Hands-on Data Science for Marketing", Packt (Hwang) (Kindle edition)
+3.  Marketing Analytics projects using R, Python
     -   Market Mix Modelling using Kaggle
     -   building plotly and shiny dashboards
-2.  revise and blog about Quant research concepts from Pearson 7e (Malhotra/Dash)
-3.  Target for daily check-ins all thru Feb
-4.  Learning path towards MLOps.
-5.  Research & academic articles in the field of digital marketing/ marketing analytics??🤔
+4.  revise and blog about Quant research concepts from "Marketing Research", Pearson 7e (Malhotra/Dash)
+5.  Target for daily check-ins all thru Feb
+6.  If above is completed, then proceed to "Python ML: ML & Deep Learning with Python, sci-kit and TensorFlow 2", Packt (Raschka/Mirjalili) (PDF)
+7.  Research & academic articles in the field of digital marketing/ marketing analytics??🤔
+8.  Exploring discussions on using NLP in the field of qualitative research
 
 As always, please share feedback and inputs using comments tab on the right 👉🏼
