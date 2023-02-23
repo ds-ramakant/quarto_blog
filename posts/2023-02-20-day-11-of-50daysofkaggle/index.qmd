@@ -1,0 +1,78 @@
+---
+title: "Day 11 of #50daysofkaggle"
+subtitle: "Roadmap to tidymodels"
+description: "Titanic dataset in R"
+date: '2023-02-20'
+categories: [kaggle, R]
+featured: no
+image: titanic.jpg
+---
+
+Till now I practiced creating classification predictions on the Titanic dataset using KNN, DT and SVM algorithms. As per Kaggle, [my submission got a score of 77%](https://www.kaggle.com/code/dsramakant/titanic-classification-by-decision-trees-python). Now I'm going to try these approaches in R.
+
+steps to do : data reading \> cleaning \> replacing NA \> splitting \> model using Decision Trees\> comparing results
+
+# Data reading and cleaning
+
+```{r}
+library(tidyverse)
+library(zip)
+library(readr)
+library(tidymodels)
+
+#reading kaggle zip file that I downloaded in older folder
+ziplocation <- "D:/Ramakant/Personal/Weekends in Mumbai/Blog/quarto_blog/posts/2022-10-12-day-6-of-50daysofkaggle/titanic.zip"
+df <-  read_csv(unz(ziplocation, "train.csv"))
+df %>% head()
+
+#selecting numerical features and removing PassengerID & Survived
+
+glimpse(df)
+df_n <- df %>% 
+  select_if(is.numeric) %>% 
+  select(-PassengerId)
+
+df_n <- df_n %>% 
+  bind_cols(Sex = df$Sex, Embarked = df$Embarked) 
+glimpse(df)
+
+#finding null values
+
+df_n %>%  
+  summarise_all(~ sum(is.na(.)))
+```
+
+Finding the mean of `Age` values and replacing NA values in `Age`
+
+```{r}
+median(df_n$Age, na.rm = T)
+
+df_n <- df_n %>% 
+  mutate(Age = replace_na(Age, median(Age, na.rm = T)))
+
+df_n %>% summarise_all(~sum(is.na(.)))
+```
+
+# Model Building
+
+Splitting the data into train & test
+
+```{r}
+df_split <- initial_split(df_n, prop = 0.8)
+train <- training(df_split)
+test <- testing(df_split)
+
+df_split
+```
+
+creating the recipe
+
+```{r}
+show_engines("decision_tree") #shows the list of engines & modes
+
+#decision_tree(mode = "classification", tree_depth = 5)
+
+titanic_dt <- decision_tree(mode = "classification", tree_depth = 3) %>% set_engine("rpart")
+
+titanic_dt %>% translate()
+```
