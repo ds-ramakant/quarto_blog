@@ -69,10 +69,21 @@ creating the recipe
 
 ```{r}
 show_engines("decision_tree") #shows the list of engines & modes
-
-#decision_tree(mode = "classification", tree_depth = 5)
-
-titanic_dt <- decision_tree(mode = "classification", tree_depth = 3) %>% set_engine("rpart")
-
-titanic_dt %>% translate()
 ```
+
+```{r}
+dt_recipe <- recipe(Survived ~ ., data = df_n) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_normalize(all_numeric_predictors())
+
+dt_recipe
+tidy(dt_recipe)
+
+
+dt_model <- decision_tree(mode = "classification", tree_depth = 3) %>% 
+  set_engine("rpart")
+
+model_dt %>% translate()
+```
+
+̥
