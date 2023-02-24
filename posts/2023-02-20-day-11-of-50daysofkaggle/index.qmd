@@ -1,11 +1,13 @@
 ---
 title: "Day 11 of #50daysofkaggle"
 subtitle: "Roadmap to tidymodels"
-description: "Titanic dataset in R"
+description: "Implementing DT using R"
 date: '2023-02-20'
 categories: [kaggle, R]
 featured: no
-image: titanic.jpg
+image: titanic_tidymodels.jpg
+execute:
+  warning: false
 ---
 
 Till now I practiced creating classification predictions on the Titanic dataset using KNN, DT and SVM algorithms. As per Kaggle, [my submission got a score of 77%](https://www.kaggle.com/code/dsramakant/titanic-classification-by-decision-trees-python). Now I'm going to try these approaches in R.
@@ -13,6 +15,8 @@ Till now I practiced creating classification predictions on the Titanic dataset 
 steps to do : data reading \> cleaning \> replacing NA \> splitting \> model using Decision Trees\> comparing results
 
 # Data reading and cleaning
+
+loading the necessary libraries & reading `train.csv` from a zipped file. Taking a glimpse of the resulting `df`
 
 ```{r}
 library(tidyverse)
@@ -23,39 +27,35 @@ library(tidymodels)
 #reading kaggle zip file that I downloaded in older folder
 ziplocation <- "D:/Ramakant/Personal/Weekends in Mumbai/Blog/quarto_blog/posts/2022-10-12-day-6-of-50daysofkaggle/titanic.zip"
 df <-  read_csv(unz(ziplocation, "train.csv"))
-df %>% head()
-
-#selecting numerical features and removing PassengerID & Survived
-
 glimpse(df)
+```
+
+Reformatting the `df` to create a new tibble `df_n`
+
+```{r}
 df_n <- df %>% 
+  #selecting only the numerical variables
   select_if(is.numeric) %>% 
-  select(-PassengerId)
-
-df_n <- df_n %>% 
+  #converting outcome variable into factor for classification 
+  mutate(Survived = as.factor(Survived)) %>% 
+  #adding back the Sex & Embarked predictors
   bind_cols(Sex = df$Sex, Embarked = df$Embarked) 
-glimpse(df)
 
-#finding null values
+head(df_n)
+```
 
-df_n$Survived <- as.factor(df_n$Survived)
+Finding the null values in the new df
 
+```{r}
 df_n %>%  
   summarise_all(~ sum(is.na(.)))
 ```
 
-Finding the mean of `Age` values and replacing NA values in `Age`
-
-```{r}
-median(df_n$Age, na.rm = T)
-
-df_n <- df_n %>% 
-  mutate(Age = replace_na(Age, median(Age, na.rm = T)))
-
-df_n %>% summarise_all(~sum(is.na(.)))
-```
+We see that there are 177 null values in the `Age` column. This will be tackled in the recipe section along with `PassengerId`
 
 # Model Building
+
+## Splitting the data 
 
 Splitting the data into train & test
 
@@ -70,55 +70,61 @@ df_split
 creating the recipe
 
 ```{r}
-show_engines("decision_tree") #shows the list of engines & modes
-```
-
-```{r}
 dt_recipe <- recipe(Survived ~ ., data = df_n) %>% 
   step_dummy(all_nominal_predictors()) %>% 
   step_normalize(all_numeric_predictors()) %>% 
   #replacing NA values in Age with median Age
-  step_mutate_at(Age, fn = ~ replace_na(Age, median(Age, na.rm = T))) 
-  # %>% step_mutate_at(Survived, fn = ~as_factor(Survived))
+  step_mutate_at(Age, fn = ~ replace_na(Age, median(Age, na.rm = T))) %>% 
+  #updating the role of the PassengerId to exclude from analysis
+  update_role(PassengerId, new_role = "id_variable")
 
 dt_recipe
+```
+
+Another way to view the recipe using `tidy()` function
+
+```{r}
 tidy(dt_recipe)
+```
 
+## Model Creation
 
+Declaring a model `dt_model` as a Decision Tree with depth as 3 and engine `rpart`
+
+```{r}
 dt_model <- decision_tree(mode = "classification", tree_depth = 3) %>% 
   set_engine("rpart")
-
 dt_model %>% translate()
 ```
 
-Creating a workflow based on the model \> fitting data \> predicting the results
+## Workflow creation
+
+**Workflow = recipe + model**
 
 ```{r}
-
 dt_wf <- workflow() %>%
   add_model(dt_model) %>% 
   add_recipe(dt_recipe)
+```
 
+## Predicting on `test` data 
 
+Fitting the `dt_wf` workflow with model created on `train` data to predict the `test` data
+
+```{r}
+
+set.seed(2023)
 dt_predict <- predict(fit(dt_wf, data = train), test)
+head(dt_predict)
+```
 
-test_n <- bind_cols(test, dt_predict)
-test_n <- test_n %>% 
-  rename(dt_yhat = .pred_class)
+Creating a new tibble called `preidcted_table` by binding the predicted values `.pred_class` to the `test` data
 
-predicted_table <- test_n %>% 
+```{r}
+predicted_table <- bind_cols(test, dt_predict) %>% 
+  rename(dt_yhat = .pred_class) %>% 
   select(Survived, dt_yhat) 
-
-#this table converts factors to numeric values
-predicted_table2 <- test_n %>% 
-  select(Survived, dt_yhat) %>% 
-#convert factor to numeric
- mutate(across(where(is.factor), as.numeric)) %>%
-#conversion takes values 1 & 2 instead of 0 & 1, hence correcting back
- mutate(across(1:2, ~.x -1))
-
-predicted_table2 %>% rmse(dt_yhat, Survived)
-
+head(predicted_table)
 ```
 
 # Testing accuracy
@@ -126,21 +132,30 @@ predicted_table2 %>% rmse(dt_yhat, Survived)
 As mentioned in the [TMRW documentation for binary classification metrics](https://www.tmwr.org/performance.html#binary-classification-metrics), we will try creating the confusion matrix and checking accuracy
 
 ```{r}
-predicted_table
-
 conf_mat(predicted_table, truth = Survived, estimate = dt_yhat)
 ```
 
+Estimating the accuracy of our model
+
 ```{r}
 accuracy(predicted_table, truth = Survived, estimate = dt_yhat)
-
-
 ```
 
+In the `tidymodels` approach, we can define the required metrics with `metric_set` seperately to check the model accuracy
+
 ```{r}
-
 classification_metrics <- metric_set(accuracy, f_meas)
-
 predicted_table %>% 
   classification_metrics(truth = Survived, estimate = dt_yhat)
 ```
+
+# Submission on Kaggle
+
+When I ran this code on Kaggle, the [Decision Tree predictions resulted in a score of 0.7799](https://www.kaggle.com/code/dsramakant/decision-tree-with-tidymodels-v01/notebook). Exactly similar to the [DT code written in python earlier](https://www.kaggle.com/code/dsramakant/titanic-classification-by-decision-trees-python/notebook).
+
+Overall, I'm glad that I was able to wrap my head around the `tidymodels` workflow.
+
+# Next steps
+
+-   Figure out how to compare accuracy of different models (KNN, SVM) that I had coded earlier in python
+-   figure out hyper-parameter tuning from the `tune()` package

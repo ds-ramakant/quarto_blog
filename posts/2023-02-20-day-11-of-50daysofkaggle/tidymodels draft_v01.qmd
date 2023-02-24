@@ -6,6 +6,7 @@ date: '2023-02-20'
 categories: [kaggle, R]
 featured: no
 image: titanic.jpg
+draft: TRUE
 ---
 
 Till now I practiced creating classification predictions on the Titanic dataset using KNN, DT and SVM algorithms. As per Kaggle, [my submission got a score of 77%](https://www.kaggle.com/code/dsramakant/titanic-classification-by-decision-trees-python). Now I'm going to try these approaches in R.
@@ -75,10 +76,15 @@ show_engines("decision_tree") #shows the list of engines & modes
 
 ```{r}
 dt_recipe <- recipe(Survived ~ ., data = df_n) %>% 
-  step_dummy(all_nominal_predictors()) %>% 
-  step_normalize(all_numeric_predictors()) %>% 
+  #reomving NA rows in Embarked columns
+  step_naomit(Embarked) %>% 
   #replacing NA values in Age with median Age
-  step_mutate_at(Age, fn = ~ replace_na(Age, median(Age, na.rm = T))) 
+  step_mutate_at(Age, fn = ~ replace_na(Age, median(Age, na.rm = T))) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_normalize(all_numeric_predictors()) 
+  
+  
+  
   # %>% step_mutate_at(Survived, fn = ~as_factor(Survived))
 
 dt_recipe
