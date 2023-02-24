@@ -74,16 +74,28 @@ show_engines("decision_tree") #shows the list of engines & modes
 ```{r}
 dt_recipe <- recipe(Survived ~ ., data = df_n) %>% 
   step_dummy(all_nominal_predictors()) %>% 
-  step_normalize(all_numeric_predictors())
+  step_normalize(all_numeric_predictors()) %>% 
+  step_mutate_at(Age, fn = ~ replace_na(Age, median(Age, na.rm = T)))
 
 dt_recipe
 tidy(dt_recipe)
 
 
-dt_model <- decision_tree(mode = "classification", tree_depth = 3) %>% 
+dt_model <- decision_tree(mode = "regression", tree_depth = 3) %>% 
   set_engine("rpart")
 
-model_dt %>% translate()
+dt_model %>% translate()
 ```
 
-̥
+Creating a workflow based on the model \> fitting data \> predicting the results
+
+```{r}
+
+dt_wf <- workflow() %>%
+  add_model(dt_model) %>% 
+  add_recipe(dt_recipe)
+
+
+dt_predict <- predict(fit(dt_wf, data = train), test)
+
+```
