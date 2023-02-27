@@ -71,7 +71,8 @@ ul.task-list li input[type="checkbox"] {
 
     const options = {
       valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
+      page: 10,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
     };
 
@@ -98,6 +99,7 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 </script>
+<script async="" src="https://hypothes.is/embed.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -171,14 +173,11 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 
 <p><img src="images/DSCN4504_v2.JPG" class="img-fluid" style="fig-align: right; float: right; border-radius: 20px;width:25.0%"></p>
 <p>Hi there 👋🏼</p>
-<p>My name is Ramakant and I am a consumer marketing enthusiast with a natural curiosity towards data and technology. I started this blog as a way to sharpen my data science skills and occasionally pour those creative juices.</p>
-<p>That’s me sitting on the steps of the Sydney Opera house trying to give my best touristy look. If you’d like to know more about my bio, please continue to the <a href="https://www.ds-ramakant.com/about.html">About Me page</a></p>
+<p>My name is Ramakant and I am a digital marketing enthusiast with a natural curiosity towards data and technology. I started this blog as a way to sharpen my data science skills and occasionally pour out those creative juices.</p>
+<p>Feel free to explore the topics below - possibly a fraction what’s on my mind these days. (rest are in the drafts.. or worse - unwritten😄). <a href="https://www.ds-ramakant.com/about.html">This page</a> gives more details about me as a professional and my motivation to create this site.</p>
 <section id="get-in-touch" class="level2">
 <h2 class="anchored" data-anchor-id="get-in-touch">Get In Touch ✍️</h2>
-<p>I’m always on the lookout for a good conversation. Feel free to mail me at <code>d.s.ramakant@gmail.com</code> or check out my <a href="https://www.linkedin.com/in/dsramakant/">Linkedin profile</a></p>
-<section id="section" class="level3">
-<h3 class="anchored" data-anchor-id="section"></h3>
-</section>
+<p>I’m always on the lookout for a good conversation. Feel free to mail me at <code>d.s.ramakant@gmail.com</code> or check out my <a href="https://www.linkedin.com/in/dsramakant/">Linkedin profile</a>. If you’d like to leave comments, please click on tab on the right 👉🏼</p>
 </section>
 <section id="blog-posts" class="level2">
 <h2 class="anchored" data-anchor-id="blog-posts">Blog Posts</h2>
@@ -188,6 +187,31 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 </section>
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+         <option value="listing-author" data-direction="asc">
+          Author
+        </option>
+     </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
 <div class="list quarto-listing-default">
 <div class="quarto-post image-right" data-index="0" data-categories="kaggle,R" data-listing-date-sort="1676831400000" data-listing-file-modified-sort="1677238628411" data-listing-reading-time-sort="2.67">
 <div class="thumbnail">
@@ -582,6 +606,9 @@ Ramakant
 <div class="listing-no-matching d-none">
 No matching items
 </div>
+<nav id="listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
