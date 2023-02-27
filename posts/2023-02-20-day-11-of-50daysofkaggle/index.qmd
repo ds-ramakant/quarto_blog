@@ -10,7 +10,7 @@ execute:
   warning: false
 ---
 
-Till now I practiced creating classification predictions on the Titanic dataset using KNN, DT and SVM algorithms. As per Kaggle, [my submission got a score of 77%](https://www.kaggle.com/code/dsramakant/titanic-classification-by-decision-trees-python). Now I'm going to try these approaches in R.
+Till now I practiced creating classification predictions on the Titanic dataset using KNN, DT and SVM algorithms. As per Kaggle, [my submission got a score of 0.77](https://www.kaggle.com/code/dsramakant/titanic-classification-by-decision-trees-python). Now I'm going to try these approaches in R.
 
 steps to do : data reading \> cleaning \> replacing NA \> splitting \> model using Decision Trees\> comparing results
 
@@ -151,9 +151,9 @@ predicted_table %>%
 
 # Submission on Kaggle
 
-When I ran this code on Kaggle, the [Decision Tree predictions resulted in a score of 0.7799](https://www.kaggle.com/code/dsramakant/decision-tree-with-tidymodels-v01/notebook). Exactly similar to the [DT code written in python earlier](https://www.kaggle.com/code/dsramakant/titanic-classification-by-decision-trees-python/notebook).
+When I ran this code on Kaggle, the [Decision Tree predictions resulted in a score of 0.7799](https://www.kaggle.com/code/dsramakant/decision-tree-with-tidymodels-v01/notebook). Exactly similar to the DT code written in python earlier.
 
-Overall, I'm glad that I was able to wrap my head around the `tidymodels` workflow.
+Overall, I'm glad that I was able to wrap my head around the `tidymodels` workflow. The fact that each of the data cleaning steps are moduled in the recipe makes it much simpler to predict since we don't have to clean the new `test` data again.
 
 # Next steps
 

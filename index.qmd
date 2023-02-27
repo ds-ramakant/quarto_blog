@@ -11,9 +11,13 @@ page-layout: full
 title-block-banner: true
 ---
 
-Hi there 👋🏼 My name is Ramakant and I am a consumer marketing enthusiast with a natural curiosity towards data and technology. I started this blog as a way to sharpen my data science skills and occasionally pour those creative juices.
+![](images/DSCN4504_v2.JPG){style="fig-align: right; float: right; border-radius: 20px" width="25%"}
 
-If you'd like to know more about my bio, please continue to the [About Me page](https://www.ds-ramakant.com/about.html)
+Hi there 👋🏼
+
+My name is Ramakant and I am a consumer marketing enthusiast with a natural curiosity towards data and technology. I started this blog as a way to sharpen my data science skills and occasionally pour those creative juices.
+
+That's me sitting on the steps of the Sydney Opera house trying to give my best touristy look. If you'd like to know more about my bio, please continue to the [About Me page](https://www.ds-ramakant.com/about.html)
 
 ## Get In Touch ✍️
 
