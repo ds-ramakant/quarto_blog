@@ -20,7 +20,7 @@ commments:
   hypothesis: true
 ---
 
-I am a media professional with a natural curiosity towards media and technology. I've worked across broadcast and OTT companies since 2008 with a wide experience across Content, Business & Marketing. In my last role at MX Player, I work on cross-functional initiatives to help boost platform growth and engagement. I am fluent in English, Hindi & Telugu. My favourite weekend activity is to switch off the laptop and listen to vinyls with my 5-year old daughter 👨‍👩‍👧
+I am a media professional with a natural curiosity towards media and technology. I've worked across broadcast and OTT companies since 2008 with a wide experience across Content, Business & Marketing. In my last role at MX Player, I worked on cross-functional initiatives to help boost platform growth and engagement. I am fluent in English, Hindi & Telugu. My favourite weekend activity is to switch off the laptop and listen to vinyls with my daughter 👨‍👩‍👧
 
 ## Why the Null Hypothesis?
 
