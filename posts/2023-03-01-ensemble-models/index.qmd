@@ -1,0 +1,11 @@
+---
+title: "Day 12 of #50daysofkaggle"
+subtitle: "Ensemble models"
+description: "Evaluating multiple models in Tidymodels"
+date: '2023-03-01'
+categories: [kaggle, R]
+featured: no
+image: ensemble.gif
+execute:
+  warning: false
+---
