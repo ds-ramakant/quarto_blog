@@ -22,7 +22,7 @@ Hi there 👋🏼
 
 My name is Ramakant and I am a digital marketing enthusiast with a natural curiosity towards data and technology. I started this blog as a way to sharpen my data science skills and occasionally pour out those creative juices.
 
-Feel free to explore the topics below - possibly a fraction what's on my mind these days. (rest are in the drafts.. or worse - unwritten😄). [This page](https://www.ds-ramakant.com/about.html) gives more details about me as a professional and my motivation to create this site.
+Feel free to explore the topics below - possibly a fraction what's on my mind these days. (rest are in the drafts.. or worse - unwritten😄). [The About Me page](https://www.ds-ramakant.com/about.html) has more details about my professional qualifications and my motivation to create this site.
 
 ## Get In Touch ✍️
 

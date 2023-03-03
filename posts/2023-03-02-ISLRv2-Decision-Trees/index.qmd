@@ -95,7 +95,7 @@ names(cv.carseats)
 
 Note to self:
 
--    `k` is the regularisation parameter $\alpha$ (alpha)
+-   `k` is the regularisation parameter $\alpha$ (alpha)
 -   `size` is \# of terminal nodes for each tree
 -   `dev` is the number of cross-validation errors
 
@@ -163,7 +163,7 @@ plot(tree.boston)
 text(tree.boston, pretty = 0)
 ```
 
-## Making the predictions 
+## Making the predictions
 
 ```{r}
 
