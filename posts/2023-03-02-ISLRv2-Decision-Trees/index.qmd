@@ -1,7 +1,7 @@
 ---
 title: "ISLR Lab - Decision Trees"
 subtitle: "Back to basics"
-description: "Revising Bagging, RF, Boosting & BART "
+description: "Revisiting concepts of Bagging, RF, Boosting & BART "
 date: '2023-03-02'
 categories: [R, ISLR]
 featured: no
@@ -11,6 +11,13 @@ image: dtree.jpg
 ---
 
 All the code here is derived from the legendary book [ISRL 2nd edition's](https://www.statlearning.com/) chapter 8 "Decision Trees". Its sometimes a wonder how elegant the base R language can be. The ISRL lab rarely mentions `tidyverse` syntax but yet manages to make the code so easy to read. The more you learn!🤓
+
+# Quick Revision
+
+1.  In $Bagging$ , the trees are grown independently on random samples of the observations. Consequently, the trees tend to be quite similar to each other. Thus, bagging can get caught in local optima and can fail to thoroughly explore the model space
+2.  In $Random Forest$, the trees are grown independently on random samples of the observations. However, each split on each tree is performed on random subset of *predictors*, thereby decorrelating the trees and leading to a better exploration relative to bagging. Both bagging & RF are ensemble methods which makes prediction from average of regression trees. Both also use *bootstrap* sampling.
+3.  In $Boosting$, we only use the original data and don't draw random samples. The trees are grown successively using a "slow" learning approach; each new tree is fit to the signal that is left over from the earlier trees. Boosting is an ensemble method that uses weighted sum and doesn't involve bootstrap sampling as the trees are fitted on a modified version of the original dataset.
+4.  In $BART$, we only use the original data and we grow the trees successively. However each tree is perturbed in order to avoid local minima. BART is related to the Boosting & RF --- each tree is created in a random manner like bagging & RF and each tree tries to capture some signal not yet accounted for in the current model like Boosting. BART tries to improve the partial residual of current tree by slightly modifying the previous iteration (changing the structure by altering number of nodes)
 
 ```{r}
 library(tree)
@@ -190,13 +197,13 @@ Mean Square Error is defined as $$MSE = \frac{1}{n} \sum_{i=1}^{n}(y_i - \hat{y_
 mean((yhat - test.boston)^2)
 ```
 
-Standard Deviation the square root of MSE which is
+RMSE which uses the same units as the output variable is:
 
 ```{r}
 (mean((yhat - test.boston)^2))^0.5
 ```
 
-## Key Takeaways: 
+## Key Takeaways:
 
 As the SD is the same units as the outcome variable, we can say that this model leads to predictions which on an average are within ±\$5,940 of the true median home value. Can we do better? Let's keep digging
 
@@ -230,23 +237,23 @@ bag.boston
 #| fig-cap: "Predicted v/s Actuals for Boston test data using Bagging"
 #| fig-cap-location: top
 yhat.bag <- predict(bag.boston, newdata = Boston[-train.boston, ])
-plot(yhat.bag, boston.test)
+plot(yhat.bag, test.boston)
 abline(0,1,col = "red")
 ```
 
 What's the accuracy here? Checking the MSE
 
 ```{r}
-mean((yhat.bag - boston.test)^2)
+mean((yhat.bag - test.boston)^2)
 ```
 
-And the deviance is square root of MSE:
+And square root of MSE or RMSE is:
 
 ```{r}
-(mean((yhat.bag - boston.test)^2))^0.5
+(mean((yhat.bag - test.boston)^2))^0.5
 ```
 
-That's \$4,839 which is better than \$5,950 derived from the 7-node decision tree discussed in [Key Takeaways]. Moving to Random Forest now.
+That's \$4,812 which is better than \$5,950 derived from the 7-node decision tree discussed in [Key Takeaways]. Moving to Random Forest now.
 
 ## Random Forest
 
@@ -273,7 +280,7 @@ rf.boston
 #| fig-cap: "Predicted v/s Actuals for Boston test data using RandomForest"
 #| fig-cap-location: top
 yhat.rf <- predict(rf.boston, newdata = Boston[-train.boston, ])
-plot(yhat.rf, boston.test)
+plot(yhat.rf, test.boston)
 abline(0,1,col = "red")
 ```
 
@@ -283,7 +290,7 @@ What's the MSE here?
 mean((yhat.rf - test.boston)^2)
 ```
 
-.. and therefore deviance is:
+.. and therefore RMSE is:
 
 ```{r}
 mean((yhat.rf - test.boston)^2)^0.5
@@ -296,3 +303,147 @@ Before moving ahead, we can also check the `importance()` function to determine 
 ```{r}
 importance(rf.boston)
 ```
+
+What are these columns?
+
+-   [**%IncMSE:**]{.underline} Avg decrease in accuracy of predictions on out-of-bag samples when given variable is calculated
+-   [**IncNodePurity:**]{.underline}Total decrease in node purity that results from split on that variable averaged over all trees.
+    -   in regression trees, the node impurity measured by the training Residual Sum of Squares(RSS)
+
+    -   in classification trees, it is the deviance
+
+```{r varimport_plot}
+#| fig-cap: "Predicted v/s Actuals for Boston test data using Bagging"
+#| fig-cap-location: top
+varImpPlot(rf.boston)
+```
+
+This shows that the two most important variables are `rm` (average number of rooms per dwelling) and `lstat` (lower status of the population in %)
+
+# Boosting
+
+Using the `gbm` package (Gradient Boosting Model) for boosted trees. Few notes:
+
+-   `distribution = "gaussian"` is considered for regression trees. For classification, it should be `distribution = "bernoulli"`
+-   `n.trees = 5000` is the number of trees we want to iterate over
+-   `interaction.depth = 4` limits the depth of each tree
+
+```{r boosting}
+library(gbm) #Gradient Boosting Models
+set.seed(1)
+boost.boston <- gbm(medv ~ ., data = Boston[train,], 
+                    distribution = "gaussian",
+                    n.trees = 5000,
+                    interaction.depth = 4)
+summary(boost.boston)
+```
+
+As seen earlier, `lm` and `rstat` show up as the most important variables.
+
+## partial dependence plots
+
+By plotting the partial dependence of `rm` and `lstat` on outcome variable, we see that
+
+-   `rm` has a direct relation viz. more the number of rooms, higher the price increases
+-   `lstat` has an inverse relation viz. higher the lower stata in the neighbourhood, lower the price
+
+```{r}
+par(mfrow = c(1,2))
+plot(boost.boston, i = "rm")
+plot(boost.boston, i = "lstat")
+```
+
+## Predictions
+
+```{r}
+yhat.boost <- predict(boost.boston, newdata = Boston[-train.boston,], 
+                      n.trees = 5000)
+
+#| fig-cap: "Predicted v/s Actuals for Boston test data using Boosted RF"
+#| fig-cap-location: top
+plot(yhat.boost, test.boston)
+abline(0,1,col = "red")
+```
+
+Figure looks so much better. testing the accuracy now. starting with the MSE
+
+```{r}
+mean((yhat.boost - test.boston)^2)
+```
+
+Wow.. that's significantly lower. How about the RMSE?
+
+```{r}
+mean((yhat.boost - test.boston)^2)^0.5
+```
+
+Amazing. This means our predicted value on an average is ±\$3,603 from the actual which is a signifcant improvement from the RMSE calculated by Random Forest ±\$4,479
+
+## Adding regularisation parameter 𝛌
+
+Also referred as the shrinkage parameter, the default value is 0.001 but we will change this to 0.01
+
+```{r}
+set.seed(1)
+boost.boston2 <- gbm(medv ~ ., data = Boston[train,], 
+                    distribution = "gaussian",
+                    n.trees = 5000,
+                    interaction.depth = 4, 
+                    shrinkage = 0.01)
+yhat.boost2 <- predict(boost.boston2, newdata = Boston[-train.boston,], 
+                      n.trees = 5000)
+```
+
+The resulting MSE therefore is calculated as:
+
+```{r}
+mean((yhat.boost2 - test.boston)^2)^0.5
+```
+
+Now we've got it even lower at ±\$3,593
+
+# Bayesian Additive Regression Trees
+
+The function `gbart()` is used for regression analysis. This syntax slightly reminds me of the python syntax as we're back to creating matrices for each test, train, x & y.
+
+```{r}
+library(BART)
+x_BART <- Boston[,1:12]
+y_BART <- Boston[,"medv"]
+
+xtrain_BART <- x_BART[train.boston, ]
+ytrain_BART <- y_BART[train.boston]
+
+xtest_BART <-  x_BART[-train.boston, ]
+ytest_BART <- y_BART[-train.boston]
+```
+
+Creating the model now:
+
+```{r}
+set.seed(1)
+bart_model <- gbart(xtrain_BART, ytrain_BART, x.test = xtest_BART)
+```
+
+Computing the test error MSE
+
+```{r}
+yhat_bart <- bart_model$yhat.test.mean
+mean((yhat_bart - test.boston)^2)
+```
+
+uhoh.. it was 12.9 for the Boosted RF trees. So the RMSE can be calculated as:
+
+```{r}
+mean((yhat_bart - test.boston)^2)^0.5
+```
+
+That's ±\$3,958 which is not as good as \$3,593 RMSE that the Boosted Tree gave us.
+
+# Summary
+
+The calculations show that as per the RMSE, the accuracy of models can be ordered as:
+
+::: {style="text-align: center; font-size: 1.4em"}
+Bagging \< Random Forest \< BART \< Boosting
+:::

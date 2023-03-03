@@ -8,7 +8,7 @@
 
 <meta name="author" content="Ramakant">
 <meta name="dcterms.date" content="2023-03-02">
-<meta name="description" content="Revising Bagging, RF, Boosting &amp; BART">
+<meta name="description" content="Revisiting concepts of Bagging, RF, Boosting &amp; BART">
 
 <title>The Null Hypothesis - ISLR Lab - Decision Trees</title>
 <style>
@@ -184,7 +184,7 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
             <p class="subtitle lead">Back to basics</p>
                   <div>
         <div class="description">
-          Revising Bagging, RF, Boosting &amp; BART
+          Revisiting concepts of Bagging, RF, Boosting &amp; BART
         </div>
       </div>
                           <div class="quarto-categories">
@@ -223,7 +223,8 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#fitting-classification-trees-on-carseats" id="toc-fitting-classification-trees-on-carseats" class="nav-link active" data-scroll-target="#fitting-classification-trees-on-carseats">Fitting Classification Trees on <code>Carseats</code></a>
+  <li><a href="#quick-revision" id="toc-quick-revision" class="nav-link active" data-scroll-target="#quick-revision">Quick Revision</a></li>
+  <li><a href="#fitting-classification-trees-on-carseats" id="toc-fitting-classification-trees-on-carseats" class="nav-link" data-scroll-target="#fitting-classification-trees-on-carseats">Fitting Classification Trees on <code>Carseats</code></a>
   <ul class="collapse">
   <li><a href="#splitting-and-fitting-the-model" id="toc-splitting-and-fitting-the-model" class="nav-link" data-scroll-target="#splitting-and-fitting-the-model">Splitting and fitting the model</a></li>
   <li><a href="#pruning-the-tree-for-improved-classification" id="toc-pruning-the-tree-for-improved-classification" class="nav-link" data-scroll-target="#pruning-the-tree-for-improved-classification">Pruning the tree for improved classification</a></li>
@@ -234,7 +235,19 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
   <li><a href="#making-the-predictions" id="toc-making-the-predictions" class="nav-link" data-scroll-target="#making-the-predictions">Making the predictions</a></li>
   <li><a href="#key-takeaways-1" id="toc-key-takeaways-1" class="nav-link" data-scroll-target="#key-takeaways-1">Key Takeaways:</a></li>
   </ul></li>
-  <li><a href="#regression-using-bagging-random-forests" id="toc-regression-using-bagging-random-forests" class="nav-link" data-scroll-target="#regression-using-bagging-random-forests">Regression using Bagging &amp; Random Forests</a></li>
+  <li><a href="#regression-using-bagging-random-forests" id="toc-regression-using-bagging-random-forests" class="nav-link" data-scroll-target="#regression-using-bagging-random-forests">Regression using Bagging &amp; Random Forests</a>
+  <ul class="collapse">
+  <li><a href="#bagging" id="toc-bagging" class="nav-link" data-scroll-target="#bagging">Bagging</a></li>
+  <li><a href="#random-forest" id="toc-random-forest" class="nav-link" data-scroll-target="#random-forest">Random Forest</a></li>
+  </ul></li>
+  <li><a href="#boosting" id="toc-boosting" class="nav-link" data-scroll-target="#boosting">Boosting</a>
+  <ul class="collapse">
+  <li><a href="#partial-dependence-plots" id="toc-partial-dependence-plots" class="nav-link" data-scroll-target="#partial-dependence-plots">partial dependence plots</a></li>
+  <li><a href="#predictions" id="toc-predictions" class="nav-link" data-scroll-target="#predictions">Predictions</a></li>
+  <li><a href="#adding-regularisation-parameter-𝛌" id="toc-adding-regularisation-parameter-𝛌" class="nav-link" data-scroll-target="#adding-regularisation-parameter-𝛌">Adding regularisation parameter 𝛌</a></li>
+  </ul></li>
+  <li><a href="#bayesian-additive-regression-trees" id="toc-bayesian-additive-regression-trees" class="nav-link" data-scroll-target="#bayesian-additive-regression-trees">Bayesian Additive Regression Trees</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -245,6 +258,14 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 
 
 <p>All the code here is derived from the legendary book <a href="https://www.statlearning.com/">ISRL 2nd edition’s</a> chapter 8 “Decision Trees”. Its sometimes a wonder how elegant the base R language can be. The ISRL lab rarely mentions <code>tidyverse</code> syntax but yet manages to make the code so easy to read. The more you learn!🤓</p>
+<section id="quick-revision" class="level1">
+<h1>Quick Revision</h1>
+<ol type="1">
+<li>In <span class="math inline">\(Bagging\)</span> , the trees are grown independently on random samples of the observations. Consequently, the trees tend to be quite similar to each other. Thus, bagging can get caught in local optima and can fail to thoroughly explore the model space</li>
+<li>In <span class="math inline">\(Random Forest\)</span>, the trees are grown independently on random samples of the observations. However, each split on each tree is performed on random subset of <em>predictors</em>, thereby decorrelating the trees and leading to a better exploration relative to bagging. Both bagging &amp; RF are ensemble methods which makes prediction from average of regression trees. Both also use <em>bootstrap</em> sampling.</li>
+<li>In <span class="math inline">\(Boosting\)</span>, we only use the original data and don’t draw random samples. The trees are grown successively using a “slow” learning approach; each new tree is fit to the signal that is left over from the earlier trees. Boosting is an ensemble method that uses weighted sum and doesn’t involve bootstrap sampling as the trees are fitted on a modified version of the original dataset.</li>
+<li>In <span class="math inline">\(BART\)</span>, we only use the original data and we grow the trees successively. However each tree is perturbed in order to avoid local minima. BART is related to the Boosting &amp; RF — each tree is created in a random manner like bagging &amp; RF and each tree tries to capture some signal not yet accounted for in the current model like Boosting. BART tries to improve the partial residual of current tree by slightly modifying the previous iteration (changing the structure by altering number of nodes)</li>
+</ol>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -282,6 +303,7 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Carseats <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Carseats, High)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+</section>
 <section id="fitting-classification-trees-on-carseats" class="level1">
 <h1>Fitting Classification Trees on <code>Carseats</code></h1>
 <p>Creating a classification tree to predict <code>High</code> using all variables except <code>Sales</code></p>
@@ -571,7 +593,7 @@ Distribution of residuals:
 <pre><code>[1] 35.28688</code></pre>
 </div>
 </div>
-<p>Standard Deviation the square root of MSE which is</p>
+<p>RMSE which uses the same units as the output variable is:</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -589,14 +611,412 @@ Distribution of residuals:
 </section>
 <section id="regression-using-bagging-random-forests" class="level1 page-columns page-full">
 <h1>Regression using Bagging &amp; Random Forests</h1>
-<p>Note: Bagging is a special case of Random Forest where <span class="math inline">\(m = p\)</span>. The <code>randomForest()</code> function can be used for evaluating predictions from both bagging &amp; RF.</p>
+<p>Note: Bagging is a special case of Random Forest where <span class="math inline">\(m = p\)</span>. The <code>randomForest()</code> function can be used for evaluating predictions from both bagging &amp; RF. So first up is the <strong>Bagging</strong> process</p>
 
-
-
-<div class="no-row-height column-margin column-container"><div class="" style="font-size: 4">
+<div class="no-row-height column-margin column-container"><div class="" style="font-size: 0.8em">
 <p><span class="math inline">\(m\)</span> = sample number of predictors</p>
 <p><span class="math inline">\(p\)</span> = total number of available predictors</p>
-</div></div></section>
+</div></div><section id="bagging" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="bagging">Bagging</h2>
+
+<div class="no-row-height column-margin column-container"><div class="" style="font-size: 0.7em">
+<p><code>importance</code> parameter here will compute and return the importance measures of each predictor variable. <code>Importance</code> measures provide a way to assess the relative importance of each predictor variable in the random forest model, based on the decrease in accuracy that occurs when that variable is excluded from the model. This increases the runtime significantly on large datasets</p>
+</div></div><div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>bag.boston <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(medv <span class="sc">~</span> . , <span class="at">data =</span> Boston, </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">subset =</span> train.boston, </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">mtry =</span> <span class="dv">12</span>, <span class="co"># m = p</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">importance =</span> T)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>bag.boston</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+ randomForest(formula = medv ~ ., data = Boston, mtry = 12, importance = T,      subset = train.boston) 
+               Type of random forest: regression
+                     Number of trees: 500
+No. of variables tried at each split: 12
+
+          Mean of squared residuals: 11.40162
+                    % Var explained: 85.17</code></pre>
+</div>
+</div>
+<div class="cell fig-cap-location-top">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>yhat.bag <span class="ot">&lt;-</span> <span class="fu">predict</span>(bag.boston, <span class="at">newdata =</span> Boston[<span class="sc">-</span>train.boston, ])</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(yhat.bag, test.boston)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Predicted v/s Actuals for Boston test data using Bagging</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>What’s the accuracy here? Checking the MSE</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((yhat.bag <span class="sc">-</span> test.boston)<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23.41916</code></pre>
+</div>
+</div>
+<p>And square root of MSE or RMSE is:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">mean</span>((yhat.bag <span class="sc">-</span> test.boston)<span class="sc">^</span><span class="dv">2</span>))<span class="sc">^</span><span class="fl">0.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.839335</code></pre>
+</div>
+</div>
+<p>That’s $4,812 which is better than $5,950 derived from the 7-node decision tree discussed in <a href="#key-takeaways">Key Takeaways</a>. Moving to Random Forest now.</p>
+</section>
+<section id="random-forest" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="random-forest">Random Forest</h2>
+<p>Its the same code, but we alter the number of predicted variables to <span class="math inline">\(m= 6\)</span> which is the <code>mtry</code> parameter</p>
+
+<div class="no-row-height column-margin column-container"><div class="" style="font-size: 0.8em">
+<p>Default settings for <code>randomForest()</code></p>
+<p>for regression analysis, <span class="math inline">\(m = p/3\)</span></p>
+<p>for classification analysis, <span class="math inline">\(m = \sqrt p\)</span></p>
+</div></div><div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>rf.boston <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(medv <span class="sc">~</span> . , <span class="at">data =</span> Boston, </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">subset =</span> train.boston, </span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">mtry =</span> <span class="dv">6</span>, <span class="co"># m = p/2</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">importance =</span> T)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>rf.boston</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+ randomForest(formula = medv ~ ., data = Boston, mtry = 6, importance = T,      subset = train.boston) 
+               Type of random forest: regression
+                     Number of trees: 500
+No. of variables tried at each split: 6
+
+          Mean of squared residuals: 10.09466
+                    % Var explained: 86.87</code></pre>
+</div>
+</div>
+<div class="cell fig-cap-location-top">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>yhat.rf <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf.boston, <span class="at">newdata =</span> Boston[<span class="sc">-</span>train.boston, ])</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(yhat.rf, test.boston)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Predicted v/s Actuals for Boston test data using RandomForest</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>What’s the MSE here?</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((yhat.rf <span class="sc">-</span> test.boston)<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20.06644</code></pre>
+</div>
+</div>
+<p>.. and therefore RMSE is:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((yhat.rf <span class="sc">-</span> test.boston)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="fl">0.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.479558</code></pre>
+</div>
+</div>
+<p>That’s ±$4,479 from the mean predicted values - which is better than $4,839 by using the Bagging method.</p>
+<p>Before moving ahead, we can also check the <code>importance()</code> function to determine key predictors</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">importance</span>(rf.boston)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>          %IncMSE IncNodePurity
+crim    19.435587    1070.42307
+zn       3.091630      82.19257
+indus    6.140529     590.09536
+chas     1.370310      36.70356
+nox     13.263466     859.97091
+rm      35.094741    8270.33906
+age     15.144821     634.31220
+dis      9.163776     684.87953
+rad      4.793720      83.18719
+tax      4.410714     292.20949
+ptratio  8.612780     902.20190
+lstat   28.725343    5813.04833</code></pre>
+</div>
+</div>
+<p>What are these columns?</p>
+<ul>
+<li><u><strong>%IncMSE:</strong></u> Avg decrease in accuracy of predictions on out-of-bag samples when given variable is calculated</li>
+<li><u><strong>IncNodePurity:</strong></u>Total decrease in node purity that results from split on that variable averaged over all trees.
+<ul>
+<li><p>in regression trees, the node impurity measured by the training Residual Sum of Squares(RSS)</p></li>
+<li><p>in classification trees, it is the deviance</p></li>
+</ul></li>
+</ul>
+<div class="cell fig-cap-location-top">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf.boston)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/varimport_plot-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Predicted v/s Actuals for Boston test data using Bagging</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This shows that the two most important variables are <code>rm</code> (average number of rooms per dwelling) and <code>lstat</code> (lower status of the population in %)</p>
+</section>
+</section>
+<section id="boosting" class="level1">
+<h1>Boosting</h1>
+<p>Using the <code>gbm</code> package (Gradient Boosting Model) for boosted trees. Few notes:</p>
+<ul>
+<li><code>distribution = "gaussian"</code> is considered for regression trees. For classification, it should be <code>distribution = "bernoulli"</code></li>
+<li><code>n.trees = 5000</code> is the number of trees we want to iterate over</li>
+<li><code>interaction.depth = 4</code> limits the depth of each tree</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gbm) <span class="co">#Gradient Boosting Models</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>boost.boston <span class="ot">&lt;-</span> <span class="fu">gbm</span>(medv <span class="sc">~</span> ., <span class="at">data =</span> Boston[train,], </span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">distribution =</span> <span class="st">"gaussian"</span>,</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">n.trees =</span> <span class="dv">5000</span>,</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">interaction.depth =</span> <span class="dv">4</span>)</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(boost.boston)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/boosting-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            var    rel.inf
+lstat     lstat 37.7145639
+rm           rm 32.0396810
+dis         dis  6.2532723
+crim       crim  5.9078403
+age         age  4.8163355
+indus     indus  3.7365846
+tax         tax  2.5457121
+nox         nox  2.5286998
+ptratio ptratio  2.5091014
+rad         rad  1.5427771
+chas       chas  0.2451445
+zn           zn  0.1602876</code></pre>
+</div>
+</div>
+<p>As seen earlier, <code>lm</code> and <code>rstat</code> show up as the most important variables.</p>
+<section id="partial-dependence-plots" class="level2">
+<h2 class="anchored" data-anchor-id="partial-dependence-plots">partial dependence plots</h2>
+<p>By plotting the partial dependence of <code>rm</code> and <code>lstat</code> on outcome variable, we see that</p>
+<ul>
+<li><code>rm</code> has a direct relation viz.&nbsp;more the number of rooms, higher the price increases</li>
+<li><code>lstat</code> has an inverse relation viz.&nbsp;higher the lower stata in the neighbourhood, lower the price</li>
+</ul>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boost.boston, <span class="at">i =</span> <span class="st">"rm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boost.boston, <span class="at">i =</span> <span class="st">"lstat"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-32-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="predictions" class="level2">
+<h2 class="anchored" data-anchor-id="predictions">Predictions</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>yhat.boost <span class="ot">&lt;-</span> <span class="fu">predict</span>(boost.boston, <span class="at">newdata =</span> Boston[<span class="sc">-</span>train.boston,], </span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">n.trees =</span> <span class="dv">5000</span>)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Predicted v/s Actuals for Boston test data using Boosted RF"</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap-location: top</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(yhat.boost, test.boston)</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Figure looks so much better. testing the accuracy now. starting with the MSE</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((yhat.boost <span class="sc">-</span> test.boston)<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12.98195</code></pre>
+</div>
+</div>
+<p>Wow.. that’s significantly lower. How about the RMSE?</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((yhat.boost <span class="sc">-</span> test.boston)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="fl">0.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.603047</code></pre>
+</div>
+</div>
+<p>Amazing. This means our predicted value on an average is ±$3,603 from the actual which is a signifcant improvement from the RMSE calculated by Random Forest ±$4,479</p>
+</section>
+<section id="adding-regularisation-parameter-𝛌" class="level2">
+<h2 class="anchored" data-anchor-id="adding-regularisation-parameter-𝛌">Adding regularisation parameter 𝛌</h2>
+<p>Also referred as the shrinkage parameter, the default value is 0.001 but we will change this to 0.01</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>boost.boston2 <span class="ot">&lt;-</span> <span class="fu">gbm</span>(medv <span class="sc">~</span> ., <span class="at">data =</span> Boston[train,], </span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">distribution =</span> <span class="st">"gaussian"</span>,</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">n.trees =</span> <span class="dv">5000</span>,</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">interaction.depth =</span> <span class="dv">4</span>, </span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">shrinkage =</span> <span class="fl">0.01</span>)</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>yhat.boost2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(boost.boston2, <span class="at">newdata =</span> Boston[<span class="sc">-</span>train.boston,], </span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">n.trees =</span> <span class="dv">5000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The resulting MSE therefore is calculated as:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((yhat.boost2 <span class="sc">-</span> test.boston)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="fl">0.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.593472</code></pre>
+</div>
+</div>
+<p>Now we’ve got it even lower at ±$3,593</p>
+</section>
+</section>
+<section id="bayesian-additive-regression-trees" class="level1">
+<h1>Bayesian Additive Regression Trees</h1>
+<p>The function <code>gbart()</code> is used for regression analysis. This syntax slightly reminds me of the python syntax as we’re back to creating matrices for each test, train, x &amp; y.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BART)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>x_BART <span class="ot">&lt;-</span> Boston[,<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>]</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>y_BART <span class="ot">&lt;-</span> Boston[,<span class="st">"medv"</span>]</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>xtrain_BART <span class="ot">&lt;-</span> x_BART[train.boston, ]</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>ytrain_BART <span class="ot">&lt;-</span> y_BART[train.boston]</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>xtest_BART <span class="ot">&lt;-</span>  x_BART[<span class="sc">-</span>train.boston, ]</span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a>ytest_BART <span class="ot">&lt;-</span> y_BART[<span class="sc">-</span>train.boston]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Creating the model now:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>bart_model <span class="ot">&lt;-</span> <span class="fu">gbart</span>(xtrain_BART, ytrain_BART, <span class="at">x.test =</span> xtest_BART)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>*****Calling gbart: type=1
+*****Data:
+data:n,p,np: 253, 12, 253
+y1,yn: 0.213439, -5.486561
+x1,x[n*p]: 0.109590, 20.080000
+xp1,xp[np*p]: 0.027310, 7.880000
+*****Number of Trees: 200
+*****Number of Cut Points: 100 ... 100
+*****burn,nd,thin: 100,1000,1
+*****Prior:beta,alpha,tau,nu,lambda,offset: 2,0.95,0.795495,3,3.71636,21.7866
+*****sigma: 4.367914
+*****w (weights): 1.000000 ... 1.000000
+*****Dirichlet:sparse,theta,omega,a,b,rho,augment: 0,0,1,0.5,1,12,0
+*****printevery: 100
+
+MCMC
+done 0 (out of 1100)
+done 100 (out of 1100)
+done 200 (out of 1100)
+done 300 (out of 1100)
+done 400 (out of 1100)
+done 500 (out of 1100)
+done 600 (out of 1100)
+done 700 (out of 1100)
+done 800 (out of 1100)
+done 900 (out of 1100)
+done 1000 (out of 1100)
+time: 8s
+trcnt,tecnt: 1000,1000</code></pre>
+</div>
+</div>
+<p>Computing the test error MSE</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>yhat_bart <span class="ot">&lt;-</span> bart_model<span class="sc">$</span>yhat.test.mean</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((yhat_bart <span class="sc">-</span> test.boston)<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15.94718</code></pre>
+</div>
+</div>
+<p>uhoh.. it was 12.9 for the Boosted RF trees. So the RMSE can be calculated as:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((yhat_bart <span class="sc">-</span> test.boston)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">^</span><span class="fl">0.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.993392</code></pre>
+</div>
+</div>
+<p>That’s ±$3,958 which is not as good as $3,593 RMSE that the Boosted Tree gave us.</p>
+</section>
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<p>The calculations show that as per the RMSE, the accuracy of models can be ordered as:</p>
+<div style="text-align: center; font-size: 1.4em">
+<p>Bagging &lt; Random Forest &lt; BART &lt; Boosting</p>
+</div>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
