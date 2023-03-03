@@ -1,7 +1,7 @@
 ---
 title: "ISLR Lab - Decision Trees"
 subtitle: "Back to basics"
-description: "Theoretical revision"
+description: "Revising Bagging, RF, Boosting & BART "
 date: '2023-03-02'
 categories: [R, ISLR]
 featured: no
@@ -10,12 +10,14 @@ execute:
 image: dtree.jpg
 ---
 
+All the code here is derived from the legendary book [ISRL 2nd edition's](https://www.statlearning.com/) chapter 8 "Decision Trees". Its sometimes a wonder how elegant the base R language can be. The ISRL lab rarely mentions `tidyverse` syntax but yet manages to make the code so easy to read. The more you learn!🤓
+
 ```{r}
 library(tree)
 library(ISLR2)
 ```
 
-In today's lab , we will be using the `Carseats` dataset from the `ISLR2` package.
+In today's lab, we will be using the `Carseats` dataset from the `ISLR2` package.
 
 ```{r}
 str(Carseats)
@@ -34,7 +36,6 @@ Carseats <- data.frame(Carseats, High)
 Creating a classification tree to predict `High` using all variables except `Sales`
 
 ```{r}
-
 set.seed(1)
 tree.carseats <- tree(High ~ .-Sales, data = Carseats)
 summary(tree.carseats)
@@ -51,12 +52,9 @@ text(tree.carseats, pretty  =0 )
 
 ```{r}
 set.seed(2)
-
 train <- sample(1:nrow(Carseats), 200)
 Carseats.test <- Carseats[-train,]
-
 High.test <- High[-train]
-
 tree.carseats <- tree(High ~ .-Sales, data = Carseats, 
                       subset = train)
 ```
@@ -78,10 +76,10 @@ table(tree.predict, High.test)
 What's the accuracy?
 
 ```{r}
-(102+52)/200
+(104+50)/200
 ```
 
-77%
+**77%** Accuracy
 
 ## Pruning the tree for improved classification
 
@@ -103,9 +101,11 @@ Note to self:
 cv.carseats
 ```
 
-Visualising the tree. The classification error is least at `size  = 9`
+Visualising the tree. The classification error is least (74) at `size  = 9`
 
 ```{r}
+#| fig-cap: "Relation between Deviance with tree size & regularisation parameter"
+#| fig-cap-location: top
 par(mfrow = c(1,2))
 plot(cv.carseats$size, cv.carseats$dev, type = "b")
 plot(cv.carseats$k, cv.carseats$dev, type = "b")
@@ -119,7 +119,7 @@ plot(prune.carseats)
 text(prune.carseats, pretty = 0)
 ```
 
-Checking the accuracy in the good-old fashioned way
+Checking the accuracy in the good-old fashioned way (*its really that simple!)*🤓
 
 ```{r}
 prune.tree.pred <- predict(prune.carseats, Carseats.test, type = "class")
@@ -132,7 +132,13 @@ So what's the accuracy?
 (97+58)/200
 ```
 
-**77.5%** which is slightly better than the non-pruned tree.
+**77.5%** which is slightly better than the non-pruned tree. Not bad.
+
+## Key Takeaways
+
+1.  Without tuning the model, the default DT algo creates a tree with 27 nodes
+2.  deviance measured as a result of changing the number of nodes indicates the best DT of 9 nodes.
+3.  The code needed to write this is surprisingly simple. However, the `tidymodels` interface allows for managing the resulting output and models in a more structured way.
 
 # Fitting regression trees on `Boston` dataset
 
@@ -146,19 +152,21 @@ Creating the training set for `Boston` which is half the size of the original
 
 ```{r}
 set.seed(1)
-train <- sample(1:nrow(Boston), nrow(Boston)/2)
+train.boston <- sample(1:nrow(Boston), nrow(Boston)/2)
 ```
 
 Building the tree
 
 ```{r}
-tree.boston <- tree(medv ~ ., data = Boston, subset = train)
+tree.boston <- tree(medv ~ ., data = Boston, subset = train.boston)
 summary(tree.boston)
 ```
 
-only 4 predictors were used. Plotting the decision tree
+only 4 predictors `rm, lstat, crim, age` were used. (*wonder why?)* Plotting the decision tree
 
 ```{r}
+#| fig-cap: "Representing the decision tree with 7 nodes"
+#| fig-cap-location: top
 plot(tree.boston)
 text(tree.boston, pretty = 0)
 ```
@@ -166,23 +174,125 @@ text(tree.boston, pretty = 0)
 ## Making the predictions
 
 ```{r}
+#| fig-cap: "This plot visualises the Predicted v/s Actuals for Boston test data"
+#| fig-cap-location: top
+yhat <- predict(tree.boston, newdata = Boston[-train.boston,])
+test.boston <- Boston[-train.boston,"medv"]
 
-yhat <- predict(tree.boston, newdata = Boston[-train,])
-boston.test <- Boston[-train,"medv"]
-
-plot(yhat, boston.test)
+plot(yhat, test.boston)
 abline(0,1, col = "red")
 
 ```
 
-Mean Square Error is defined as :
+Mean Square Error is defined as $$MSE = \frac{1}{n} \sum_{i=1}^{n}(y_i - \hat{y_i})^2$$
 
 ```{r}
-mean((yhat - boston.test)^2)
+mean((yhat - test.boston)^2)
 ```
 
 Standard Deviation the square root of MSE which is
 
 ```{r}
-(mean((yhat - boston.test)^2))^0.5
+(mean((yhat - test.boston)^2))^0.5
+```
+
+## Key Takeaways: 
+
+As the SD is the same units as the outcome variable, we can say that this model leads to predictions which on an average are within ±\$5,940 of the true median home value. Can we do better? Let's keep digging
+
+# Regression using Bagging & Random Forests
+
+Note: Bagging is a special case of Random Forest where $m = p$. The `randomForest()` function can be used for evaluating predictions from both bagging & RF. So first up is the **Bagging** process
+
+::: {.column-margin style="font-size: 0.8em"}
+$m$ = sample number of predictors
+
+$p$ = total number of available predictors
+:::
+
+## Bagging
+
+::: {.column-margin style="font-size: 0.7em"}
+`importance` parameter here will compute and return the importance measures of each predictor variable. `Importance` measures provide a way to assess the relative importance of each predictor variable in the random forest model, based on the decrease in accuracy that occurs when that variable is excluded from the model. This increases the runtime significantly on large datasets
+:::
+
+```{r}
+library(randomForest)
+set.seed(1)
+bag.boston <- randomForest(medv ~ . , data = Boston, 
+                           subset = train.boston, 
+                           mtry = 12, # m = p
+                           importance = T)
+bag.boston
+```
+
+```{r}
+#| fig-cap: "Predicted v/s Actuals for Boston test data using Bagging"
+#| fig-cap-location: top
+yhat.bag <- predict(bag.boston, newdata = Boston[-train.boston, ])
+plot(yhat.bag, boston.test)
+abline(0,1,col = "red")
+```
+
+What's the accuracy here? Checking the MSE
+
+```{r}
+mean((yhat.bag - boston.test)^2)
+```
+
+And the deviance is square root of MSE:
+
+```{r}
+(mean((yhat.bag - boston.test)^2))^0.5
+```
+
+That's \$4,839 which is better than \$5,950 derived from the 7-node decision tree discussed in [Key Takeaways]. Moving to Random Forest now.
+
+## Random Forest
+
+Its the same code, but we alter the number of predicted variables to $m= 6$ which is the `mtry` parameter
+
+::: {.column-margin style="font-size: 0.8em"}
+Default settings for `randomForest()`
+
+for regression analysis, $m = p/3$
+
+for classification analysis, $m = \sqrt p$
+:::
+
+```{r}
+set.seed(1)
+rf.boston <- randomForest(medv ~ . , data = Boston, 
+                           subset = train.boston, 
+                           mtry = 6, # m = p/2
+                           importance = T)
+rf.boston
+```
+
+```{r}
+#| fig-cap: "Predicted v/s Actuals for Boston test data using RandomForest"
+#| fig-cap-location: top
+yhat.rf <- predict(rf.boston, newdata = Boston[-train.boston, ])
+plot(yhat.rf, boston.test)
+abline(0,1,col = "red")
+```
+
+What's the MSE here?
+
+```{r}
+mean((yhat.rf - test.boston)^2)
+```
+
+.. and therefore deviance is:
+
+```{r}
+mean((yhat.rf - test.boston)^2)^0.5
+```
+
+That's ±\$4,479 from the mean predicted values - which is better than \$4,839 by using the Bagging method.
+
+Before moving ahead, we can also check the `importance()` function to determine key predictors
+
+```{r}
+importance(rf.boston)
 ```

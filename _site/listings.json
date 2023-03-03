@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2023-03-02-ISLRv2-Decision-Trees/index.html",
+      "/posts/2023-03-01-ensemble-models/index.html",
       "/posts/2023-02-20-day-11-of-50daysofkaggle/index.html",
       "/posts/2023-02-17-migrating-to-quarto/index.html",
       "/posts/2022-10-27-holiday-break-for-50daysofkaggle/index.en.html",
