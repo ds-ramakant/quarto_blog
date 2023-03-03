@@ -606,7 +606,7 @@ Distribution of residuals:
 </section>
 <section id="key-takeaways-1" class="level2">
 <h2 class="anchored" data-anchor-id="key-takeaways-1">Key Takeaways:</h2>
-<p>As the SD is the same units as the outcome variable, we can say that this model leads to predictions which on an average are within ±$5,940 of the true median home value. Can we do better? Let’s keep digging</p>
+<p>As the SD is the same units as the outcome variable, we can say that this model leads to predictions which on an average are within ±$5940 of the true median home value. Can we do better? Let’s keep digging</p>
 </section>
 </section>
 <section id="regression-using-bagging-random-forests" class="level1 page-columns page-full">
@@ -680,7 +680,7 @@ No. of variables tried at each split: 12
 <pre><code>[1] 4.839335</code></pre>
 </div>
 </div>
-<p>That’s $4,812 which is better than $5,950 derived from the 7-node decision tree discussed in <a href="#key-takeaways">Key Takeaways</a>. Moving to Random Forest now.</p>
+<p>That’s $4839 which is better than $ 5940 derived from the 7-node decision tree discussed in <a href="#key-takeaways">Key Takeaways</a>. Moving to Random Forest now.</p>
 </section>
 <section id="random-forest" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="random-forest">Random Forest</h2>
@@ -748,7 +748,7 @@ No. of variables tried at each split: 6
 <pre><code>[1] 4.479558</code></pre>
 </div>
 </div>
-<p>That’s ±$4,479 from the mean predicted values - which is better than $4,839 by using the Bagging method.</p>
+<p>That’s ±$4480 from the mean predicted values - which is better than $4839 by using the Bagging method.</p>
 <p>Before moving ahead, we can also check the <code>importance()</code> function to determine key predictors</p>
 <div class="cell">
 <details>
@@ -898,7 +898,7 @@ zn           zn  0.1602876</code></pre>
 <pre><code>[1] 3.603047</code></pre>
 </div>
 </div>
-<p>Amazing. This means our predicted value on an average is ±$3,603 from the actual which is a signifcant improvement from the RMSE calculated by Random Forest ±$4,479</p>
+<p>Amazing. This means our predicted value on an average is ±$3603 from the actual which is a signifcant improvement from the RMSE calculated by Random Forest ±$4480</p>
 </section>
 <section id="adding-regularisation-parameter-𝛌" class="level2">
 <h2 class="anchored" data-anchor-id="adding-regularisation-parameter-𝛌">Adding regularisation parameter 𝛌</h2>
@@ -926,7 +926,7 @@ zn           zn  0.1602876</code></pre>
 <pre><code>[1] 3.593472</code></pre>
 </div>
 </div>
-<p>Now we’ve got it even lower at ±$3,593</p>
+<p>Now we’ve got it even lower at ±$3593</p>
 </section>
 </section>
 <section id="bayesian-additive-regression-trees" class="level1">
@@ -981,7 +981,7 @@ done 700 (out of 1100)
 done 800 (out of 1100)
 done 900 (out of 1100)
 done 1000 (out of 1100)
-time: 8s
+time: 9s
 trcnt,tecnt: 1000,1000</code></pre>
 </div>
 </div>
@@ -1006,13 +1006,13 @@ trcnt,tecnt: 1000,1000</code></pre>
 <pre><code>[1] 3.993392</code></pre>
 </div>
 </div>
-<p>That’s ±$3,958 which is not as good as $3,593 RMSE that the Boosted Tree gave us.</p>
+<p>That’s ±$3993 which is not as good as $3593 RMSE that the Boosted Tree with shrinkage gave us.</p>
 </section>
 <section id="summary" class="level1">
 <h1>Summary</h1>
 <p>The calculations show that as per the RMSE, the accuracy of models can be ordered as:</p>
 <div style="text-align: center; font-size: 1.4em">
-<p>Bagging &lt; Random Forest &lt; BART &lt; Boosting</p>
+<p>Bagging &lt; Random Forest &lt; BART &lt; Boosting &lt; Boosting w/ Regularization</p>
 </div>
 
 

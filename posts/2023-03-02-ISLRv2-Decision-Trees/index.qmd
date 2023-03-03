@@ -205,7 +205,7 @@ RMSE which uses the same units as the output variable is:
 
 ## Key Takeaways:
 
-As the SD is the same units as the outcome variable, we can say that this model leads to predictions which on an average are within ±\$5,940 of the true median home value. Can we do better? Let's keep digging
+As the SD is the same units as the outcome variable, we can say that this model leads to predictions which on an average are within ±\$`r round(1000*(mean((yhat - test.boston)^2))^0.5, 0)` of the true median home value. Can we do better? Let's keep digging
 
 # Regression using Bagging & Random Forests
 
@@ -253,7 +253,7 @@ And square root of MSE or RMSE is:
 (mean((yhat.bag - test.boston)^2))^0.5
 ```
 
-That's \$4,812 which is better than \$5,950 derived from the 7-node decision tree discussed in [Key Takeaways]. Moving to Random Forest now.
+That's \$`r round(1000*(mean((yhat.bag - test.boston)^2))^0.5, 0)` which is better than \$ `r round(1000*(mean((yhat - test.boston)^2))^0.5, 0)` derived from the 7-node decision tree discussed in [Key Takeaways]. Moving to Random Forest now.
 
 ## Random Forest
 
@@ -296,7 +296,7 @@ mean((yhat.rf - test.boston)^2)
 mean((yhat.rf - test.boston)^2)^0.5
 ```
 
-That's ±\$4,479 from the mean predicted values - which is better than \$4,839 by using the Bagging method.
+That's ±\$`r round(1000*mean((yhat.rf - test.boston)^2)^0.5, 0)` from the mean predicted values - which is better than \$`r round(1000*mean((yhat.bag - test.boston)^2)^0.5, 0)` by using the Bagging method.
 
 Before moving ahead, we can also check the `importance()` function to determine key predictors
 
@@ -377,7 +377,7 @@ Wow.. that's significantly lower. How about the RMSE?
 mean((yhat.boost - test.boston)^2)^0.5
 ```
 
-Amazing. This means our predicted value on an average is ±\$3,603 from the actual which is a signifcant improvement from the RMSE calculated by Random Forest ±\$4,479
+Amazing. This means our predicted value on an average is ±\$`r round(1000*mean((yhat.boost - test.boston)^2)^0.5, 0)`  from the actual which is a signifcant improvement from the RMSE calculated by Random Forest ±\$`r round(1000*mean((yhat.rf - test.boston)^2)^0.5, 0)`
 
 ## Adding regularisation parameter 𝛌
 
@@ -400,7 +400,7 @@ The resulting MSE therefore is calculated as:
 mean((yhat.boost2 - test.boston)^2)^0.5
 ```
 
-Now we've got it even lower at ±\$3,593
+Now we've got it even lower at ±\$`r round(1000*mean((yhat.boost2 - test.boston)^2)^0.5,0)`
 
 # Bayesian Additive Regression Trees
 
@@ -438,12 +438,12 @@ uhoh.. it was 12.9 for the Boosted RF trees. So the RMSE can be calculated as:
 mean((yhat_bart - test.boston)^2)^0.5
 ```
 
-That's ±\$3,958 which is not as good as \$3,593 RMSE that the Boosted Tree gave us.
+That's ±\$`r round(1000*mean((yhat_bart - test.boston)^2)^0.5,0)` which is not as good as \$`r round(1000*mean((yhat.boost2 - test.boston)^2)^0.5,0)` RMSE that the Boosted Tree with shrinkage gave us.
 
 # Summary
 
 The calculations show that as per the RMSE, the accuracy of models can be ordered as:
 
-::: {style="text-align: center; font-size: 1.4em"}
-Bagging \< Random Forest \< BART \< Boosting
+::: {style="text-align: center; font-size: 1.2em"}
+Bagging \< Random Forest \< BART \< Boosting \< Boosting w/ Regularization
 :::
