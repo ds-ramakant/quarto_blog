@@ -1,7 +1,7 @@
 ---
 title: "ISLR Lab - Decision Trees"
 subtitle: "Back to basics"
-description: "Revisiting concepts of Bagging, RF, Boosting & BART "
+description: "Revisiting concepts of Bagging, RF, Boosting & BART"
 date: '2023-03-02'
 categories: [R, ISLR]
 featured: no
@@ -10,14 +10,16 @@ execute:
 image: dtree.jpg
 ---
 
-All the code here is derived from the legendary book [ISRL 2nd edition's](https://www.statlearning.com/) chapter 8 "Decision Trees". Its sometimes a wonder how elegant the base R language can be. The ISRL lab rarely mentions `tidyverse` syntax but yet manages to make the code so easy to read. The more you learn!🤓
+All the code here is derived from the legendary book [ISRL 2nd edition's](https://www.statlearning.com/) chapter 8 "Decision Trees". Its sometimes a wonder how elegant the base R language can be. For someone who's initiation to Data Science was through the [R4DS text book](https://r4ds.had.co.nz/), I am regularly impressed at the variety of functions & packages that make R so easy to read. The more you learn!🤓
+
+For feedback and suggestions, please use the comments tab on the right 👉🏼
 
 # Quick Revision
 
 1.  In $Bagging$ , the trees are grown independently on random samples of the observations. Consequently, the trees tend to be quite similar to each other. Thus, bagging can get caught in local optima and can fail to thoroughly explore the model space
 2.  In $Random Forest$, the trees are grown independently on random samples of the observations. However, each split on each tree is performed on random subset of *predictors*, thereby decorrelating the trees and leading to a better exploration relative to bagging. Both bagging & RF are ensemble methods which makes prediction from average of regression trees. Both also use *bootstrap* sampling.
 3.  In $Boosting$, we only use the original data and don't draw random samples. The trees are grown successively using a "slow" learning approach; each new tree is fit to the signal that is left over from the earlier trees. Boosting is an ensemble method that uses weighted sum and doesn't involve bootstrap sampling as the trees are fitted on a modified version of the original dataset.
-4.  In $BART$, we only use the original data and we grow the trees successively. However each tree is perturbed in order to avoid local minima. BART is related to the Boosting & RF --- each tree is created in a random manner like bagging & RF and each tree tries to capture some signal not yet accounted for in the current model like Boosting. BART tries to improve the partial residual of current tree by slightly modifying the previous iteration (changing the structure by altering number of nodes)
+4.  In $BART (Bayesian Additive Regression Trees)$, we only use the original data and we grow the trees successively. However each tree is perturbed in order to avoid local minima. BART is related to the Boosting & RF --- each tree is created in a random manner like bagging & RF and each tree tries to capture some signal not yet accounted for in the current model like Boosting. BART tries to improve the partial residual of current tree by slightly modifying the previous iteration (changing the structure by altering number of nodes)
 
 ```{r}
 library(tree)
@@ -377,7 +379,7 @@ Wow.. that's significantly lower. How about the RMSE?
 mean((yhat.boost - test.boston)^2)^0.5
 ```
 
-Amazing. This means our predicted value on an average is ±\$`r round(1000*mean((yhat.boost - test.boston)^2)^0.5, 0)`  from the actual which is a signifcant improvement from the RMSE calculated by Random Forest ±\$`r round(1000*mean((yhat.rf - test.boston)^2)^0.5, 0)`
+Amazing. This means our predicted value on an average is ±\$`r round(1000*mean((yhat.boost - test.boston)^2)^0.5, 0)` from the actual which is a signifcant improvement from the RMSE calculated by Random Forest ±\$`r round(1000*mean((yhat.rf - test.boston)^2)^0.5, 0)`
 
 ## Adding regularisation parameter 𝛌
 
@@ -445,5 +447,7 @@ That's ±\$`r round(1000*mean((yhat_bart - test.boston)^2)^0.5,0)` which is not 
 The calculations show that as per the RMSE, the accuracy of models can be ordered as:
 
 ::: {style="text-align: center; font-size: 1.2em"}
-Bagging \< Random Forest \< BART \< Boosting \< Boosting w/ Regularization
+Boosting with 𝛌\> Boosting \> BART \> Random Forest \> Bagging
 :::
+
+# 
