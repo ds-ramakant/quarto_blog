@@ -3,9 +3,7 @@ title: 'day 1 of #50daysofkaggle'
 author: ''
 date: '2022-10-07'
 slug: day-1-of-50daysofkaggle
-categories: [kaggle]
-tags: [kaggle, 50daysofkaggle, python, machinelearning]
-authors: [Me]
+categories: [kaggle, python]
 lastmod: '2022-10-07T15:32:49+05:30'
 featured: no
 projects: []

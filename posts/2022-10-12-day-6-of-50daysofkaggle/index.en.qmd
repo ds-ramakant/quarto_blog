@@ -1,12 +1,9 @@
 ---
 title: "Day 6 of #50daysofkaggle"
-author: ''
 date: "2022-10-12"
-slug: "day-6-of-50daysofkaggle"
-categories: [kaggle]
+categories: [kaggle, python]
 subtitle: 'Classification using KNN'
-summary: 'Classification using KNN'
-authors: [Me]
+description: 'K-Nearest Neighbours'
 lastmod: "2022-10-12T15:38:17+05:30"
 featured: no
 image: titanic_KNN.jpg

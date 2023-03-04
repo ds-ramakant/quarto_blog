@@ -1,0 +1,10 @@
+---
+title: "Day 14 of #50daysofKaggle"
+subtitle: "Roadmap to Tidymodels - Part 2"
+description: "Screening multiple models"
+date: '2023-03-04'
+categories: [R, kaggle]
+featured: no
+execute:
+  warning: false
+---

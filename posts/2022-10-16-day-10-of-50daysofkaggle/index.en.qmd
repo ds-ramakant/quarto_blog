@@ -1,12 +1,9 @@
 ---
 title: 'Day 10 of #50daysofkaggle'
-author: ''
 date: "2022-10-16"
-slug: "day-10-of-50daysofkaggle"
-categories: [kaggle]
-subtitle: Support Vector Machines
-description: Classification through SVM
-authors: [Me]
+categories: [kaggle, python]
+subtitle: "Support Vector Machines"
+description: "Classification through SVM"
 lastmod: "2022-10-18T10:40:27+05:30"
 featured: no
 image: titanic_SVM.jpg

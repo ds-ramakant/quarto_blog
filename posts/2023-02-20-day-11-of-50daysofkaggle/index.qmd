@@ -55,7 +55,7 @@ We see that there are 177 null values in the `Age` column. This will be tackled 
 
 # Model Building
 
-## Splitting the data 
+## Splitting the data
 
 Splitting the data into train & test
 
@@ -107,7 +107,7 @@ dt_wf <- workflow() %>%
   add_recipe(dt_recipe)
 ```
 
-## Predicting on `test` data 
+## Predicting on `test` data
 
 Fitting the `dt_wf` workflow with model created on `train` data to predict the `test` data
 
