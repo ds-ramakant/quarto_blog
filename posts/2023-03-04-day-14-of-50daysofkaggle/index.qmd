@@ -8,3 +8,5 @@ featured: no
 execute:
   warning: false
 ---
+
+Today's post is an attempt to use the `tidymodels` framework to screen multiple models. Inspiration for this post comes from

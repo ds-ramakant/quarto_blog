@@ -1,17 +1,12 @@
 ---
 title: "Day 8 of #50daysofkaggle"
-author: ''
 date: '2022-10-14'
-slug: day-8-of-kaggle
-categories: [kaggle]
+categories: [kaggle, python]
 subtitle: 'Decision Tree'
 summary: 'Classification through Decision Trees'
-authors: [Me]
 lastmod: '2022-10-14T09:32:49+05:30'
 featured: no
 image: titanic_DT.jpg
-projects: [50daysofkaggle]
-
 #removes warning messages
 execute: 
   warning: true

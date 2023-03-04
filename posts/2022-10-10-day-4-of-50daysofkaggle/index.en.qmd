@@ -1,12 +1,9 @@
 ---
 title: 'Day 4 of #50daysofkaggle'
-author: 'Me'
 date: '2022-10-10'
-slug: day-4-of-50daysofkaggle
 categories: [kaggle, python]
 lastmod: '2022-10-10T11:28:37+05:30'
 featured: no
-projects: []
 format:
   html:
     code-fold: true

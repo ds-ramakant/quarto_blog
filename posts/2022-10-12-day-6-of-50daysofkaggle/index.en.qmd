@@ -7,7 +7,6 @@ description: 'K-Nearest Neighbours'
 lastmod: "2022-10-12T15:38:17+05:30"
 featured: no
 image: titanic_KNN.jpg
-projects: [50daysofkaggle]
 format:
   html:
     code-fold: true
