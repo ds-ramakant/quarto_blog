@@ -1,0 +1,74 @@
+---
+title: "Day 13 of #50daysofKaggle"
+subtitle: "Taking a breath"
+description: "Status Update"
+date: '2023-03-04'
+categories: [personal, kaggle]
+featured: no
+execute:
+  warning: false
+image: giphy.gif
+---
+
+![](/posts/2023-03-04-day-13-of-50daysofkaggle/lost_map.gif){fig-align="center" width="25%"}
+
+# Checking in at the checkpoint
+
+As none of you are wondering, I'm taking this Saturday evening to update myself on what I've been trying to do with all the work so far. And since none of you have commented, I'm going to pretend I'm talking to my invisible reader and assuage none of their concerns. 🙈
+
+# Where am I right now?
+
+So ... what is `#50daysofKaggle`?
+
+Attempting a kaggle competition has been one of the longest running aspiration for me. Exactly 6 years ago in March '17, I created my profile. But I knew I had to start learning to code. So I just kept learning... and learning... and learning... without any real application. As with any new project, I think I may have spent way too much time in planning and worrying about stuff instead of actually ... doing stuff!
+
+Many false starts later, it was in the winter of 2022 I had to take that hard decision.
+
+`#50daysofkaggle` was my own personal challenge to check-in daily here to ensure that I'm giving at least 50 consecutive days to my worst fears. My [first kaggle post](https://www.ds-ramakant.com/posts/2022-10-07-day-1-of-50daysofkaggle/index.en.html) was on 7th Oct. Its roughly 150 days since then. Here are my thoughts so far:
+
+1.  This blogging is super helpful in not only reviewing code but also for revising theory thru ISLR labs. Offline I'm maintaining my own notes but this blog is all about application and it has given me more perspective than I intended at the start. Totally the right thing I should be investing my time into.
+2.  Code-switching between R & Python is super helpful to learning from best of both worlds. I may have effectively eliminated the "fear of coding" that held me back forever now.
+3.  these posts are taking longer to write than I thought. Seriously... its been around 13 posts in the last 26 weeks. So that's 1 post every two weeks. gulp! Reasons are obvious
+    -   learning to code is one of the biggest things slowing me down
+    -   busy with job-hunt
+    -   holiday season in Dec'22 (was away from keyboard for almost an entire month)
+4.  Till now the numbering of the posts & the days are largely immaterial. It should broadly be read as "post #13 out of 50 that I committed myself". I keep skipping the count of days because each post actually takes me 2-3 days to finish. Going forward, I'm going change it to imply "blog post number" instead of "day number". And this one definitely counts because its really important to what I want to keep doing
+
+# Where do I want to go?
+
+Now that I've got that wee bit experiential learning, 7 posts have been made about my kaggle journey, so now I'm aiming for 43 more. I'm listing down a bunch of things that I want to achieve through `#50daysofkaggle`. topics that I definitely want to cover in order of priority:
+
+1.  keep the focus on Marketing Analytics & Marketing datasets (Hands-on DS for Marketing, Hwang).
+2.  Shiny App in R
+3.  Plotly/ Dash App in Python
+4.  Need to highlight usecases to share with professional network
+5.  sci-kit learn in python
+6.  Deep learning algorithms
+7.  using coding for applying quant research (Marketing Research 7e, Malhotra/Dash)
+8.  TidyTuesday participation?
+9.  time-series approach for content consumption data
+
+# How long will it take?
+
+Not anytime soon. Even if I make a post every 2 days (without holidays) starting today I'll be done by 31st May. At 3 days for each post it will 13th July. Incidentally, by August my financial runway is going to end. I'll at least have a blog. hurrah!😅
+
+# How do I get there?
+
+The only real answer is to **keep practicing**. Persevereance is key so the deadline makes it more important.
+
+1.  speeden up the EDA, feature engineering by picking datasets that comes from my domain experience. in other words, stick to strengths and don't jump into areas I've got no idea about.
+2.  getting to XGBoost was one of my goals with revising DT & Resampling methods
+3.  Efficiency in model building should be over-ridden with explaining the business impact. Need to pull myself away to the 20,000 feet view for each dataset.
+4.  Use communities like LetsCodeTogether on WA, KaggleNoobs+R4DS on Slack and Rstats on Twitter
+5.  Target 1 or 2 important real-world applications that will be worth showcasing at a job interview.
+
+Other issues I'll have to address:
+
+1.  Consulting assignments that are coming up
+2.  Job hunts (as of today, there's only one process in hand)
+
+Anyways, that's enough for today.
+
+Now my goal is in sight. I must proceed! 🏃‍♂️
+
+![](https://media.giphy.com/media/eiR8WW0nW5RzhzS70i/giphy-downsized.gif){fig-align="center"}

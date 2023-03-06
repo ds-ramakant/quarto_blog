@@ -1,0 +1,16 @@
+---
+title: "Day 14 of #50daysofKaggle"
+subtitle: "Roadmap to Tidymodels - Part 2"
+description: "Screening multiple models"
+date: '2023-03-04'
+categories: [R, kaggle]
+featured: no
+execute:
+  warning: false
+draft: true
+---
+
+Today's post is an attempt to use the `tidymodels` framework to screen multiple models. Inspiration for this post comes from the [Ch 15 of the Tidymodels with R textbook](https://www.tmwr.org/workflow-sets.html) along with two more noteworthy blogs
+
+-   [Olivier Gimenez's post](https://oliviergimenez.github.io/blog/learning-machine-learning/) that had me marvelling at the feature engineering
+-   [Tural Sadigov's post](https://rpubs.com/tsadigov/titanic_tidymodels) on handling multiple models
