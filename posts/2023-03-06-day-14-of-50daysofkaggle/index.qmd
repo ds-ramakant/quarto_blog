@@ -14,3 +14,16 @@ Today's post is an attempt to use the `tidymodels` framework to screen multiple 
 
 -   [Olivier Gimenez's post](https://oliviergimenez.github.io/blog/learning-machine-learning/) that had me marvelling at the feature engineering
 -   [Tural Sadigov's post](https://rpubs.com/tsadigov/titanic_tidymodels) on handling multiple models
+
+# EDA
+
+what about ticket number and fare? investigate into ticket number and check for families that are travelling together
+
+1.  combine ticket_id and fare as suggested [here](https://www.kaggle.com/code/jack89roberts/titanic-using-ticket-groupings/comments#337002)
+2.  also check the titanic mega model [here](https://www.kaggle.com/code/cdeotte/titantic-mega-model-0-84210/notebook)
+
+# Feature Engineering
+
+# Building Model 1:
+
+## Testing for accuracy
