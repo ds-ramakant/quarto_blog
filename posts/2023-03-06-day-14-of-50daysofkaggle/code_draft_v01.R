@@ -63,11 +63,13 @@ titanic_data <- titanic_data %>%
 
 glimpse(titanic_data)
 
+
+# regex cleaning ----------------------------------------------------------
 #as per https://regex101.com/
 names_with_splchar <- regex("[A-Za-z]+[\\'\\-\\s]+[A-Za-z]+")
 names_with_3words <- regex("[A-Za-z]+\\s[A-Za-z]+\\s[A-Za-z]+")
 names_with_1word <- regex("[A-Za-z]+") 
-names_with_2words <- regex("[A-Za-z]+\\s[A-Za-z]+")
+names_with_2words <- regex("[A-Za-z]+\\s+[A-Za-z]+")
 
 str_detect("Duran y More, Miss. Asuncion", names_with_splchar)
 str_view("Duran y More, Miss. Asuncion", names_with_3words)
@@ -78,46 +80,169 @@ str_view(head(titanic_data$name,20),
                  collapse = "|"))
 
 
-debug_df <- titanic_data %>% 
+titanic_data <- titanic_data %>% 
   separate_wider_regex(
     name, 
     patterns = c(
+#IMP: ordering of regex patterns changes the outcome
       surname = str_c(c(names_with_splchar, 
-                        names_with_1word, 
-                        names_with_3words), 
-                      collapse = "|"), # picks the first word before comma
-      ", ",                  # the comma  
-      title =  "[A-Za-z]+",  # picks word or words after the comma
-      ". ",                  # the dot
-      given_name = ".{1,}"), # picks anything else which occurs at least once
-    too_few = "debug") %>% view()
+                        names_with_3words,
+                        names_with_1word), 
+                      collapse = "|"),    # picks the first word before comma
+      ", ",                               # the comma  
+#IMP: ordering of regex patterns changes the outcome
+      title = str_c(c(names_with_2words , # two words with special char in between like 'the countess'
+                      names_with_1word),  # one word such as Mr Miss Mrs etc
+                    collapse = "|"),      
+      ". ",                               # the dot
+      given_name = ".+"),                 # picks anything else which occurs at least once
+#retains the original column    
+    cols_remove = F
+    ) 
+
+
+titanic_data %>% 
+  count(title, sort= T)
+
+titanic_data <- titanic_data %>% 
+  mutate(grouping1 = str_c(surname, family_count, sep = "_"))
+
+table1 <- titanic_data %>% 
+  count(grouping1, sort = T) 
+
+debug_df <- titanic_data %>% 
+  select(passenger_id, 
+         title, contains("name"),-name, family_count, sib_sp, parch,
+         grouping1, 
+         sex, age,
+         ticket, fare, everything()) 
+
+
+# checking for grouping errors --------------------------------------------
+
+table2 <- titanic_data %>% 
+  add_count(grouping1) %>% 
+  rename(grouping1_count= n) %>% 
+  filter(!(family_count == grouping1_count)) %>% 
+  group_by(grouping1, family_count) %>% 
+  count() %>% 
+  rename(count_z = n)
+
+view(table2)
+table2 %>% 
+  filter(count_z < family_count) %>% 
+  view()
+
+table2 %>%
+  mutate(delta = count_z - family_count)  %>%
+  group_by(delta) %>% count()
+
+table2 %>%
+  mutate(delta = count_z - family_count)  %>%
+  filter(delta<0) %>% 
+  group_by(family_count) %>% count()
+
+
+# creating ticket_head and new grouping -----------------------------------------------
+
+# notes: 
+# 1) there are people with same surnames but not from the same family ie. 
+#       family_count not matching and/or ticket_id_minus_2char are not matching
+# 2) need to come up with some way of creating some flag that creates these groupings
+# 3) in table2, if the incorrect_grouping count is greater than family_count, it means that
+#       the surname is appearing multiple times and they are not from the same family
+# 4) in table2, if the incorrect_grouping count is less than family_count, it might imply data error
+#       i.e family_count is high implies other family members are missing
+# 
+
+
+titanic_data <- titanic_data %>% 
+  mutate(ticket_head = substr(ticket, 1, nchar(ticket)-1),
+         ticket_tail = substr(ticket, nchar(ticket), nchar(ticket)),
+         grouping2 = paste0(surname, "_", ticket_head)) 
+
+titanic_data %>% 
+  count(grouping2, sort = T) %>% rename(px_in_grouping2 = n) %>% 
+  count(px_in_grouping2)
+
+check_grouping2 <- function(df){
+  for(i in df$grouping2){
+    
+  }
+  
+  }
+
+
+#adding count for grouping2
+titanic_data <- titanic_data %>% 
+  add_count(grouping2) %>% 
+  rename(grouping2_count = n)
+
+# creating flag to understand the relationships here:
+# case 1: if (family_count ==1 AND grouping2_count ==1), then flag as "1_solo" (this may include relatives & friends)
+# case 2: if (family_count == grouping2_count), then family is complete and flag is "2_family_full"
+# case 3: if (family_count < grouping2_count), then family_count is incorrect but they're on the same ticket so flag is "3_family_friends"
+# case 4: if (family_count > grouping2_count), then flag as "4_inspect"
+
+debug_df <- titanic_data %>% 
+  mutate(flag = case_when ((family_count==1 & grouping2_count==1) ~ "1_solo",
+                           family_count == grouping2_count ~ "2_family_full",
+                           family_count < grouping2_count ~ "3_family_plus",
+                           family_count > grouping2_count ~ "4_inspect",
+                           .default = "x")
+         )
+
+debug_df <- debug_df %>% 
+  select(title, contains("name"),family_count,
+         contains("grouping2"), flag,
+         sex, age,
+         ticket, fare, everything(),-name, -grouping1, -sib_sp, -parch)
+
+
+table3 <- debug_df %>% 
+  select(grouping2, flag) %>% 
+  group_by(flag) %>% 
+  summarise(unique_g2 = n_distinct(grouping2))
+
+table3 <- debug_df %>% count(flag) %>% rename(unique_pax=n)  %>% select(unique_pax) %>%  bind_cols(table3)
+
+table3
+debug_df %>% 
+  filter(flag=="4_inspect") %>% count(grouping2, sort = T) %>% print(n = 64)
+
+debug_df %>% 
+  filter(flag=="3_family_plus") %>% count(grouping2, sort = T)
+
+# rough -------------------------------------------------------------------
+titanic_data %>% 
+  head(10) %>% 
+  select(ticket) %>% 
+  separate_wider_position(widths = c(ticketID_minus2 = nchar()-2), 
+                          cols = "ticket",
+                          too_few = "debug")
+
+
+
 
 titanic_data %>% 
   separate_wider_regex(
     name, 
     patterns = c(
+      #IMP: ordering of regex patterns changes the outcome
       surname = str_c(c(names_with_splchar, 
-                        names_with_1word, 
-                        names_with_3words), 
-                      collapse = "|"), # picks the first word before comma
-      ", ",                  # the comma  
-      title = str_c(c(names_with_1word , # one word with a space
-                      names_with_2words), #two words with special char in between like 'the countess'
-                    collapse = "|"), # picks word or words after the comma
-      ". ",                  # the dot
-      given_name = ".{1,}"), # picks anything else which occurs at least once
+                        names_with_3words,
+                        names_with_1word), 
+                      collapse = "|"),    # picks the first word before comma
+      ", ",                               # the comma  
+      #IMP: ordering of regex patterns changes the outcome
+      title = str_c(c(names_with_2words , # two words with special char in between like 'the countess'
+                      names_with_1word),  # one word with a space
+                    collapse = "|"),      # picks word or words after the comma
+      ". ",                               # the dot
+      given_name = ".{1,}"),              # picks anything else which occurs at least once
     too_few = "debug") %>% view()
 
 
-
-debug_df %>% 
-  group_by(title) %>% count(sort= T)
-
-
-
-
-
-# rough -------------------------------------------------------------------
 
 
 library(stringr)
@@ -156,8 +281,8 @@ regex("^[A-Za-z]+")
 
 title_regex <- c(regex("[,]\\s[A-Za-z]+[.]" ),
                  regex("[,]\\s[A-Za-z]+[\\'\\-\\s]+[A-Za-z]+[.]"))
-title_regex2 <- c(paste0("[,]\\s",names_with_1word),
-                  paste0("[,]\\s",names_with_2words, "\\s[.]"))
+title_regex2 <- c(paste0("[,]\\s",names_with_2words, "[.]"),
+                  paste0("[,]\\s",names_with_1word))
 
 
 
@@ -173,4 +298,12 @@ str_view(regex_test1, str_c(title_regex, collapse = "|"))
 str_detect(regex_test1, str_c(title_regex2, collapse = "|"))
 str_view(regex_test1, str_c(title_regex2, collapse = "|"))
 
-str_view(regex_test1, paste0("[,]\\s",names_with_2words, "[.]"))
+str_view(regex_test1, paste0("[,]\\s",names_with_2words))
+
+df_xx$y = 7:9
+df_xx
+supid <- function(df){
+    paste0(df$ticket_head, "__", df$ticket_tail)
+}
+supid(df_xx)
+titanic_data %>% head(10) %>% supid(.)

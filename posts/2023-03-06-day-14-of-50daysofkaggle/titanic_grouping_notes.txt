@@ -112,3 +112,12 @@ following 8 people have the same ticket_id (1601) and none have common surnames 
 	Chip, Mr. Chang
 
 following 11 people have the same ticket_id (CA. 2343) and with the same surname and family_count. first 4 need to be predicted. bottom 7 are all not survived. in this case the prediction should most likely be not survive even with age details missing. 
+
+
+#####################################
+grouping1 = surname + family_count
+outliers:
+	Davies_3
+	Hocking_5
+	Richards_6
+	Kink-Heilmann_5
