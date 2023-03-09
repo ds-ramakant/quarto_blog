@@ -1,0 +1,114 @@
+https://www.kaggle.com/code/jack89roberts/titanic-using-ticket-groupings/notebook
+
+https://oliviergimenez.github.io/blog/learning-machine-learning/
+
+https://www.kaggle.com/code/cdeotte/titanic-using-name-only-0-81818/notebook
+
+titanic dataset
+which fields have no NA values? 
+	passenger_id
+	class
+	name
+	sex
+	SibSp + ParCh = family_count
+	ticket_id
+	
+
+
+grouping of the passengers based on 1309 rows (test + train)
+1) ticket_id	: 216 tickets out of 929 have more than 1 passenger
+	what if the last number is removed? 
+2) number of passengers with the same ticket_id and same SibSp/ ParCh count
+	- if ticket_id and surname is the same then they are to be grouped together
+	- example of family_group is ticket_id "347088" --> 6 members, kids are tagged as 3 SibSp while mom/dad have ParCh as 4. data for full family is available
+	- another family_group is ticket_id "19950" --> 6 members but survival data for only 4 is known. Two males aged (64 & 19) did not survive but other 2 females aged 23 & 24 survived. what is the probability of survival for two other females aged 28 & 60. My guess would be that given they are from the Class 1 and women they should surive. Therefore age, class, surname grouping should be factored into the model
+	- another family_group with surname "Vander Planke". 4 members of which we know survival data for 3. Looking at the SibSp count, it would imply that Mr. Julius Vander Planke travelled with his wife and two siblings (Augusta and Leo). they all boarded at S on two different tickets in Class 3. We have survival data on 3 of them - all perished. What are the chances of Mr. Julius (Male, 31 years) surviving? possibly very weak. Therefore, the model should factor surname + ticket_id minus last digit + fare + port
+	- family_group that contains "Gustafsson". This is a bit strange because it seems that "Backstrom, Mrs. Karl Alfred (Maria Mathilda Gustafsson)"
+	- people with name "Asplund". Out of the 8 people, 7 of them share the same ticket_id, Fare and family_count. only one of them "Asplund, Mr. Johan Charles" (male, age 23) with different ticket_id and family_count is noticed. he is not part of this family_group. Therefore family_group should consider surname + ticket_id minus one + fare + family_count
+	- sometimes the family_count doesn't tally with the total number of passengers on that ticket_id. for instance 
+	- surname "Andersson, " throws up another bunch of combinations. 11 names out of which 7 of them satisfy the following conditions:
+		1) same ticket_id
+		2) same Fare, embarked, class and survival_status
+		3) # of people in that ticket_id + 1 = SibSp + ParCh for each person
+		- the problem with the remaining 4 people with surname "Andersson, " is that they have 
+			a) 4 different ticket_id which are not similar
+			b) 3 different types of fares
+			c) the family_count doesn't add up to the number of people in that ticket_id pattern. two of the passengers "Andersson, Miss. Ida Augusta Margareta" and "Andersson, Miss. Erna Alexandra" are tagged with SibSp = 4 and ParCh = 2. That means they were travelling with 6 other people but i've not been able to identify which group they are with. Could this be a data entry error?" The worst part is that we need to predict the survival of "Andersson, Miss. Ida Augusta Margareta" who is in the test data who doesn't fit into any group. calculation for this will need to be considered outside of family_group. 
+3) checking for outliers where grouping by ticket_id doesn't satisfy the family_count rule. The outliers here are:
+	- ticket_id = 347091, 3101281 which gives us these two people
+	- ticket_id = 29104 --> doesn't follow family_count rule and neither fare. looks like another data entry error
+	
+	
+
+
+			
+family_count rules in order of priority:
+	1) must share the same surname (sometimes ticket_id are not same eg. "Elias, " family)
+	2) must have the same family_count
+	2) must share the same ticket_id (excluding last 2 digits)
+	3) must have the same fare cost & embarked 
+	4) same cabin?? 
+	there are some people with same ticket_id but different surname (371110, 248727) and family_count. this could be either nanny, caretaker etc. we should add these people within the same family group if the ticket_id matches exactly. 
+	following ticket_id are the same but there no common surname nor family_count. these might just be friends (110152, 239853, C 4001)
+
+	
+	
+outliers:
+following 3 people are 1 single family_group but have diff surname and fare. Only thing that is common to them is the family_count
+	Newsom, Miss. Helen Monypeny
+	Beckwith, Mr. Richard Leonard
+	Beckwith, Mrs. Richard Leonard (Sallie Monypeny)
+
+following 3 people had the same cabin but different surnames, fare and ticket_id minus 2 digits was common. The only thing common was their maiden names in braces and SibSp. It would imply that they are sisters (age between 53-39) who are travelling together in Class 1. Important for our model because we know that 1 has survived and must predict survival of other 2. so in this case model should consider gender, age, class and family_group
+	Cornell, Mrs. Robert Clifford (Malvina Helen Lamson)
+	Brown, Mrs. John Murray (Caroline Lane Lamson)
+	Appleton, Mrs. Edward Dale (Charlotte Lamson)
+
+following 3 people are difficult to model because while they share the same surname and family_count, they have different fares, cabin. we need to predict the first person, so it will be difficult to push her into a family_group
+	Crosby, Mrs. Edward Gifford (Catherine Elizabeth Halstead)
+	Crosby, Miss. Harriet R
+	Crosby, Capt. Edward Gifford
+
+following three people have the same surname and family_count but different fare. important to model because the first two (females age 36 & 1) need to be predicted and the last one (male, 18 yr) did not survive. fare should definitely not be included because it depends upon the age. Here there are 
+	Klasen, Mrs. (Hulda Kristina Eugenia Lofqvist)
+	Klasen, Miss. Gertrud Emilia
+	Klasen, Mr. Klas Albin
+
+following 4 people have the same ticket_id (PC 17760) and fare but no matching surnames, cabin and embarked. Out of these 4, we need to predict the first person. 2nd & 3rd survived while last one didn't
+	White, Mrs. John Stuart (Ella Holmes)
+	Bissette, Miss. Amelia
+	Young, Miss. Marie Grice
+	Ringhini, Mr. Sante
+
+following 5 people have the same ticket_id (220845) but 1 out of 5 has a different surname. he should be ideally added into this grouping. only the last 2 survived. first 3 have to be predicted. 
+	Sweet, Mr. George Frederick
+	Herman, Mr. Samuel
+	Herman, Miss. Kate
+	Herman, Miss. Alice
+	Herman, Mrs. Samuel (Jane Laver)
+
+following 5 people have the same ticket_id (113503) but 2 out of 5 has a different surname. only the last one is known and first 4 have to be predicted.  
+	Geiger, Miss. Amalie
+	Keeping, Mr. Edwin
+	Widener, Mrs. George Dunton (Eleanor Elkins)
+	Widener, Mr. George Dunton
+	Widener, Mr. Harry Elkins
+
+following 5 people have the same ticket_id (PC 17757) and 2 out of 5 has a common surname. only 1 has to be predicted. 3rd has not surived while 2nd, 4th and 5th have survived. Actually it is the wife who has survived.  
+	Astor, Col. John Jacob
+	Bidois, Miss. Rosalie
+	Robbins, Mr. Victor
+	Astor, Mrs. John Jacob (Madeleine Talmadge Force)
+	Endres, Miss. Caroline Louise
+
+following 8 people have the same ticket_id (1601) and none have common surnames with family_count = 0. only first has to be predicted and his age is also not known. 
+	Hee, Mr. Ling
+	Bing, Mr. Lee
+	Ling, Mr. Lee
+	Lang, Mr. Fang
+	Foo, Mr. Choong
+	Lam, Mr. Ali
+	Lam, Mr. Len
+	Chip, Mr. Chang
+
+following 11 people have the same ticket_id (CA. 2343) and with the same surname and family_count. first 4 need to be predicted. bottom 7 are all not survived. in this case the prediction should most likely be not survive even with age details missing. 
