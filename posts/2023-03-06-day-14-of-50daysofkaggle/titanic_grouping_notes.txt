@@ -59,7 +59,7 @@ following 3 people are 1 single family_group but have diff surname and fare. Onl
 	Beckwith, Mr. Richard Leonard
 	Beckwith, Mrs. Richard Leonard (Sallie Monypeny)
 
-following 3 people had the same cabin but different surnames, fare and ticket_id minus 2 digits was common. The only thing common was their maiden names in braces and SibSp. It would imply that they are sisters (age between 53-39) who are travelling together in Class 1. Important for our model because we know that 1 has survived and must predict survival of other 2. so in this case model should consider gender, age, class and family_group
+following 3 people had the same cabin but different surnames, fare and ticket_id minus 2 digits was common. The only thing common was their maiden names in braces and SibSp. It would imply that they are sisters (age between 53-39) who are travelling together in Class 1. Important for our model because we know that 1 has survived and must predict survival of other 2. so in this case model should consider gender, age, class and family_group. here the ticket_id are 11770, 11769, 11769 respectively. ticket_head & ticket_tail don't match. 
 	Cornell, Mrs. Robert Clifford (Malvina Helen Lamson)
 	Brown, Mrs. John Murray (Caroline Lane Lamson)
 	Appleton, Mrs. Edward Dale (Charlotte Lamson)

@@ -1,6 +1,6 @@
 library(tidyverse)
 library(tidymodels)
-
+library(DataEditR)
 
 # reading data ------------------------------------------------------------
 
@@ -165,13 +165,6 @@ titanic_data %>%
   count(grouping2, sort = T) %>% rename(px_in_grouping2 = n) %>% 
   count(px_in_grouping2)
 
-check_grouping2 <- function(df){
-  for(i in df$grouping2){
-    
-  }
-  
-  }
-
 
 #adding count for grouping2
 titanic_data <- titanic_data %>% 
@@ -212,6 +205,51 @@ debug_df %>%
 
 debug_df %>% 
   filter(flag=="3_family_plus") %>% count(grouping2, sort = T)
+
+
+# finding nannies, relatives & friends ---------------------------------------------
+
+debug_df <- debug_df %>% 
+  add_count(ticket_head) %>% 
+  rename(ticket_count = n) %>% 
+  select(title, contains("name"),family_count,ticket_count,
+         contains("grouping2"), flag,
+         sex, age,
+         ticket, fare, everything())
+
+ticket_head_uniques <- unique(debug_df$ticket_head)
+
+#how many people within the same ticket have multiple grouping2? 
+debug_df <- debug_df %>% 
+  group_by(ticket) %>% 
+  mutate(number_of_g2 = n_distinct(grouping2)) %>% ungroup()
+   
+ticket_with_multi_groups <- debug_df %>% 
+  filter(!number_of_g2==1) %>% 
+  count(ticket, sort = T)
+
+ticket_with_multi_groups <- ticket_with_multi_groups %>% 
+  mutate(merge = NA)
+
+data_edit(ticket_with_multi_groups)
+
+
+debug_df %>% 
+  group_by(ticket) %>% 
+  summarise(number_of_g2 = n_distinct(grouping2)) %>% 
+  count(number_of_g2)
+
+
+debug_df <- debug_df %>% 
+  mutate(grouping3 = if_else(ticket %in% ticket_with_multi_groups$ticket, 
+                             ticket, grouping2),
+         lable = if_else(ticket %in% ticket_with_multi_groups$ticket,
+                         "5_ticket_grouping", flag))
+
+write.csv(debug_df, row.names = F, 
+          file = ".\\posts\\2023-03-06-day-14-of-50daysofkaggle\\debug_df.csv")
+
+
 
 # rough -------------------------------------------------------------------
 titanic_data %>% 
