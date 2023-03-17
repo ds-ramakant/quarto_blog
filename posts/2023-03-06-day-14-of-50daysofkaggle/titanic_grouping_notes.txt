@@ -1,8 +1,26 @@
+################## model creation basics
+
+
+fitting using control_samples --> https://juliasilge.com/blog/bird-baths/
+how to use workflow sets --> https://juliasilge.com/blog/giant-pumpkins/
+
+
+
+
+
+
+####################titanic grouping notes
 https://www.kaggle.com/code/jack89roberts/titanic-using-ticket-groupings/notebook
+https://www.kaggle.com/code/cdeotte/titanic-using-name-only-0-81818/notebook
+https://www.kaggle.com/code/cdeotte/titantic-mega-model-0-84210/notebook#PART-A:-The-Woman-Child-Group-Model
+
+
 
 https://oliviergimenez.github.io/blog/learning-machine-learning/
 
 https://www.kaggle.com/code/cdeotte/titanic-using-name-only-0-81818/notebook
+
+https://rpubs.com/tsadigov/titanic_tidymodels
 
 titanic dataset
 which fields have no NA values? 
