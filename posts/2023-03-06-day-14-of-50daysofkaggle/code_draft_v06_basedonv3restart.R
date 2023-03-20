@@ -397,3 +397,112 @@ final_fit %>%
   pull_workflow_fit() %>% 
   vip()
 
+
+# generating autoplot manually --------------------------------------------
+# because I can't sleep without looking under the hood
+
+tidy_titanic_rs <- tibble(wf = rep(unique(titanic_rs$wflow_id), 10*2),
+                          metrics = rep(c(rep("accuracy", 4), 
+                                          rep("roc_auc",4)),
+                                        10),
+                          values = rep(NA, 4*10*2))
+
+tidy_titanic_rs
+
+
+
+bigtable <- purrr:::pluck(titanic_rs, 4)
+wflow_id_titanic <- unique(titanic_rs$wflow_id)
+for(i in 1:length(wflow_id_titanic)){
+    
+  wflow_id <- wflow_id_titanic[i]
+  smalltable <- bigtable[[i]]
+  
+  for(j in 1:length(smalltable$.metrics)){
+    smallertable <- purrr::pluck(smalltable$.metrics, j)
+    tidy_titanic_rs$values[(tidy_titanic_rs$wf==wflow_id & 
+                              tidy_titanic_rs$metrics=="accuracy")][j] <- smallertable$.estimate[smallertable$.metric == "accuracy"]
+    tidy_titanic_rs$values[(tidy_titanic_rs$wf==wflow_id & 
+                              tidy_titanic_rs$metrics=="roc_auc")][j] <- smallertable$.estimate[smallertable$.metric == "roc_auc"]
+    
+  }
+}
+
+tidy_titanic_rs2 <- tidy_titanic_rs %>% 
+  group_by(wf, metrics) %>% 
+  summarise(value_min = mean(values) - 0.5*sd(values),
+            value_max = mean(values) + 0.5*sd(values),
+            value_mean = mean(values)) %>% ungroup() %>% 
+  right_join(tidy_titanic_rs, by = c("wf", "metrics"))
+
+write.csv(tidy_titanic_rs, row.names = F, 
+          file = ".\\posts\\2023-03-06-day-14-of-50daysofkaggle\\tidy_titanic_rs.csv")
+
+
+# generating manual plot --------------------------------------------------
+
+p1 <- tidy_titanic_rs2 %>% 
+  filter(metrics =="accuracy") %>% 
+  ggplot(aes(x = reorder(wf, desc(value_mean)), 
+             y = values, 
+             color = wf))+
+  geom_errorbar(aes(ymax = value_max, ymin = value_min), 
+                width = 0.1)+
+  geom_point(aes(y= value_mean))+
+  scale_y_continuous(breaks = seq(0.6, 0.9, 0.05))+
+  theme(legend.position = "none")+
+  labs(title = "Accuracy",x = NULL)
+p1  
+p2 <- tidy_titanic_rs2 %>% 
+  filter(metrics =="roc_auc") %>% 
+  ggplot(aes(x = reorder(wf, desc(value_mean)), 
+             y = values, 
+             color = wf))+
+  geom_errorbar(aes(ymax = value_max, ymin = value_min), 
+                width = 0.1)+
+  geom_point(aes(y= value_mean))+
+  scale_y_continuous(breaks = seq(0.6, 0.9, 0.05))+
+  theme(legend.position = "none")+
+  labs(title = "ROC_AUC",x = NULL)
+p2
+
+tidy_titanic_rs2 %>% 
+ggplot(aes(x = reorder(wf, desc(value_mean)), 
+             y = values, 
+             color = wf))+
+  geom_errorbar(aes(ymax = value_max, ymin = value_min), 
+                width = 0.1)+
+  geom_point(aes(y= value_mean))+
+  scale_y_continuous(breaks = seq(0.65, 0.9, 0.05),
+                     limits = c(0.65, 0.9))+
+  theme(legend.position = "none")+
+  labs(x = NULL, y = NULL)+
+  facet_wrap(~metrics)
+
+
+
+
+# draft scripts -----------------------------------------------------------
+
+
+xx_bigtable <- purrr::pluck(titanic_rs, 4)
+xx_test <- tibble(wf = rep(unique(titanic_rs$wflow_id), 10*2),
+                  metrics = rep(c(rep("accuracy", 4), 
+                                  rep("roc_auc",4)),
+                                  10),
+                  values = rep(NA, 4*10*2))
+
+
+
+for(i in 1:unique(titanic_rs$wflow_id)){
+  for(j in 1:10){
+    temp_table <- purrr::pluck(xx_bigtable[[i]])
+    xx_bigtable[[i]]$.metrics[[j]]$.estimate[xx_bigtable[[i]]$.metrics[[j]]$.metric=="accuracy"]
+  }
+}
+
+
+tibble(x = rep(c(1,2), 4), 
+       y = rep(c("a", "b", "c", "d"), 2),
+       z  = rep(0, 8)
+       )
