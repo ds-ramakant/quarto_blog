@@ -19,7 +19,9 @@ Today's post is an attempt to use the `tidymodels` framework to screen multiple 
 -   [Olivier Gimenez's post](https://oliviergimenez.github.io/blog/learning-machine-learning/) that had me marvelling at the feature engineering
 -   [Tural Sadigov's post](https://rpubs.com/tsadigov/titanic_tidymodels) on handling multiple models
 
-I'm skipping the EDA component as I've covered it in the previous posts. Moving on to some boring (but very necessary) sections:
+I'm skipping the EDA component as I've covered it in the previous posts. Moving on to some boring (but very necessary) sections.
+
+As always, please feel free to leave a comment using the side-bar👉🏼
 
 # Loading the data
 
@@ -71,7 +73,7 @@ names(titanic_data)
 
 Voila. Everything now in lower case and snake case!
 
-### Imputing NA values in `embarked`
+### Imputing `NA` values in `embarked`
 
 Now under **embarked** there are two rows that don't have `NA` but are blank. That's a bit odd🤨
 
@@ -97,7 +99,7 @@ titanic_data %>%
   count(embarked, sort = T)
 ```
 
-### Imputing NA values in `age`
+### Imputing `NA` values in `age`
 
 The **age** column has a bunch of missing values. My approach today is to substitute them with the median values when grouped by **sex** and **class**. Here's a function written to impute within the test and train data accordingly.
 
@@ -141,7 +143,7 @@ titanic_data %>%
   summarise(median_age = median(age))
 ```
 
-### Imputing `NA` values for fare
+### Imputing `NA` values for `fare`
 
 There's this one person (passenger_id = 1044, male and pclass = 3) who has a `na` value in **fare** from `test` data. Replacing it with the median value.
 
@@ -164,6 +166,14 @@ titanic_data <- titanic_data %>%
   mutate(fare = if_else(is.na(fare), 
 #from the above table. Urgh!! hard coding for that 1 guy!! how inelegant.
                         7.8958, age))
+```
+
+checking if has been replaced.
+
+```{r}
+titanic_data %>% 
+  select(source, name, passenger_id, sex, age, pclass, fare) %>% 
+  filter(is.na(fare))
 ```
 
 # Feature Engineering
@@ -202,7 +212,7 @@ Essentially, it is a delimiter that breaks up columns based on the string patter
 names_with_splchar <- regex("[A-Za-z]+[\\'\\-\\s]+[A-Za-z]+")
 names_with_3words <- regex("[A-Za-z]+\\s[A-Za-z]+\\s[A-Za-z]+")
 names_with_1word <- regex("[A-Za-z]+") 
-names_with_2words <- regex("[A-Za-z]+\\s+[A-Za-z]+")
+names_with_2words <- regex("[A-Za-z]+\\s+[A-Za-z]+") # for 'the countess'
 
 
 titanic_data <- titanic_data %>% 
@@ -229,7 +239,7 @@ titanic_data %>%
   head(10)
 ```
 
-What is the break of titles now?
+What is the break-up of titles now?
 
 ```{r}
 titanic_data %>% 
@@ -320,9 +330,9 @@ glimpse(to_predict)
 
 Phew. finally done with the pre-processing. Thanks for sticking around. Here have a gif
 
-![](https://media.giphy.com/media/lSVXGiITXtabGGxAyg/giphy.gif){fig-align="center" width="240"}
+![](https://media.giphy.com/media/lSVXGiITXtabGGxAyg/giphy.gif){width="75%"}
 
-# Model Building 
+# Model Building
 
 So today I'm going to be taking different classification models and compare the findings on a 10-fold bootstrap resample. The 4 selected models are:
 
@@ -333,28 +343,319 @@ So today I'm going to be taking different classification models and compare the 
 
 The [Tidymodels textbook](https://www.tmwr.org/workflows.html#workflow-sets-intro) is possibly the best place to begin understanding about workflow. In a nutshell:
 
--   Create resampling folds
+1.  Create resampling folds
 
--   Describe each model (I'm going to be using untuned parameters for sake of simplicity)
+2.  Describe each model (I'm going to be using untuned parameters for sake of simplicity)
 
--   create a recipe for each model
+3.  create a base recipe for `given_data`
 
--   Just as you would with a single model, the workflow combines the base recipe with the multiple models but it takes the form of a list here
+4.  Defining a workflow that uses the recipe for each model
 
--   Fit the resampled folds on the workflow_set
+5.  Fit the resampled folds on the workflow_set
 
--   Find the winning model - since we're dealing with classification, I am using `roc_auc`
+6.  Find the winning model - since we're dealing with classification, I am using `roc_auc`
 
--   fit the winning model to the `given data`
+7.  fit the winning model to the `given data`
 
--   Generate predictions on `to_predict` df using the best fit
+8.  Generate predictions on `to_predict` df using the best fit
 
--   submit on kaggle
+9.  submit on kaggle
 
--   ...
+10. ...
 
--   profit? (well not exactly. but you can create another blog and share your new found knowledge with the world🤓)
+11. profit? (well not exactly. but you can create another blog and share your new found knowledge with the world🤓)
 
 So lets get cooking!
 
-## The Recipe 
+## Step 1: creating resampling folds
+
+```{r}
+set.seed(2023)
+titanic_folds <- bootstraps(data = given_data, 
+                            times = 15)
+titanic_folds
+
+```
+
+## Step 2: Recipe
+
+Creating the `base_recipe` object that has only 3 steps
+
+```{r}
+base_recipe <- recipe(survived ~ ., data = given_data) %>% 
+  update_role(passenger_id, new_role = "id_variable") %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_normalize(all_numeric_predictors()) 
+base_recipe
+```
+
+Or if one would like to see it in a `tidy` format.
+
+```{r}
+tidy(base_recipe)
+```
+
+## Step 3: Model definitions
+
+All the four models are defined as:
+
+```{r}
+#logistic regression
+glm_model <- logistic_reg() %>% 
+  set_engine("glm") %>% 
+  set_mode("classification")
+
+#random forest
+rf_model <- rand_forest(trees = 1000) %>% 
+  set_engine("ranger") %>% 
+  set_mode("classification")
+
+#support vector machines
+svm_model <- svm_rbf() %>% # rbf - radial based
+  set_engine("kernlab") %>% 
+  set_mode("classification")
+
+#decision tree
+dt_model <- decision_tree(mode = "classification", 
+                          tree_depth = 3) %>% 
+  set_engine("rpart")
+```
+
+## Step 4: Workflow set
+
+Just as you would with a single model, the workflow combines the base recipe with the multiple models by using lists when declaring the object.
+
+```{r}
+titanic_wf_set <- workflow_set(
+  list(base_recipe),
+  list(glm_model, rf_model, svm_model, dt_model),
+  cross = T
+)
+titanic_wf_set
+```
+
+In the table above, the **result** column shows a list\[0\] implying that it is currently empty. This is because till now, we've only defined the workflows and models but are yet to pass the data though it.
+
+Obligatory shout out to the phenom Julia Silge whose YT tutorials and blogs have been my learning books at each step. These steps are succinctly explained in her [Tidy Tuesday post](https://juliasilge.com/blog/giant-pumpkins/) which I highly recommend.
+
+## Step 5: Fitting on resampled folds
+
+So this part of it needs to be dealt with care. Resampling may take a while...
+
+```{r}
+start_time <- Sys.time()
+set.seed(2023)
+doParallel::registerDoParallel()
+titanic_rs <- workflow_map(
+  titanic_wf_set,
+  "fit_resamples",
+  resamples = titanic_folds
+)
+end_time <- Sys.time()
+```
+
+... which is ...
+
+```{r}
+end_time - start_time
+```
+
+Hmm... So moving on. What does the workflow_set object look like now?
+
+```{r}
+titanic_rs
+```
+
+## Step 6: Finding the winning model
+
+This is how the `tidymodels` package all fits in. If you've got all the steps covered this far, the decision making shouldn't take much effort
+
+```{r}
+collect_metrics(titanic_rs)
+```
+
+Since we're looking at classification, lets see which one of the models resulted in the best `roc_auc`?
+
+```{r}
+collect_metrics(titanic_rs) %>% 
+  filter(.metric == "roc_auc") %>% 
+  arrange(desc(mean))
+```
+
+Looks like the `rand_forest` is the winner!
+
+![](https://media.giphy.com/media/dZLx6Lf738Jy46tUR4/giphy.gif){width="360"}
+
+Another wonderful way it all ties in together is the visualisation with a single line of code.
+
+```{r}
+autoplot(titanic_rs)
+```
+
+Pieces of code that just fit into each other feels like a spoon-full of ice cream!
+
+## Step 7 & 8: Fitting the winner and predictions
+
+From the object `titanic_rs` we need to pick the winning model and fit to `to_predict`
+
+```{r}
+final_fit <- extract_workflow(titanic_rs, 
+                              "recipe_rand_forest") %>% 
+  fit(given_data)
+
+final_fit
+```
+
+Creating a new dataframe for predictions
+
+```{r}
+final_predictions <- predict(object = final_fit, 
+                             new_data = to_predict)
+
+final_predictions <- final_predictions %>% 
+  rename(Survived = .pred_class) %>% 
+  bind_cols(PassengerId = to_predict$passenger_id)
+head(final_predictions)
+```
+
+## Step 9: Submit to Kaggle
+
+Converting the `final_predictions` to csv and uploading to kaggle
+
+```{r}
+write.csv(final_predictions, row.names = F, 
+          file = "submissions.csv")
+```
+
+Uploaded it to Kaggle and behold...
+
+![](images/image-1373401355.png)
+
+Not bad !!! that's like... top 12% percentile. Woohoo!
+
+![.. And so did you, dear reader!!](https://media.giphy.com/media/7zYKTVt3vvbj7SC2Bl/giphy.gif){width="50%"}
+
+# Tailpiece regarding `autoplot()`
+
+After model creation, I couldn't help wonder at the marvel behind the `autoplot()` function. How can a single function decipher convey such meaningful depth?
+
+## Peeking under the hood
+
+I tried to replicate the same errorbar plot generated by the function. For me, this was possibly one of the bigger conceptual lessons about `tidymodels` framework. Here's how I did it:
+
+There are 15 bootsample folds that were generated. The `workflow_set` maps the `fit_resamples` function on the workflow. This implies that each of the 4 models have generated 2 pairs of metrics (`accuracy` & `roc_auc`) for each of the 15 resamples.
+
+The `collect_metrics` function generates the mean vale of each metric allowing us to chose the best one.
+
+The manner in which all of this is done within a single object is sublime. Information is stored in tibbles within tibbles!
+
+For instance, let us look at the class of `titanic_rs`
+
+```{r}
+class(titanic_rs)
+```
+
+It is a tibble with 4 columns out of which `results` is a list object consisting of more tibbles.
+
+```{r}
+titanic_rs
+```
+
+What does the first tibble in the `results` list look like? This corresponds to the logistic regression model as shown in the table above.
+
+```{r}
+titanic_rs$result[[1]]
+```
+
+What does the `.metrics` list contain?
+
+```{r}
+titanic_rs$result[[1]]$.metrics[[1]]
+```
+
+So `.metrics` is a list of results that is generated for each of the folds. The above tibble is the resulting metrics after cross-validation of the first fold of `titanic_folds` using `glm` (logisitic classification).
+
+If the intent is to create the errorgraph manually, then we'll need to extract the data within each of these tibbles.
+
+Now I wasn't able to check the code for `autoplot()` and I'm pretty certain there's a more elegant method out there. Hit me up if you feel there's a better way to extract data from within tibbles in the comments here 👉🏼
+
+First step is to create an empty tibble consisting of 4 models, 2 metrics and 80 empty cells that need to be filled in from `titanic_rs` object.
+
+```{r}
+tidy_titanic_rs <- tibble(wf = rep(unique(titanic_rs$wflow_id), 15*2),
+                          metrics = rep(c(rep("accuracy", 4), 
+                                          rep("roc_auc",4)),
+                                        15),
+                          values = rep(NA, 4*15*2))
+head(tidy_titanic_rs, 8)
+```
+
+Dimensions of this empty table?
+
+```{r}
+dim(tidy_titanic_rs)
+```
+
+To extract the values from the tibbles in `titanic_rs` and save in `tidy_titanic_rs`, I proceeded to employ a nested `for` loop. Dont' judge, i say!
+
+## Extracting the tibbles
+
+`pluck` has got to be the coolest function I've ever come across!
+
+```{r}
+bigtable <- purrr:::pluck(titanic_rs, 4)
+wflow_id_titanic <- unique(titanic_rs$wflow_id)
+for(i in 1:length(wflow_id_titanic)){
+    
+  wflow_id <- wflow_id_titanic[i]
+  smalltable <- bigtable[[i]]
+  
+  for(j in 1:length(smalltable$.metrics)){
+    smallertable <- purrr::pluck(smalltable$.metrics, j)
+    tidy_titanic_rs$values[(tidy_titanic_rs$wf==wflow_id & 
+                              tidy_titanic_rs$metrics=="accuracy")][j] <- smallertable$.estimate[smallertable$.metric == "accuracy"]
+    tidy_titanic_rs$values[(tidy_titanic_rs$wf==wflow_id & 
+                              tidy_titanic_rs$metrics=="roc_auc")][j] <- smallertable$.estimate[smallertable$.metric == "roc_auc"]
+    
+  }
+}
+
+tidy_titanic_rs2 <- tidy_titanic_rs %>% 
+  group_by(wf, metrics) %>% 
+  summarise(value_min = mean(values) - 0.5*sd(values),
+            value_max = mean(values) + 0.5*sd(values),
+            value_mean = mean(values)) %>% ungroup() %>% 
+  right_join(tidy_titanic_rs, by = c("wf", "metrics"))
+
+```
+
+For some reason, `value_max` and `value_min` for the error-bar are 0.5 \* 𝝈 or approximately [±19% of the mean of values](https://mathbitsnotebook.com/Algebra2/Statistics/STstandardNormalDistribution.html)
+
+## Manually generated plot
+
+With the data in a rectangular tidy format, the rest of the magic is handled by `ggplot`
+
+***cracks knuckles***
+
+```{r}
+tidy_titanic_rs2 %>% 
+ggplot(aes(x = reorder(wf, desc(value_mean)), 
+             y = values, 
+             color = wf))+
+  geom_errorbar(aes(ymax = value_max, ymin = value_min), 
+                width = 0.1)+
+  geom_point(aes(y= value_mean))+
+  scale_y_continuous(breaks = seq(0.65, 0.9, 0.05),
+                     limits = c(0.65, 0.9))+
+  theme(legend.position = "none")+
+  labs(x = NULL, y = NULL)+
+  facet_wrap(~metrics)
+```
+
+And here once again is the auto-generated plot. Not bad, eh?
+
+```{r}
+autoplot(titanic_rs)
+```
+
+![Oooh yeeah!](https://media.giphy.com/media/3oEduKVQdG4c0JVPSo/giphy.gif){width="50%"}

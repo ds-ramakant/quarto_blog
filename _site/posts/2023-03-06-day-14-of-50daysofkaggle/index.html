@@ -227,9 +227,9 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
   <li><a href="#cleaning-data" id="toc-cleaning-data" class="nav-link" data-scroll-target="#cleaning-data">Cleaning data</a>
   <ul class="collapse">
   <li><a href="#janitorclean_names" id="toc-janitorclean_names" class="nav-link" data-scroll-target="#janitorclean_names">Janitor::clean_names()</a></li>
-  <li><a href="#imputing-na-values-in-embarked" id="toc-imputing-na-values-in-embarked" class="nav-link" data-scroll-target="#imputing-na-values-in-embarked">Imputing NA values in <code>embarked</code></a></li>
-  <li><a href="#imputing-na-values-in-age" id="toc-imputing-na-values-in-age" class="nav-link" data-scroll-target="#imputing-na-values-in-age">Imputing NA values in <code>age</code></a></li>
-  <li><a href="#imputing-na-values-for-fare" id="toc-imputing-na-values-for-fare" class="nav-link" data-scroll-target="#imputing-na-values-for-fare">Imputing <code>NA</code> values for fare</a></li>
+  <li><a href="#imputing-na-values-in-embarked" id="toc-imputing-na-values-in-embarked" class="nav-link" data-scroll-target="#imputing-na-values-in-embarked">Imputing <code>NA</code> values in <code>embarked</code></a></li>
+  <li><a href="#imputing-na-values-in-age" id="toc-imputing-na-values-in-age" class="nav-link" data-scroll-target="#imputing-na-values-in-age">Imputing <code>NA</code> values in <code>age</code></a></li>
+  <li><a href="#imputing-na-values-for-fare" id="toc-imputing-na-values-for-fare" class="nav-link" data-scroll-target="#imputing-na-values-for-fare">Imputing <code>NA</code> values for <code>fare</code></a></li>
   </ul></li>
   </ul></li>
   <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link" data-scroll-target="#feature-engineering">Feature Engineering</a>
@@ -239,7 +239,20 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
   </ul></li>
   <li><a href="#model-building" id="toc-model-building" class="nav-link" data-scroll-target="#model-building">Model Building</a>
   <ul class="collapse">
-  <li><a href="#the-recipe" id="toc-the-recipe" class="nav-link" data-scroll-target="#the-recipe">The Recipe</a></li>
+  <li><a href="#step-1-creating-resampling-folds" id="toc-step-1-creating-resampling-folds" class="nav-link" data-scroll-target="#step-1-creating-resampling-folds">Step 1: creating resampling folds</a></li>
+  <li><a href="#step-2-recipe" id="toc-step-2-recipe" class="nav-link" data-scroll-target="#step-2-recipe">Step 2: Recipe</a></li>
+  <li><a href="#step-3-model-definitions" id="toc-step-3-model-definitions" class="nav-link" data-scroll-target="#step-3-model-definitions">Step 3: Model definitions</a></li>
+  <li><a href="#step-4-workflow-set" id="toc-step-4-workflow-set" class="nav-link" data-scroll-target="#step-4-workflow-set">Step 4: Workflow set</a></li>
+  <li><a href="#step-5-fitting-on-resampled-folds" id="toc-step-5-fitting-on-resampled-folds" class="nav-link" data-scroll-target="#step-5-fitting-on-resampled-folds">Step 5: Fitting on resampled folds</a></li>
+  <li><a href="#step-6-finding-the-winning-model" id="toc-step-6-finding-the-winning-model" class="nav-link" data-scroll-target="#step-6-finding-the-winning-model">Step 6: Finding the winning model</a></li>
+  <li><a href="#step-7-8-fitting-the-winner-and-predictions" id="toc-step-7-8-fitting-the-winner-and-predictions" class="nav-link" data-scroll-target="#step-7-8-fitting-the-winner-and-predictions">Step 7 &amp; 8: Fitting the winner and predictions</a></li>
+  <li><a href="#step-9-submit-to-kaggle" id="toc-step-9-submit-to-kaggle" class="nav-link" data-scroll-target="#step-9-submit-to-kaggle">Step 9: Submit to Kaggle</a></li>
+  </ul></li>
+  <li><a href="#tailpiece-regarding-autoplot" id="toc-tailpiece-regarding-autoplot" class="nav-link" data-scroll-target="#tailpiece-regarding-autoplot">Tailpiece regarding <code>autoplot()</code></a>
+  <ul class="collapse">
+  <li><a href="#peeking-under-the-hood" id="toc-peeking-under-the-hood" class="nav-link" data-scroll-target="#peeking-under-the-hood">Peeking under the hood</a></li>
+  <li><a href="#extracting-the-tibbles" id="toc-extracting-the-tibbles" class="nav-link" data-scroll-target="#extracting-the-tibbles">Extracting the tibbles</a></li>
+  <li><a href="#manually-generated-plot" id="toc-manually-generated-plot" class="nav-link" data-scroll-target="#manually-generated-plot">Manually generated plot</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -257,7 +270,8 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <li><a href="https://oliviergimenez.github.io/blog/learning-machine-learning/">Olivier Gimenez’s post</a> that had me marvelling at the feature engineering</li>
 <li><a href="https://rpubs.com/tsadigov/titanic_tidymodels">Tural Sadigov’s post</a> on handling multiple models</li>
 </ul>
-<p>I’m skipping the EDA component as I’ve covered it in the previous posts. Moving on to some boring (but very necessary) sections:</p>
+<p>I’m skipping the EDA component as I’ve covered it in the previous posts. Moving on to some boring (but very necessary) sections.</p>
+<p>As always, please feel free to leave a comment using the side-bar👉🏼</p>
 <section id="loading-the-data" class="level1">
 <h1>Loading the data</h1>
 <p><code>test</code> and <code>train</code> data is inputted and merged into a single dataframe</p>
@@ -343,7 +357,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <p>Voila. Everything now in lower case and snake case!</p>
 </section>
 <section id="imputing-na-values-in-embarked" class="level3">
-<h3 class="anchored" data-anchor-id="imputing-na-values-in-embarked">Imputing NA values in <code>embarked</code></h3>
+<h3 class="anchored" data-anchor-id="imputing-na-values-in-embarked">Imputing <code>NA</code> values in <code>embarked</code></h3>
 <p>Now under <strong>embarked</strong> there are two rows that don’t have <code>NA</code> but are blank. That’s a bit odd🤨</p>
 <div class="cell">
 <details>
@@ -385,7 +399,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 </div>
 </section>
 <section id="imputing-na-values-in-age" class="level3">
-<h3 class="anchored" data-anchor-id="imputing-na-values-in-age">Imputing NA values in <code>age</code></h3>
+<h3 class="anchored" data-anchor-id="imputing-na-values-in-age">Imputing <code>NA</code> values in <code>age</code></h3>
 <p>The <strong>age</strong> column has a bunch of missing values. My approach today is to substitute them with the median values when grouped by <strong>sex</strong> and <strong>class</strong>. Here’s a function written to impute within the test and train data accordingly.</p>
 <p><em>note: Feature engineering functions can be addressed in the <code>tidymodels</code></em> <em>framework at recipe stage.</em></p>
 <div class="cell">
@@ -450,7 +464,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 </div>
 </section>
 <section id="imputing-na-values-for-fare" class="level3">
-<h3 class="anchored" data-anchor-id="imputing-na-values-for-fare">Imputing <code>NA</code> values for fare</h3>
+<h3 class="anchored" data-anchor-id="imputing-na-values-for-fare">Imputing <code>NA</code> values for <code>fare</code></h3>
 <p>There’s this one person (passenger_id = 1044, male and pclass = 3) who has a <code>na</code> value in <strong>fare</strong> from <code>test</code> data. Replacing it with the median value.</p>
 <div class="cell">
 <details>
@@ -494,6 +508,20 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                        <span class="fl">7.8958</span>, age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<p>checking if has been replaced.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(source, name, passenger_id, sex, age, pclass, fare) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(fare))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] source       name         passenger_id sex          age         
+[6] pclass       fare        
+&lt;0 rows&gt; (or 0-length row.names)</code></pre>
+</div>
+</div>
 </section>
 </section>
 </section>
@@ -504,9 +532,9 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, sex,age, ticket, survived) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(name, <span class="st">"Cacic"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, sex,age, ticket, survived) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(name, <span class="st">"Cacic"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  name    sex age ticket survived
@@ -521,9 +549,9 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, sex, age, ticket, survived) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ticket<span class="sc">==</span><span class="dv">1601</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, sex, age, ticket, survived) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ticket<span class="sc">==</span><span class="dv">1601</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>             name  sex age ticket survived
@@ -546,34 +574,34 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>names_with_splchar <span class="ot">&lt;-</span> <span class="fu">regex</span>(<span class="st">"[A-Za-z]+[</span><span class="sc">\\</span><span class="st">'</span><span class="sc">\\</span><span class="st">-</span><span class="sc">\\</span><span class="st">s]+[A-Za-z]+"</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>names_with_3words <span class="ot">&lt;-</span> <span class="fu">regex</span>(<span class="st">"[A-Za-z]+</span><span class="sc">\\</span><span class="st">s[A-Za-z]+</span><span class="sc">\\</span><span class="st">s[A-Za-z]+"</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>names_with_1word <span class="ot">&lt;-</span> <span class="fu">regex</span>(<span class="st">"[A-Za-z]+"</span>) </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>names_with_2words <span class="ot">&lt;-</span> <span class="fu">regex</span>(<span class="st">"[A-Za-z]+</span><span class="sc">\\</span><span class="st">s+[A-Za-z]+"</span>)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    name, </span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">patterns =</span> <span class="fu">c</span>(</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co">#IMP: ordering of regex patterns changes the outcome</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">surname =</span> <span class="fu">str_c</span>(<span class="fu">c</span>(names_with_splchar, </span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>                        names_with_3words,</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>                        names_with_1word), </span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">collapse =</span> <span class="st">"|"</span>),    <span class="co"># picks the first word before comma</span></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>      <span class="st">", "</span>,                               <span class="co"># the comma  </span></span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="co">#IMP: ordering of regex patterns changes the outcome</span></span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="fu">str_c</span>(<span class="fu">c</span>(names_with_2words , <span class="co"># two words with special char in between like 'the countess'</span></span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>                      names_with_1word),  <span class="co"># one word such as Mr Miss Mrs etc</span></span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>                    <span class="at">collapse =</span> <span class="st">"|"</span>),      </span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>      <span class="st">". "</span>,                               <span class="co"># the dot</span></span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">given_name =</span> <span class="st">".+"</span>),                 <span class="co"># picks anything else which occurs at least once</span></span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols_remove =</span> F                       <span class="co"># retains the original column    </span></span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, title, surname, given_name) <span class="sc">%&gt;%</span> </span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>names_with_splchar <span class="ot">&lt;-</span> <span class="fu">regex</span>(<span class="st">"[A-Za-z]+[</span><span class="sc">\\</span><span class="st">'</span><span class="sc">\\</span><span class="st">-</span><span class="sc">\\</span><span class="st">s]+[A-Za-z]+"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>names_with_3words <span class="ot">&lt;-</span> <span class="fu">regex</span>(<span class="st">"[A-Za-z]+</span><span class="sc">\\</span><span class="st">s[A-Za-z]+</span><span class="sc">\\</span><span class="st">s[A-Za-z]+"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>names_with_1word <span class="ot">&lt;-</span> <span class="fu">regex</span>(<span class="st">"[A-Za-z]+"</span>) </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>names_with_2words <span class="ot">&lt;-</span> <span class="fu">regex</span>(<span class="st">"[A-Za-z]+</span><span class="sc">\\</span><span class="st">s+[A-Za-z]+"</span>) <span class="co"># for 'the countess'</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_regex</span>(</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    name, </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">patterns =</span> <span class="fu">c</span>(</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co">#IMP: ordering of regex patterns changes the outcome</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">surname =</span> <span class="fu">str_c</span>(<span class="fu">c</span>(names_with_splchar, </span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>                        names_with_3words,</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>                        names_with_1word), </span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">collapse =</span> <span class="st">"|"</span>),    <span class="co"># picks the first word before comma</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>      <span class="st">", "</span>,                               <span class="co"># the comma  </span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="co">#IMP: ordering of regex patterns changes the outcome</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="fu">str_c</span>(<span class="fu">c</span>(names_with_2words , <span class="co"># two words with special char in between like 'the countess'</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>                      names_with_1word),  <span class="co"># one word such as Mr Miss Mrs etc</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>                    <span class="at">collapse =</span> <span class="st">"|"</span>),      </span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>      <span class="st">". "</span>,                               <span class="co"># the dot</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">given_name =</span> <span class="st">".+"</span>),                 <span class="co"># picks anything else which occurs at least once</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols_remove =</span> F                       <span class="co"># retains the original column    </span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, title, surname, given_name) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 4
@@ -592,12 +620,12 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 # … with abbreviated variable name ¹​given_name</code></pre>
 </div>
 </div>
-<p>What is the break of titles now?</p>
+<p>What is the break-up of titles now?</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(title, <span class="at">sort=</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(title, <span class="at">sort=</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 18 × 2
@@ -630,62 +658,62 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ticket_head =</span> <span class="fu">substr</span>(ticket, <span class="dv">1</span>, <span class="fu">nchar</span>(ticket)<span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ticket_tail =</span> <span class="fu">substr</span>(ticket, <span class="fu">nchar</span>(ticket), <span class="fu">nchar</span>(ticket)),</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">group_id =</span> <span class="fu">paste0</span>(surname, <span class="st">"_"</span>, ticket_head)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ticket_head =</span> <span class="fu">substr</span>(ticket, <span class="dv">1</span>, <span class="fu">nchar</span>(ticket)<span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ticket_tail =</span> <span class="fu">substr</span>(ticket, <span class="fu">nchar</span>(ticket), <span class="fu">nchar</span>(ticket)),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">group_id =</span> <span class="fu">paste0</span>(surname, <span class="st">"_"</span>, ticket_head)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Creating columns that indicate the number of people and other flags</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(group_id) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">pax_in_group =</span> n)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">flag =</span> <span class="fu">case_when</span> ((family_count<span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> pax_in_group<span class="sc">==</span><span class="dv">1</span>) <span class="sc">~</span> <span class="st">"1_solo"</span>,</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>                           family_count <span class="sc">==</span> pax_in_group <span class="sc">~</span> <span class="st">"2_family_full"</span>,</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>                           <span class="sc">!</span>(family_count <span class="sc">==</span> pax_in_group) <span class="sc">~</span> <span class="st">"3_clubbed"</span>,</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">.default =</span> <span class="st">"x"</span>))</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(ticket_head) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">pax_in_ticket_head =</span> n)</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="co"># how many instances of the same ticket having multiple groups? </span></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ticket) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">groups_in_ticket =</span> <span class="fu">n_distinct</span>(group_id)) <span class="sc">%&gt;%</span> <span class="fu">ungroup</span>()</span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a><span class="co"># which tickets that have more than 1 groups in them? </span></span>
-<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a><span class="co">#     these passengers will have ticket_grouping precedence as they may include </span></span>
-<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a><span class="co">#     nannies, relatives &amp; friends that don't share the same surname</span></span>
-<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>ticket_with_multiple_groups <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
-<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>groups_in_ticket<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(ticket, <span class="at">sort =</span> T)</span>
-<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
-<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">final_grouping =</span> <span class="fu">if_else</span>(ticket <span class="sc">%in%</span> ticket_with_multiple_groups<span class="sc">$</span>ticket, </span>
-<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>                             ticket, group_id),</span>
-<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">final_label =</span> <span class="fu">if_else</span>(ticket <span class="sc">%in%</span> ticket_with_multiple_groups<span class="sc">$</span>ticket,</span>
-<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"4_ticket_grouping"</span>, flag)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(group_id) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">pax_in_group =</span> n)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">flag =</span> <span class="fu">case_when</span> ((family_count<span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> pax_in_group<span class="sc">==</span><span class="dv">1</span>) <span class="sc">~</span> <span class="st">"1_solo"</span>,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>                           family_count <span class="sc">==</span> pax_in_group <span class="sc">~</span> <span class="st">"2_family_full"</span>,</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>                           <span class="sc">!</span>(family_count <span class="sc">==</span> pax_in_group) <span class="sc">~</span> <span class="st">"3_clubbed"</span>,</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">.default =</span> <span class="st">"x"</span>))</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(ticket_head) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">pax_in_ticket_head =</span> n)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co"># how many instances of the same ticket having multiple groups? </span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ticket) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">groups_in_ticket =</span> <span class="fu">n_distinct</span>(group_id)) <span class="sc">%&gt;%</span> <span class="fu">ungroup</span>()</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a><span class="co"># which tickets that have more than 1 groups in them? </span></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="co">#     these passengers will have ticket_grouping precedence as they may include </span></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a><span class="co">#     nannies, relatives &amp; friends that don't share the same surname</span></span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>ticket_with_multiple_groups <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>groups_in_ticket<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(ticket, <span class="at">sort =</span> T)</span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">final_grouping =</span> <span class="fu">if_else</span>(ticket <span class="sc">%in%</span> ticket_with_multiple_groups<span class="sc">$</span>ticket, </span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>                             ticket, group_id),</span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">final_label =</span> <span class="fu">if_else</span>(ticket <span class="sc">%in%</span> ticket_with_multiple_groups<span class="sc">$</span>ticket,</span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"4_ticket_grouping"</span>, flag)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Since the code now has become a bit too long and I’m creating a checkpost here with a new df called <code>titanic_data2</code></p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>titanic_data2 <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(source, passenger_id, survived,  sex, age, fare, pclass, embarked, </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>         family_count, pax_in_group, pax_in_ticket_head, groups_in_ticket,</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>         final_grouping) <span class="sc">%&gt;%</span> </span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">final_grouping =</span> <span class="fu">as_factor</span>(final_grouping),</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">survived =</span> <span class="fu">as_factor</span>(survived),</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">pclass =</span> <span class="fu">as_factor</span>(pclass),</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">sex =</span> <span class="fu">as_factor</span>(sex),</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">embarked =</span> <span class="fu">as_factor</span>(embarked))</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(titanic_data2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>titanic_data2 <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(source, passenger_id, survived,  sex, age, fare, pclass, embarked, </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>         family_count, pax_in_group, pax_in_ticket_head, groups_in_ticket,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>         final_grouping) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">final_grouping =</span> <span class="fu">as_factor</span>(final_grouping),</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">survived =</span> <span class="fu">as_factor</span>(survived),</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">pclass =</span> <span class="fu">as_factor</span>(pclass),</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">sex =</span> <span class="fu">as_factor</span>(sex),</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">embarked =</span> <span class="fu">as_factor</span>(embarked))</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(titanic_data2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 1,309
@@ -709,17 +737,17 @@ $ final_grouping     &lt;fct&gt; Braund_A/5 2117, Cumings_PC 1759, Heikkinen_STO
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>to_predict <span class="ot">&lt;-</span> titanic_data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(source <span class="sc">==</span> <span class="st">"test"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>survived, <span class="sc">-</span>source)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>given_data <span class="ot">&lt;-</span> titanic_data2 <span class="sc">%&gt;%</span> </span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(source <span class="sc">==</span> <span class="st">"train"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>source)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>to_predict <span class="ot">&lt;-</span> titanic_data2 <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(source <span class="sc">==</span> <span class="st">"test"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>survived, <span class="sc">-</span>source)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>given_data <span class="ot">&lt;-</span> titanic_data2 <span class="sc">%&gt;%</span> </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(source <span class="sc">==</span> <span class="st">"train"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>source)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p><code>given_data</code> has all the necessary columns we need to train the algo on</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(given_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(given_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 891
@@ -742,7 +770,7 @@ $ final_grouping     &lt;fct&gt; Braund_A/5 2117, Cumings_PC 1759, Heikkinen_STO
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(to_predict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(to_predict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 418
@@ -778,11 +806,11 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 <li>Decision Trees</li>
 </ol>
 <p>The <a href="https://www.tmwr.org/workflows.html#workflow-sets-intro">Tidymodels textbook</a> is possibly the best place to begin understanding about workflow. In a nutshell:</p>
-<ul>
+<ol type="1">
 <li><p>Create resampling folds</p></li>
 <li><p>Describe each model (I’m going to be using untuned parameters for sake of simplicity)</p></li>
-<li><p>create a recipe for each model</p></li>
-<li><p>Just as you would with a single model, the workflow combines the base recipe with the multiple models but it takes the form of a list here</p></li>
+<li><p>create a base recipe for <code>given_data</code></p></li>
+<li><p>Defining a workflow that uses the recipe for each model</p></li>
 <li><p>Fit the resampled folds on the workflow_set</p></li>
 <li><p>Find the winning model - since we’re dealing with classification, I am using <code>roc_auc</code></p></li>
 <li><p>fit the winning model to the <code>given data</code></p></li>
@@ -790,10 +818,510 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 <li><p>submit on kaggle</p></li>
 <li><p>…</p></li>
 <li><p>profit? (well not exactly. but you can create another blog and share your new found knowledge with the world🤓)</p></li>
-</ul>
+</ol>
 <p>So lets get cooking!</p>
-<section id="the-recipe" class="level2">
-<h2 class="anchored" data-anchor-id="the-recipe">The Recipe</h2>
+<section id="step-1-creating-resampling-folds" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-creating-resampling-folds">Step 1: creating resampling folds</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2023</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>titanic_folds <span class="ot">&lt;-</span> <span class="fu">bootstraps</span>(<span class="at">data =</span> given_data, </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">times =</span> <span class="dv">15</span>)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>titanic_folds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># Bootstrap sampling 
+# A tibble: 15 × 2
+   splits            id         
+   &lt;list&gt;            &lt;chr&gt;      
+ 1 &lt;split [891/318]&gt; Bootstrap01
+ 2 &lt;split [891/313]&gt; Bootstrap02
+ 3 &lt;split [891/340]&gt; Bootstrap03
+ 4 &lt;split [891/313]&gt; Bootstrap04
+ 5 &lt;split [891/326]&gt; Bootstrap05
+ 6 &lt;split [891/342]&gt; Bootstrap06
+ 7 &lt;split [891/316]&gt; Bootstrap07
+ 8 &lt;split [891/323]&gt; Bootstrap08
+ 9 &lt;split [891/338]&gt; Bootstrap09
+10 &lt;split [891/331]&gt; Bootstrap10
+11 &lt;split [891/319]&gt; Bootstrap11
+12 &lt;split [891/322]&gt; Bootstrap12
+13 &lt;split [891/340]&gt; Bootstrap13
+14 &lt;split [891/321]&gt; Bootstrap14
+15 &lt;split [891/320]&gt; Bootstrap15</code></pre>
+</div>
+</div>
+</section>
+<section id="step-2-recipe" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-recipe">Step 2: Recipe</h2>
+<p>Creating the <code>base_recipe</code> object that has only 3 steps</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>base_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(survived <span class="sc">~</span> ., <span class="at">data =</span> given_data) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_role</span>(passenger_id, <span class="at">new_role =</span> <span class="st">"id_variable"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>base_recipe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Or if one would like to see it in a <code>tidy</code> format.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(base_recipe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 6
+  number operation type      trained skip  id             
+   &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;lgl&gt;   &lt;lgl&gt; &lt;chr&gt;          
+1      1 step      dummy     FALSE   FALSE dummy_FSxXz    
+2      2 step      normalize FALSE   FALSE normalize_bu1Ti</code></pre>
+</div>
+</div>
+</section>
+<section id="step-3-model-definitions" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-model-definitions">Step 3: Model definitions</h2>
+<p>All the four models are defined as:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#logistic regression</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>glm_model <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"glm"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co">#random forest</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>rf_model <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(<span class="at">trees =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="co">#support vector machines</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>svm_model <span class="ot">&lt;-</span> <span class="fu">svm_rbf</span>() <span class="sc">%&gt;%</span> <span class="co"># rbf - radial based</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a><span class="co">#decision tree</span></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>dt_model <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>(<span class="at">mode =</span> <span class="st">"classification"</span>, </span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>                          <span class="at">tree_depth =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="step-4-workflow-set" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-workflow-set">Step 4: Workflow set</h2>
+<p>Just as you would with a single model, the workflow combines the base recipe with the multiple models by using lists when declaring the object.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>titanic_wf_set <span class="ot">&lt;-</span> <span class="fu">workflow_set</span>(</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(base_recipe),</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(glm_model, rf_model, svm_model, dt_model),</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cross =</span> T</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>titanic_wf_set</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A workflow set/tibble: 4 × 4
+  wflow_id             info             option    result    
+  &lt;chr&gt;                &lt;list&gt;           &lt;list&gt;    &lt;list&gt;    
+1 recipe_logistic_reg  &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+2 recipe_rand_forest   &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+3 recipe_svm_rbf       &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+4 recipe_decision_tree &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;</code></pre>
+</div>
+</div>
+<p>In the table above, the <strong>result</strong> column shows a list[0] implying that it is currently empty. This is because till now, we’ve only defined the workflows and models but are yet to pass the data though it.</p>
+<p>Obligatory shout out to the phenom Julia Silge whose YT tutorials and blogs have been my learning books at each step. These steps are succinctly explained in her <a href="https://juliasilge.com/blog/giant-pumpkins/">Tidy Tuesday post</a> which I highly recommend.</p>
+</section>
+<section id="step-5-fitting-on-resampled-folds" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-fitting-on-resampled-folds">Step 5: Fitting on resampled folds</h2>
+<p>So this part of it needs to be dealt with care. Resampling may take a while…</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2023</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>doParallel<span class="sc">::</span><span class="fu">registerDoParallel</span>()</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>titanic_rs <span class="ot">&lt;-</span> <span class="fu">workflow_map</span>(</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  titanic_wf_set,</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"fit_resamples"</span>,</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">resamples =</span> titanic_folds</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>… which is …</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 11.58433 mins</code></pre>
+</div>
+</div>
+<p>Hmm… So moving on. What does the workflow_set object look like now?</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>titanic_rs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A workflow set/tibble: 4 × 4
+  wflow_id             info             option    result   
+  &lt;chr&gt;                &lt;list&gt;           &lt;list&gt;    &lt;list&gt;   
+1 recipe_logistic_reg  &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;
+2 recipe_rand_forest   &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;
+3 recipe_svm_rbf       &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;
+4 recipe_decision_tree &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="step-6-finding-the-winning-model" class="level2">
+<h2 class="anchored" data-anchor-id="step-6-finding-the-winning-model">Step 6: Finding the winning model</h2>
+<p>This is how the <code>tidymodels</code> package all fits in. If you’ve got all the steps covered this far, the decision making shouldn’t take much effort</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 9
+  wflow_id             .config preproc model .metric .esti…¹  mean     n std_err
+  &lt;chr&gt;                &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;
+1 recipe_logistic_reg  Prepro… recipe  logi… accura… binary  0.675    15 0.0147 
+2 recipe_logistic_reg  Prepro… recipe  logi… roc_auc binary  0.695    15 0.0184 
+3 recipe_rand_forest   Prepro… recipe  rand… accura… binary  0.824    15 0.00484
+4 recipe_rand_forest   Prepro… recipe  rand… roc_auc binary  0.872    15 0.00488
+5 recipe_svm_rbf       Prepro… recipe  svm_… accura… binary  0.780    15 0.00706
+6 recipe_svm_rbf       Prepro… recipe  svm_… roc_auc binary  0.806    15 0.00704
+7 recipe_decision_tree Prepro… recipe  deci… accura… binary  0.809    15 0.00476
+8 recipe_decision_tree Prepro… recipe  deci… roc_auc binary  0.811    15 0.00684
+# … with abbreviated variable name ¹​.estimator</code></pre>
+</div>
+</div>
+<p>Since we’re looking at classification, lets see which one of the models resulted in the best <code>roc_auc</code>?</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(titanic_rs) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"roc_auc"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 9
+  wflow_id             .config preproc model .metric .esti…¹  mean     n std_err
+  &lt;chr&gt;                &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;
+1 recipe_rand_forest   Prepro… recipe  rand… roc_auc binary  0.872    15 0.00488
+2 recipe_decision_tree Prepro… recipe  deci… roc_auc binary  0.811    15 0.00684
+3 recipe_svm_rbf       Prepro… recipe  svm_… roc_auc binary  0.806    15 0.00704
+4 recipe_logistic_reg  Prepro… recipe  logi… roc_auc binary  0.695    15 0.0184 
+# … with abbreviated variable name ¹​.estimator</code></pre>
+</div>
+</div>
+<p>Looks like the <code>rand_forest</code> is the winner!</p>
+<p><img src="https://media.giphy.com/media/dZLx6Lf738Jy46tUR4/giphy.gif" class="img-fluid" width="360"></p>
+<p>Another wonderful way it all ties in together is the visualisation with a single line of code.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Pieces of code that just fit into each other feels like a spoon-full of ice cream!</p>
+</section>
+<section id="step-7-8-fitting-the-winner-and-predictions" class="level2">
+<h2 class="anchored" data-anchor-id="step-7-8-fitting-the-winner-and-predictions">Step 7 &amp; 8: Fitting the winner and predictions</h2>
+<p>From the object <code>titanic_rs</code> we need to pick the winning model and fit to <code>to_predict</code></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>final_fit <span class="ot">&lt;-</span> <span class="fu">extract_workflow</span>(titanic_rs, </span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"recipe_rand_forest"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(given_data)</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>final_fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>══ Workflow [trained] ══════════════════════════════════════════════════════════
+Preprocessor: Recipe
+Model: rand_forest()
+
+── Preprocessor ────────────────────────────────────────────────────────────────
+2 Recipe Steps
+
+• step_dummy()
+• step_normalize()
+
+── Model ───────────────────────────────────────────────────────────────────────
+Ranger result
+
+Call:
+ ranger::ranger(x = maybe_data_frame(x), y = y, num.trees = ~1000,      num.threads = 1, verbose = FALSE, seed = sample.int(10^5,          1), probability = TRUE) 
+
+Type:                             Probability estimation 
+Number of trees:                  1000 
+Sample size:                      891 
+Number of independent variables:  908 
+Mtry:                             30 
+Target node size:                 10 
+Variable importance mode:         none 
+Splitrule:                        gini 
+OOB prediction error (Brier s.):  0.1386875 </code></pre>
+</div>
+</div>
+<p>Creating a new dataframe for predictions</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>final_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> final_fit, </span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">new_data =</span> to_predict)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>final_predictions <span class="ot">&lt;-</span> final_predictions <span class="sc">%&gt;%</span> </span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Survived =</span> .pred_class) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(<span class="at">PassengerId =</span> to_predict<span class="sc">$</span>passenger_id)</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(final_predictions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  Survived PassengerId
+  &lt;fct&gt;          &lt;int&gt;
+1 0                892
+2 0                893
+3 0                894
+4 0                895
+5 0                896
+6 0                897</code></pre>
+</div>
+</div>
+</section>
+<section id="step-9-submit-to-kaggle" class="level2">
+<h2 class="anchored" data-anchor-id="step-9-submit-to-kaggle">Step 9: Submit to Kaggle</h2>
+<p>Converting the <code>final_predictions</code> to csv and uploading to kaggle</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(final_predictions, <span class="at">row.names =</span> F, </span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">file =</span> <span class="st">"submissions.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Uploaded it to Kaggle and behold…</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-1373401355.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>Not bad !!! that’s like top 12% percentile.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.giphy.com/media/7zYKTVt3vvbj7SC2Bl/giphy.gif" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">.. And so did you, dear reader!!</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="tailpiece-regarding-autoplot" class="level1">
+<h1>Tailpiece regarding <code>autoplot()</code></h1>
+<p>After model creation, I couldn’t help wonder at the marvel behind the <code>autoplot()</code> function. How can a single function decipher convey such meaningful depth?</p>
+<section id="peeking-under-the-hood" class="level2">
+<h2 class="anchored" data-anchor-id="peeking-under-the-hood">Peeking under the hood</h2>
+<p>I tried to replicate the same errorbar plot generated by the function. For me, this was possibly one of the bigger conceptual lessons about <code>tidymodels</code> framework. Here’s how I did it:</p>
+<p>There are 15 bootsample folds that were generated. The <code>workflow_set</code> maps the <code>fit_resamples</code> function on the workflow. This implies that each of the 4 models have generated 2 pairs of metrics (<code>accuracy</code> &amp; <code>roc_auc</code>) for each of the 15 resamples.</p>
+<p>The <code>collect_metrics</code> function generates the mean vale of each metric allowing us to chose the best one.</p>
+<p>The manner in which all of this is done within a single object is sublime. Information is stored in tibbles within tibbles!</p>
+<p>For instance, let us look at the class of <code>titanic_rs</code></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "workflow_set" "tbl_df"       "tbl"          "data.frame"  </code></pre>
+</div>
+</div>
+<p>It is a tibble with 4 columns out of which <code>results</code> is a list object consisting of more tibbles.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>titanic_rs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A workflow set/tibble: 4 × 4
+  wflow_id             info             option    result   
+  &lt;chr&gt;                &lt;list&gt;           &lt;list&gt;    &lt;list&gt;   
+1 recipe_logistic_reg  &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;
+2 recipe_rand_forest   &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;
+3 recipe_svm_rbf       &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;
+4 recipe_decision_tree &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</code></pre>
+</div>
+</div>
+<p>What does the first tibble in the <code>results</code> list look like? This corresponds to the logistic regression model as shown in the table above.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>titanic_rs<span class="sc">$</span>result[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># Resampling results
+# Bootstrap sampling 
+# A tibble: 15 × 4
+   splits            id          .metrics         .notes          
+   &lt;list&gt;            &lt;chr&gt;       &lt;list&gt;           &lt;list&gt;          
+ 1 &lt;split [891/318]&gt; Bootstrap01 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+ 2 &lt;split [891/313]&gt; Bootstrap02 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+ 3 &lt;split [891/340]&gt; Bootstrap03 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+ 4 &lt;split [891/313]&gt; Bootstrap04 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+ 5 &lt;split [891/326]&gt; Bootstrap05 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+ 6 &lt;split [891/342]&gt; Bootstrap06 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+ 7 &lt;split [891/316]&gt; Bootstrap07 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+ 8 &lt;split [891/323]&gt; Bootstrap08 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+ 9 &lt;split [891/338]&gt; Bootstrap09 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+10 &lt;split [891/331]&gt; Bootstrap10 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+11 &lt;split [891/319]&gt; Bootstrap11 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+12 &lt;split [891/322]&gt; Bootstrap12 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+13 &lt;split [891/340]&gt; Bootstrap13 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+14 &lt;split [891/321]&gt; Bootstrap14 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+15 &lt;split [891/320]&gt; Bootstrap15 &lt;tibble [2 × 4]&gt; &lt;tibble [3 × 3]&gt;
+
+There were issues with some computations:
+
+  - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x1: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x4: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x11: Column(s) have zero variance so scaling cannot be used: `final_gr...   - Warning(s) x15: Column(s) have zero variance so scaling cannot be used: `final_gr...
+
+Run `show_notes(.Last.tune.result)` for more information.</code></pre>
+</div>
+</div>
+<p>What does the <code>.metrics</code> list contain?</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>titanic_rs<span class="sc">$</span>result[[<span class="dv">1</span>]]<span class="sc">$</span>.metrics[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  .metric  .estimator .estimate .config             
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;               
+1 accuracy binary         0.682 Preprocessor1_Model1
+2 roc_auc  binary         0.655 Preprocessor1_Model1</code></pre>
+</div>
+</div>
+<p>So <code>.metrics</code> is a list of results that is generated for each of the folds. The above tibble is the resulting metrics after cross-validation of the first fold of <code>titanic_folds</code> using <code>glm</code> (logisitic classification).</p>
+<p>If the intent is to create the errorgraph manually, then we’ll need to extract the data within each of these tibbles.</p>
+<p>Now I wasn’t able to check the code for <code>autoplot()</code> and I’m pretty certain there’s a more elegant method out there. Hit me up if you feel there’s a better way to extract data from within tibbles in the comments here 👉🏼</p>
+<p>First step is to create an empty tibble consisting of 4 models, 2 metrics and 80 empty cells that need to be filled in from <code>titanic_rs</code> object.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>tidy_titanic_rs <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">wf =</span> <span class="fu">rep</span>(<span class="fu">unique</span>(titanic_rs<span class="sc">$</span>wflow_id), <span class="dv">15</span><span class="sc">*</span><span class="dv">2</span>),</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">metrics =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"accuracy"</span>, <span class="dv">4</span>), </span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="fu">rep</span>(<span class="st">"roc_auc"</span>,<span class="dv">4</span>)),</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>                                        <span class="dv">15</span>),</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">values =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">4</span><span class="sc">*</span><span class="dv">15</span><span class="sc">*</span><span class="dv">2</span>))</span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tidy_titanic_rs, <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 3
+  wf                   metrics  values
+  &lt;chr&gt;                &lt;chr&gt;    &lt;lgl&gt; 
+1 recipe_logistic_reg  accuracy NA    
+2 recipe_rand_forest   accuracy NA    
+3 recipe_svm_rbf       accuracy NA    
+4 recipe_decision_tree accuracy NA    
+5 recipe_logistic_reg  roc_auc  NA    
+6 recipe_rand_forest   roc_auc  NA    
+7 recipe_svm_rbf       roc_auc  NA    
+8 recipe_decision_tree roc_auc  NA    </code></pre>
+</div>
+</div>
+<p>Dimensions of this empty table?</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(tidy_titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 120   3</code></pre>
+</div>
+</div>
+<p>To extract the values from the tibbles in <code>titanic_rs</code> and save in <code>tidy_titanic_rs</code>, I proceeded to employ a nested <code>for</code> loop. Dont’ judge, i say!</p>
+</section>
+<section id="extracting-the-tibbles" class="level2">
+<h2 class="anchored" data-anchor-id="extracting-the-tibbles">Extracting the tibbles</h2>
+<p><code>pluck</code> has got to be the coolest function I’ve ever come across!</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>bigtable <span class="ot">&lt;-</span> purrr<span class="sc">:::</span><span class="fu">pluck</span>(titanic_rs, <span class="dv">4</span>)</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>wflow_id_titanic <span class="ot">&lt;-</span> <span class="fu">unique</span>(titanic_rs<span class="sc">$</span>wflow_id)</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(wflow_id_titanic)){</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>  wflow_id <span class="ot">&lt;-</span> wflow_id_titanic[i]</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>  smalltable <span class="ot">&lt;-</span> bigtable[[i]]</span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(smalltable<span class="sc">$</span>.metrics)){</span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a>    smallertable <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">pluck</span>(smalltable<span class="sc">$</span>.metrics, j)</span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a>    tidy_titanic_rs<span class="sc">$</span>values[(tidy_titanic_rs<span class="sc">$</span>wf<span class="sc">==</span>wflow_id <span class="sc">&amp;</span> </span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a>                              tidy_titanic_rs<span class="sc">$</span>metrics<span class="sc">==</span><span class="st">"accuracy"</span>)][j] <span class="ot">&lt;-</span> smallertable<span class="sc">$</span>.estimate[smallertable<span class="sc">$</span>.metric <span class="sc">==</span> <span class="st">"accuracy"</span>]</span>
+<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a>    tidy_titanic_rs<span class="sc">$</span>values[(tidy_titanic_rs<span class="sc">$</span>wf<span class="sc">==</span>wflow_id <span class="sc">&amp;</span> </span>
+<span id="cb75-13"><a href="#cb75-13" aria-hidden="true" tabindex="-1"></a>                              tidy_titanic_rs<span class="sc">$</span>metrics<span class="sc">==</span><span class="st">"roc_auc"</span>)][j] <span class="ot">&lt;-</span> smallertable<span class="sc">$</span>.estimate[smallertable<span class="sc">$</span>.metric <span class="sc">==</span> <span class="st">"roc_auc"</span>]</span>
+<span id="cb75-14"><a href="#cb75-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb75-15"><a href="#cb75-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb75-16"><a href="#cb75-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb75-17"><a href="#cb75-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-18"><a href="#cb75-18" aria-hidden="true" tabindex="-1"></a>tidy_titanic_rs2 <span class="ot">&lt;-</span> tidy_titanic_rs <span class="sc">%&gt;%</span> </span>
+<span id="cb75-19"><a href="#cb75-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(wf, metrics) <span class="sc">%&gt;%</span> </span>
+<span id="cb75-20"><a href="#cb75-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">value_min =</span> <span class="fu">mean</span>(values) <span class="sc">-</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">sd</span>(values),</span>
+<span id="cb75-21"><a href="#cb75-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">value_max =</span> <span class="fu">mean</span>(values) <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">sd</span>(values),</span>
+<span id="cb75-22"><a href="#cb75-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">value_mean =</span> <span class="fu">mean</span>(values)) <span class="sc">%&gt;%</span> <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb75-23"><a href="#cb75-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">right_join</span>(tidy_titanic_rs, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"wf"</span>, <span class="st">"metrics"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>For some reason, <code>value_max</code> and <code>value_min</code> for the error-bar are 0.5 * 𝝈 or approximately <a href="https://mathbitsnotebook.com/Algebra2/Statistics/STstandardNormalDistribution.html#:~:text=Reading%20from%20the%20chart%2C%20it,or%20left">±19% of the mean of values</a>%20of%20the%20mean.)</p>
+</section>
+<section id="manually-generated-plot" class="level2">
+<h2 class="anchored" data-anchor-id="manually-generated-plot">Manually generated plot</h2>
+<p>With the data in a rectangular tidy format, the rest of the magic is handled by <code>ggplot</code></p>
+<p><strong><em>cracks knuckles</em></strong></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>tidy_titanic_rs2 <span class="sc">%&gt;%</span> </span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(wf, <span class="fu">desc</span>(value_mean)), </span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> values, </span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> wf))<span class="sc">+</span></span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymax =</span> value_max, <span class="at">ymin =</span> value_min), </span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span> value_mean))<span class="sc">+</span></span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fl">0.65</span>, <span class="fl">0.9</span>, <span class="fl">0.05</span>),</span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.65</span>, <span class="fl">0.9</span>))<span class="sc">+</span></span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)<span class="sc">+</span></span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>)<span class="sc">+</span></span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>And here once again is the auto-generated plot. Not bad, eh?</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.giphy.com/media/3oEduKVQdG4c0JVPSo/giphy.gif" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Oooh yeeah!</figcaption><p></p>
+</figure>
+</div>
 
 
 </section>
