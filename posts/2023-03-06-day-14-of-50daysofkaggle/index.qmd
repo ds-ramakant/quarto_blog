@@ -1,29 +1,360 @@
 ---
 title: "Day 14 of #50daysofKaggle"
 subtitle: "Roadmap to Tidymodels - Part 2"
-description: "Screening multiple models"
-date: '2023-03-04'
+description: "Screening multiple models using workflows"
+date: '2023-03-20'
 categories: [R, kaggle]
 featured: no
 execute:
   warning: false
-draft: true
+image: Rplot.png
 ---
+
+How hard is it to evaluate multiple models when working on a given data problem?
+
+If you're using the `tidymodels` package, the answer is surprisingly simple.
 
 Today's post is an attempt to use the `tidymodels` framework to screen multiple models. Inspiration for this post comes from the [Ch 15 of the Tidymodels with R textbook](https://www.tmwr.org/workflow-sets.html) along with two more noteworthy blogs
 
 -   [Olivier Gimenez's post](https://oliviergimenez.github.io/blog/learning-machine-learning/) that had me marvelling at the feature engineering
 -   [Tural Sadigov's post](https://rpubs.com/tsadigov/titanic_tidymodels) on handling multiple models
 
-# EDA
+I'm skipping the EDA component as I've covered it in the previous posts. Moving on to some boring (but very necessary) sections:
 
-what about ticket number and fare? investigate into ticket number and check for families that are travelling together
+# Loading the data
 
-1.  combine ticket_id and fare as suggested [here](https://www.kaggle.com/code/jack89roberts/titanic-using-ticket-groupings/comments#337002)
-2.  also check the titanic mega model [here](https://www.kaggle.com/code/cdeotte/titantic-mega-model-0-84210/notebook)
+`test` and `train` data is inputted and merged into a single dataframe
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+
+
+titanic_train <- read.csv("train.csv", header = T)
+
+#adding column to identify source
+titanic_train <- titanic_train %>% 
+  mutate(source = "train")
+
+titanic_test <- read.csv("test.csv", header = T)
+#adding column to identify source
+titanic_test <- titanic_test %>% 
+  mutate(Survived = NA,
+         source = "test")
+
+#merging the data. step1 starts here
+titanic_data <- bind_rows(titanic_train, titanic_test)
+
+glimpse(titanic_data)
+```
+
+## Cleaning data
+
+Checking for `NA` values in the full df tells us that Age column has 86 missing in `test` & 177 missing values in `train` while there's 1 missing NA value in Fare. The 418 missing values in Survived in `test` are the ones we need to predict.
+
+```{r}
+titanic_data %>% 
+  group_by(source) %>% 
+  summarise_all(~ sum(is.na(.)))
+```
+
+### Janitor::clean_names()
+
+Now i've got a thing about keeping column names clean so summoning `janitor` with a magic wand:
+
+```{r}
+titanic_data <- titanic_data %>% 
+  mutate(family_count = SibSp+Parch+1) %>% 
+  janitor::clean_names()
+names(titanic_data)
+```
+
+Voila. Everything now in lower case and snake case!
+
+### Imputing NA values in `embarked`
+
+Now under **embarked** there are two rows that don't have `NA` but are blank. That's a bit odd🤨
+
+```{r}
+titanic_data %>% 
+  count(embarked, sort = T)
+```
+
+Since it is only 2 such rows, I'll be replacing the `NA` values with the most repeated **embarked** value. So now zero empty values in **embarked**
+
+```{r}
+mode_embarked <- titanic_data %>% 
+  count(embarked, sort = T) %>% 
+  select(embarked) %>% 
+  head(1) %>% 
+#this beautiful func comes from the purrr package. equivalent of .[[1]]
+  pluck(1)
+
+titanic_data <- titanic_data %>% 
+  mutate(embarked = if_else(embarked == "", mode_embarked, embarked))
+
+titanic_data %>% 
+  count(embarked, sort = T)
+```
+
+### Imputing NA values in `age`
+
+The **age** column has a bunch of missing values. My approach today is to substitute them with the median values when grouped by **sex** and **class**. Here's a function written to impute within the test and train data accordingly.
+
+*note: Feature engineering functions can be addressed in the `tidymodels`* *framework at recipe stage.*
+
+```{r}
+median_age_calc <- function(df){
+  median_ages <- df %>% 
+    group_by(sex, pclass) %>% 
+    summarise(age = median(age,na.rm = T))
+  df %>%
+    mutate(age = case_when((sex =="male" & pclass ==1 & is.na(age)) ~ median_ages$age[1],
+                           (sex =="male" & pclass ==2 & is.na(age)) ~ median_ages$age[2],
+                           (sex =="male" & pclass ==3 & is.na(age)) ~ median_ages$age[3],
+                           (sex =="female" & pclass ==1 & is.na(age)) ~ median_ages$age[4],
+                           (sex =="female" & pclass ==2 & is.na(age)) ~ median_ages$age[5],
+                           (sex =="female" & pclass ==3 & is.na(age)) ~ median_ages$age[6],
+                           .default = age)
+    )
+}
+
+titanic_data <- titanic_data %>% 
+  median_age_calc() %>% ungroup()
+
+```
+
+Are there any `na` values in the titanic data now?
+
+```{r}
+titanic_data %>% 
+  select(source, survived, sex, pclass, fare, age) %>% 
+  group_by(source) %>% 
+  summarise_all(~ sum(is.na(.)))
+```
+
+Phew. So age is covered. What are the median values now?
+
+```{r}
+titanic_data %>% 
+  group_by(pclass, sex) %>%
+  summarise(median_age = median(age))
+```
+
+### Imputing `NA` values for fare
+
+There's this one person (passenger_id = 1044, male and pclass = 3) who has a `na` value in **fare** from `test` data. Replacing it with the median value.
+
+```{r}
+titanic_data %>% 
+  select(source, name, passenger_id, sex, age, pclass, fare) %>% 
+  filter(is.na(fare))
+```
+
+```{r}
+titanic_data %>% 
+  group_by(sex, pclass) %>% 
+  summarise(median_fare = median(fare, na.rm = T))
+```
+
+Replacing in the main df
+
+```{r}
+titanic_data <- titanic_data %>% 
+  mutate(fare = if_else(is.na(fare), 
+#from the above table. Urgh!! hard coding for that 1 guy!! how inelegant.
+                        7.8958, age))
+```
 
 # Feature Engineering
 
-# Building Model 1:
+For this post, I've focussed on a different approach while predicting survival probabilities. The guiding principle here is to club passengers from the same family and/or the same ticket_ID. The `titanic` dataset poses the challenge of having people within the same family purchase different tickets while at the same time so **surnames** really are not always the best grouping feature.
 
-## Testing for accuracy
+One such example is the Cacic family:
+
+```{r}
+titanic_data %>% 
+  select(name, sex,age, ticket, survived) %>% 
+  filter(str_detect(name, "Cacic"))
+```
+
+How about only clubbing with only **surname**? Well, that also gets tricky because sometimes we have instances of people within the same **ticket** sharing multiple **surnames.**
+
+Case in point is ticket 1601:
+
+```{r}
+titanic_data %>% 
+  select(name, sex, age, ticket, survived) %>% 
+  filter(ticket==1601)
+```
+
+In times of crisis, it is expected that groups that traveled together will look out for their own. While this is not a thumb rule, I wanted to create a custom column that will combine the **ticket** and **surnames**.
+
+So first step is to finding the surnames. That means using regex. Lovely 🤢
+
+## Splitting names
+
+With absolutely no guilt, I confess that this took me almost an entire day to figure out. And am I glad to have done it. The best thing about the tidyverse approach is the onus on making readable data. For that I'm grateful to discover functions like `seperate_wider_regex`.
+
+Essentially, it is a delimiter that breaks up columns based on the string patterns. So neat!
+
+```{r}
+names_with_splchar <- regex("[A-Za-z]+[\\'\\-\\s]+[A-Za-z]+")
+names_with_3words <- regex("[A-Za-z]+\\s[A-Za-z]+\\s[A-Za-z]+")
+names_with_1word <- regex("[A-Za-z]+") 
+names_with_2words <- regex("[A-Za-z]+\\s+[A-Za-z]+")
+
+
+titanic_data <- titanic_data %>% 
+  separate_wider_regex(
+    name, 
+    patterns = c(
+#IMP: ordering of regex patterns changes the outcome
+      surname = str_c(c(names_with_splchar, 
+                        names_with_3words,
+                        names_with_1word), 
+                      collapse = "|"),    # picks the first word before comma
+      ", ",                               # the comma  
+#IMP: ordering of regex patterns changes the outcome
+      title = str_c(c(names_with_2words , # two words with special char in between like 'the countess'
+                      names_with_1word),  # one word such as Mr Miss Mrs etc
+                    collapse = "|"),      
+      ". ",                               # the dot
+      given_name = ".+"),                 # picks anything else which occurs at least once
+    cols_remove = F                       # retains the original column    
+  ) 
+
+titanic_data %>% 
+  select(name, title, surname, given_name) %>% 
+  head(10)
+```
+
+What is the break of titles now?
+
+```{r}
+titanic_data %>% 
+  count(title, sort= T)
+```
+
+## Creating a custom grouping
+
+The **ticket** is going to be broken up into **ticket_tail** (the last character) and **ticket_head** (all but the last character). Then we merge **surname** and **ticket_head** to create a **group_id**
+
+```{r}
+titanic_data <- titanic_data %>% 
+  mutate(ticket_head = substr(ticket, 1, nchar(ticket)-1),
+         ticket_tail = substr(ticket, nchar(ticket), nchar(ticket)),
+         group_id = paste0(surname, "_", ticket_head)) 
+```
+
+Creating columns that indicate the number of people and other flags
+
+```{r}
+titanic_data <- titanic_data %>% 
+  add_count(group_id) %>% rename(pax_in_group = n)
+
+titanic_data <- titanic_data %>% 
+  mutate(flag = case_when ((family_count==1 & pax_in_group==1) ~ "1_solo",
+                           family_count == pax_in_group ~ "2_family_full",
+                           !(family_count == pax_in_group) ~ "3_clubbed",
+                           .default = "x"))
+
+titanic_data <- titanic_data %>% 
+  add_count(ticket_head) %>% 
+  rename(pax_in_ticket_head = n)
+
+# how many instances of the same ticket having multiple groups? 
+titanic_data <- titanic_data %>% 
+  group_by(ticket) %>% 
+  mutate(groups_in_ticket = n_distinct(group_id)) %>% ungroup()
+
+# which tickets that have more than 1 groups in them? 
+#     these passengers will have ticket_grouping precedence as they may include 
+#     nannies, relatives & friends that don't share the same surname
+ticket_with_multiple_groups <- titanic_data %>% 
+  filter(!groups_in_ticket==1) %>% 
+  count(ticket, sort = T)
+
+titanic_data <- titanic_data %>% 
+  mutate(final_grouping = if_else(ticket %in% ticket_with_multiple_groups$ticket, 
+                             ticket, group_id),
+         final_label = if_else(ticket %in% ticket_with_multiple_groups$ticket,
+                         "4_ticket_grouping", flag)) 
+```
+
+Since the code now has become a bit too long and I'm creating a checkpost here with a new df called `titanic_data2`
+
+```{r}
+titanic_data2 <- titanic_data %>% 
+  select(source, passenger_id, survived,  sex, age, fare, pclass, embarked, 
+         family_count, pax_in_group, pax_in_ticket_head, groups_in_ticket,
+         final_grouping) %>% 
+  mutate(final_grouping = as_factor(final_grouping),
+         survived = as_factor(survived),
+         pclass = as_factor(pclass),
+         sex = as_factor(sex),
+         embarked = as_factor(embarked))
+glimpse(titanic_data2)
+```
+
+Now this is the part I don't get. Why does Kaggle call it `train` and `test` when it can be easily told to be `given_data` and `to_predict` data?
+
+```{r}
+to_predict <- titanic_data2 %>% 
+  filter(source == "test") %>% select(-survived, -source)
+given_data <- titanic_data2 %>% 
+  filter(source == "train") %>% select(-source)
+```
+
+`given_data` has all the necessary columns we need to train the algo on
+
+```{r}
+glimpse(given_data)
+```
+
+`to_predict` dataframe has everything else except **survived** column that needs to be predicted.
+
+```{r}
+glimpse(to_predict)
+```
+
+Phew. finally done with the pre-processing. Thanks for sticking around. Here have a gif
+
+![](https://media.giphy.com/media/lSVXGiITXtabGGxAyg/giphy.gif){fig-align="center" width="240"}
+
+# Model Building 
+
+So today I'm going to be taking different classification models and compare the findings on a 10-fold bootstrap resample. The 4 selected models are:
+
+1.  Logistic classification
+2.  Random Forest
+3.  Support Vector Machines
+4.  Decision Trees
+
+The [Tidymodels textbook](https://www.tmwr.org/workflows.html#workflow-sets-intro) is possibly the best place to begin understanding about workflow. In a nutshell:
+
+-   Create resampling folds
+
+-   Describe each model (I'm going to be using untuned parameters for sake of simplicity)
+
+-   create a recipe for each model
+
+-   Just as you would with a single model, the workflow combines the base recipe with the multiple models but it takes the form of a list here
+
+-   Fit the resampled folds on the workflow_set
+
+-   Find the winning model - since we're dealing with classification, I am using `roc_auc`
+
+-   fit the winning model to the `given data`
+
+-   Generate predictions on `to_predict` df using the best fit
+
+-   submit on kaggle
+
+-   ...
+
+-   profit? (well not exactly. but you can create another blog and share your new found knowledge with the world🤓)
+
+So lets get cooking!
+
+## The Recipe 
