@@ -248,12 +248,14 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
   <li><a href="#step-7-8-fitting-the-winner-and-predictions" id="toc-step-7-8-fitting-the-winner-and-predictions" class="nav-link" data-scroll-target="#step-7-8-fitting-the-winner-and-predictions">Step 7 &amp; 8: Fitting the winner and predictions</a></li>
   <li><a href="#step-9-submit-to-kaggle" id="toc-step-9-submit-to-kaggle" class="nav-link" data-scroll-target="#step-9-submit-to-kaggle">Step 9: Submit to Kaggle</a></li>
   </ul></li>
+  <li><a href="#understanding-variable-importance" id="toc-understanding-variable-importance" class="nav-link" data-scroll-target="#understanding-variable-importance">Understanding variable importance</a></li>
   <li><a href="#tailpiece-regarding-autoplot" id="toc-tailpiece-regarding-autoplot" class="nav-link" data-scroll-target="#tailpiece-regarding-autoplot">Tailpiece regarding <code>autoplot()</code></a>
   <ul class="collapse">
   <li><a href="#peeking-under-the-hood" id="toc-peeking-under-the-hood" class="nav-link" data-scroll-target="#peeking-under-the-hood">Peeking under the hood</a></li>
   <li><a href="#extracting-the-tibbles" id="toc-extracting-the-tibbles" class="nav-link" data-scroll-target="#extracting-the-tibbles">Extracting the tibbles</a></li>
   <li><a href="#manually-generated-plot" id="toc-manually-generated-plot" class="nav-link" data-scroll-target="#manually-generated-plot">Manually generated plot</a></li>
   </ul></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul>
 </nav>
     </div>
@@ -441,7 +443,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 2 train         0     0      0     0     0</code></pre>
 </div>
 </div>
-<p>Phew. So age is covered. What are the median values now?</p>
+<p>Phew. So <strong>age</strong> is covered but one <code>NA</code> in <strong>fare</strong>. What are the median age values now?</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -788,12 +790,8 @@ $ groups_in_ticket   &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1,
 $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31515,…</code></pre>
 </div>
 </div>
-<p>Phew. finally done with the pre-processing. Thanks for sticking around. Here have a gif</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://media.giphy.com/media/lSVXGiITXtabGGxAyg/giphy.gif" class="img-fluid figure-img" width="240"></p>
-</figure>
-</div>
+<p>Phew. finally done with the pre-processing. Thanks for sticking around. Here have a gif.</p>
+<p><img src="https://media.giphy.com/media/lSVXGiITXtabGGxAyg/giphy.gif" class="img-fluid" style="width:75.0%"></p>
 </section>
 </section>
 <section id="model-building" class="level1">
@@ -959,7 +957,7 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 11.58433 mins</code></pre>
+<pre><code>Time difference of 10.71708 mins</code></pre>
 </div>
 </div>
 <p>Hmm… So moving on. What does the workflow_set object look like now?</p>
@@ -1111,12 +1109,8 @@ OOB prediction error (Brier s.):  0.1386875 </code></pre>
 </details>
 </div>
 <p>Uploaded it to Kaggle and behold…</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/image-1373401355.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-<p>Not bad !!! that’s like top 12% percentile.</p>
+<p><img src="images/image-1373401355.png" class="img-fluid"></p>
+<p>Not bad !!! that’s like… top 12% percentile. Woohoo!</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://media.giphy.com/media/7zYKTVt3vvbj7SC2Bl/giphy.gif" class="img-fluid figure-img" style="width:50.0%"></p>
@@ -1124,6 +1118,32 @@ OOB prediction error (Brier s.):  0.1386875 </code></pre>
 </figure>
 </div>
 </section>
+</section>
+<section id="understanding-variable-importance" class="level1">
+<h1>Understanding variable importance</h1>
+<p>Since we’ve got a random forest winner, I wanted to take a look at the importance of the variables used.</p>
+<p>Inspired from Julia’s <a href="https://juliasilge.com/blog/ikea-prices/">Tidy Tuesday on Ikea Prices</a>. For a ranger model, we do need to go back to the model specification itself and update the engine with <code>importance = "permutation"</code> in order to compute feature importance. This means fitting the model one more time.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>rf_model2 <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(<span class="at">trees =</span> <span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>, <span class="at">importance =</span> <span class="st">"permutation"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(base_recipe) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(rf_model2) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(given_data) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull_workflow_fit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vip</span>(<span class="at">aesthetics =</span> <span class="fu">list</span>(<span class="at">alpha=</span> <span class="fl">0.8</span>, <span class="at">fill =</span> <span class="st">"green"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This is interesting to me. While I was expecting the <strong>gender</strong> and <strong>class</strong> predictors to play an important part in the model, other grouped columns like <strong>family_count, pax_in_group &amp; pax_in_ticket_head</strong> also added in improving the accuracy.</p>
 </section>
 <section id="tailpiece-regarding-autoplot" class="level1">
 <h1>Tailpiece regarding <code>autoplot()</code></h1>
@@ -1138,7 +1158,7 @@ OOB prediction error (Brier s.):  0.1386875 </code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "workflow_set" "tbl_df"       "tbl"          "data.frame"  </code></pre>
@@ -1148,7 +1168,7 @@ OOB prediction error (Brier s.):  0.1386875 </code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>titanic_rs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>titanic_rs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A workflow set/tibble: 4 × 4
@@ -1164,7 +1184,7 @@ OOB prediction error (Brier s.):  0.1386875 </code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>titanic_rs<span class="sc">$</span>result[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>titanic_rs<span class="sc">$</span>result[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># Resampling results
@@ -1199,7 +1219,7 @@ Run `show_notes(.Last.tune.result)` for more information.</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>titanic_rs<span class="sc">$</span>result[[<span class="dv">1</span>]]<span class="sc">$</span>.metrics[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>titanic_rs<span class="sc">$</span>result[[<span class="dv">1</span>]]<span class="sc">$</span>.metrics[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
@@ -1216,12 +1236,12 @@ Run `show_notes(.Last.tune.result)` for more information.</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>tidy_titanic_rs <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">wf =</span> <span class="fu">rep</span>(<span class="fu">unique</span>(titanic_rs<span class="sc">$</span>wflow_id), <span class="dv">15</span><span class="sc">*</span><span class="dv">2</span>),</span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">metrics =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"accuracy"</span>, <span class="dv">4</span>), </span>
-<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="fu">rep</span>(<span class="st">"roc_auc"</span>,<span class="dv">4</span>)),</span>
-<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>                                        <span class="dv">15</span>),</span>
-<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">values =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">4</span><span class="sc">*</span><span class="dv">15</span><span class="sc">*</span><span class="dv">2</span>))</span>
-<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tidy_titanic_rs, <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>tidy_titanic_rs <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">wf =</span> <span class="fu">rep</span>(<span class="fu">unique</span>(titanic_rs<span class="sc">$</span>wflow_id), <span class="dv">15</span><span class="sc">*</span><span class="dv">2</span>),</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">metrics =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"accuracy"</span>, <span class="dv">4</span>), </span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>                                          <span class="fu">rep</span>(<span class="st">"roc_auc"</span>,<span class="dv">4</span>)),</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>                                        <span class="dv">15</span>),</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">values =</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">4</span><span class="sc">*</span><span class="dv">15</span><span class="sc">*</span><span class="dv">2</span>))</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tidy_titanic_rs, <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 3
@@ -1241,7 +1261,7 @@ Run `show_notes(.Last.tune.result)` for more information.</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(tidy_titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(tidy_titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 120   3</code></pre>
@@ -1255,32 +1275,32 @@ Run `show_notes(.Last.tune.result)` for more information.</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>bigtable <span class="ot">&lt;-</span> purrr<span class="sc">:::</span><span class="fu">pluck</span>(titanic_rs, <span class="dv">4</span>)</span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>wflow_id_titanic <span class="ot">&lt;-</span> <span class="fu">unique</span>(titanic_rs<span class="sc">$</span>wflow_id)</span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(wflow_id_titanic)){</span>
-<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>  wflow_id <span class="ot">&lt;-</span> wflow_id_titanic[i]</span>
-<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>  smalltable <span class="ot">&lt;-</span> bigtable[[i]]</span>
-<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(smalltable<span class="sc">$</span>.metrics)){</span>
-<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a>    smallertable <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">pluck</span>(smalltable<span class="sc">$</span>.metrics, j)</span>
-<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a>    tidy_titanic_rs<span class="sc">$</span>values[(tidy_titanic_rs<span class="sc">$</span>wf<span class="sc">==</span>wflow_id <span class="sc">&amp;</span> </span>
-<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a>                              tidy_titanic_rs<span class="sc">$</span>metrics<span class="sc">==</span><span class="st">"accuracy"</span>)][j] <span class="ot">&lt;-</span> smallertable<span class="sc">$</span>.estimate[smallertable<span class="sc">$</span>.metric <span class="sc">==</span> <span class="st">"accuracy"</span>]</span>
-<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a>    tidy_titanic_rs<span class="sc">$</span>values[(tidy_titanic_rs<span class="sc">$</span>wf<span class="sc">==</span>wflow_id <span class="sc">&amp;</span> </span>
-<span id="cb75-13"><a href="#cb75-13" aria-hidden="true" tabindex="-1"></a>                              tidy_titanic_rs<span class="sc">$</span>metrics<span class="sc">==</span><span class="st">"roc_auc"</span>)][j] <span class="ot">&lt;-</span> smallertable<span class="sc">$</span>.estimate[smallertable<span class="sc">$</span>.metric <span class="sc">==</span> <span class="st">"roc_auc"</span>]</span>
-<span id="cb75-14"><a href="#cb75-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb75-15"><a href="#cb75-15" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb75-16"><a href="#cb75-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb75-17"><a href="#cb75-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-18"><a href="#cb75-18" aria-hidden="true" tabindex="-1"></a>tidy_titanic_rs2 <span class="ot">&lt;-</span> tidy_titanic_rs <span class="sc">%&gt;%</span> </span>
-<span id="cb75-19"><a href="#cb75-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(wf, metrics) <span class="sc">%&gt;%</span> </span>
-<span id="cb75-20"><a href="#cb75-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">value_min =</span> <span class="fu">mean</span>(values) <span class="sc">-</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">sd</span>(values),</span>
-<span id="cb75-21"><a href="#cb75-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">value_max =</span> <span class="fu">mean</span>(values) <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">sd</span>(values),</span>
-<span id="cb75-22"><a href="#cb75-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">value_mean =</span> <span class="fu">mean</span>(values)) <span class="sc">%&gt;%</span> <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb75-23"><a href="#cb75-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">right_join</span>(tidy_titanic_rs, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"wf"</span>, <span class="st">"metrics"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>bigtable <span class="ot">&lt;-</span> purrr<span class="sc">:::</span><span class="fu">pluck</span>(titanic_rs, <span class="dv">4</span>)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>wflow_id_titanic <span class="ot">&lt;-</span> <span class="fu">unique</span>(titanic_rs<span class="sc">$</span>wflow_id)</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(wflow_id_titanic)){</span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  wflow_id <span class="ot">&lt;-</span> wflow_id_titanic[i]</span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>  smalltable <span class="ot">&lt;-</span> bigtable[[i]]</span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(smalltable<span class="sc">$</span>.metrics)){</span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>    smallertable <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">pluck</span>(smalltable<span class="sc">$</span>.metrics, j)</span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>    tidy_titanic_rs<span class="sc">$</span>values[(tidy_titanic_rs<span class="sc">$</span>wf<span class="sc">==</span>wflow_id <span class="sc">&amp;</span> </span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>                              tidy_titanic_rs<span class="sc">$</span>metrics<span class="sc">==</span><span class="st">"accuracy"</span>)][j] <span class="ot">&lt;-</span> smallertable<span class="sc">$</span>.estimate[smallertable<span class="sc">$</span>.metric <span class="sc">==</span> <span class="st">"accuracy"</span>]</span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a>    tidy_titanic_rs<span class="sc">$</span>values[(tidy_titanic_rs<span class="sc">$</span>wf<span class="sc">==</span>wflow_id <span class="sc">&amp;</span> </span>
+<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a>                              tidy_titanic_rs<span class="sc">$</span>metrics<span class="sc">==</span><span class="st">"roc_auc"</span>)][j] <span class="ot">&lt;-</span> smallertable<span class="sc">$</span>.estimate[smallertable<span class="sc">$</span>.metric <span class="sc">==</span> <span class="st">"roc_auc"</span>]</span>
+<span id="cb76-14"><a href="#cb76-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb76-15"><a href="#cb76-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb76-16"><a href="#cb76-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb76-17"><a href="#cb76-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-18"><a href="#cb76-18" aria-hidden="true" tabindex="-1"></a>tidy_titanic_rs2 <span class="ot">&lt;-</span> tidy_titanic_rs <span class="sc">%&gt;%</span> </span>
+<span id="cb76-19"><a href="#cb76-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(wf, metrics) <span class="sc">%&gt;%</span> </span>
+<span id="cb76-20"><a href="#cb76-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">value_min =</span> <span class="fu">mean</span>(values) <span class="sc">-</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">sd</span>(values),</span>
+<span id="cb76-21"><a href="#cb76-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">value_max =</span> <span class="fu">mean</span>(values) <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">sd</span>(values),</span>
+<span id="cb76-22"><a href="#cb76-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">value_mean =</span> <span class="fu">mean</span>(values)) <span class="sc">%&gt;%</span> <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb76-23"><a href="#cb76-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">right_join</span>(tidy_titanic_rs, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"wf"</span>, <span class="st">"metrics"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>For some reason, <code>value_max</code> and <code>value_min</code> for the error-bar are 0.5 * 𝝈 or approximately <a href="https://mathbitsnotebook.com/Algebra2/Statistics/STstandardNormalDistribution.html#:~:text=Reading%20from%20the%20chart%2C%20it,or%20left">±19% of the mean of values</a>%20of%20the%20mean.)</p>
+<p>For some reason, <code>value_max</code> and <code>value_min</code> for the error-bar are 0.5 * 𝝈 or approximately <a href="https://mathbitsnotebook.com/Algebra2/Statistics/STstandardNormalDistribution.html">±19% of the mean of values</a></p>
 </section>
 <section id="manually-generated-plot" class="level2">
 <h2 class="anchored" data-anchor-id="manually-generated-plot">Manually generated plot</h2>
@@ -1289,31 +1309,31 @@ Run `show_notes(.Last.tune.result)` for more information.</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>tidy_titanic_rs2 <span class="sc">%&gt;%</span> </span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(wf, <span class="fu">desc</span>(value_mean)), </span>
-<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> values, </span>
-<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> wf))<span class="sc">+</span></span>
-<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymax =</span> value_max, <span class="at">ymin =</span> value_min), </span>
-<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
-<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span> value_mean))<span class="sc">+</span></span>
-<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fl">0.65</span>, <span class="fl">0.9</span>, <span class="fl">0.05</span>),</span>
-<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.65</span>, <span class="fl">0.9</span>))<span class="sc">+</span></span>
-<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)<span class="sc">+</span></span>
-<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>)<span class="sc">+</span></span>
-<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>tidy_titanic_rs2 <span class="sc">%&gt;%</span> </span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(wf, <span class="fu">desc</span>(value_mean)), </span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> values, </span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> wf))<span class="sc">+</span></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymax =</span> value_max, <span class="at">ymin =</span> value_min), </span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span> value_mean))<span class="sc">+</span></span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fl">0.65</span>, <span class="fl">0.9</span>, <span class="fl">0.05</span>),</span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.65</span>, <span class="fl">0.9</span>))<span class="sc">+</span></span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)<span class="sc">+</span></span>
+<span id="cb77-11"><a href="#cb77-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>)<span class="sc">+</span></span>
+<span id="cb77-12"><a href="#cb77-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>And here once again is the auto-generated plot. Not bad, eh?</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="quarto-figure quarto-figure-center">
@@ -1322,9 +1342,12 @@ Run `show_notes(.Last.tune.result)` for more information.</code></pre>
 <p></p><figcaption class="figure-caption">Oooh yeeah!</figcaption><p></p>
 </figure>
 </div>
-
-
 </section>
+</section>
+<section id="section" class="level1">
+<h1></h1>
+
+
 </section>
 
 </main> <!-- /main -->

@@ -135,7 +135,7 @@ titanic_data %>%
   summarise_all(~ sum(is.na(.)))
 ```
 
-Phew. So age is covered. What are the median values now?
+Phew. So **age** is covered but one `NA` in **fare**. What are the median age values now?
 
 ```{r}
 titanic_data %>% 
@@ -328,7 +328,7 @@ glimpse(given_data)
 glimpse(to_predict)
 ```
 
-Phew. finally done with the pre-processing. Thanks for sticking around. Here have a gif
+Phew. finally done with the pre-processing. Thanks for sticking around. Here have a gif.
 
 ![](https://media.giphy.com/media/lSVXGiITXtabGGxAyg/giphy.gif){width="75%"}
 
@@ -535,6 +535,29 @@ Not bad !!! that's like... top 12% percentile. Woohoo!
 
 ![.. And so did you, dear reader!!](https://media.giphy.com/media/7zYKTVt3vvbj7SC2Bl/giphy.gif){width="50%"}
 
+# Understanding variable importance
+
+Since we've got a random forest winner, I wanted to take a look at the importance of the variables used.
+
+Inspired from Julia's [Tidy Tuesday on Ikea Prices](https://juliasilge.com/blog/ikea-prices/). For a ranger model, we do need to go back to the model specification itself and update the engine with `importance = "permutation"` in order to compute feature importance. This means fitting the model one more time.
+
+```{r}
+library(vip)
+
+rf_model2 <- rand_forest(trees = 1000) %>% 
+  set_engine("ranger", importance = "permutation") %>% 
+  set_mode("classification")
+
+workflow() %>% 
+  add_recipe(base_recipe) %>% 
+  add_model(rf_model2) %>% 
+  fit(given_data) %>% 
+  pull_workflow_fit() %>% 
+  vip(aesthetics = list(alpha= 0.8, fill = "green"))
+```
+
+This is interesting to me. While I was expecting the **gender** and **class** predictors to play an important part in the model, other grouped columns like **family_count, pax_in_group & pax_in_ticket_head** also added in improving the accuracy.
+
 # Tailpiece regarding `autoplot()`
 
 After model creation, I couldn't help wonder at the marvel behind the `autoplot()` function. How can a single function decipher convey such meaningful depth?
@@ -659,3 +682,5 @@ autoplot(titanic_rs)
 ```
 
 ![Oooh yeeah!](https://media.giphy.com/media/3oEduKVQdG4c0JVPSo/giphy.gif){width="50%"}
+
+# 
