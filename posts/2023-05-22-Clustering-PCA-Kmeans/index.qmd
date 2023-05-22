@@ -1,0 +1,19 @@
+---
+title: "Day 15 of #50daysofKaggle"
+subtitle: "Audience Segmentation"
+description: "using PCA with KMeans"
+date: '2023-05-22'
+categories: [R, kaggle]
+featured: no
+execute:
+  warning: false
+---
+
+Today's excercise is an attempt to replicate the customer segmentation applied in [Winarta's blog](https://rpubs.com/wiwiekwin/585082)
+
+```{r}
+library(tidyverse)
+library(FactoMineR)
+library(factoextra)
+library(animation)
+```
