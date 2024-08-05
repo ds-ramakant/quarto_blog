@@ -425,5 +425,12 @@
     "title": "Day 15 of #50daysofKaggle",
     "section": "",
     "text": "Today’s excercise is an attempt to replicate the customer segmentation applied in Winarta’s blog\n\n\nCode\nlibrary(tidyverse)\nlibrary(FactoMineR)\nlibrary(factoextra)\nlibrary(animation)"
+  },
+  {
+    "objectID": "posts/20240-08-05-Restart/index.html",
+    "href": "posts/20240-08-05-Restart/index.html",
+    "title": "Restart",
+    "section": "",
+    "text": "Been a busy year away from the blog. Checking in to see if all systems are running ok.\n\n\n\nShuru kare leke prabhu ka naam"
   }
 ]
