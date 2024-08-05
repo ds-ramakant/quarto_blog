@@ -1,6 +1,6 @@
 ---
 title: "Back after a while"
-subtitle: "...as in 14 months"
+subtitle: "..."
 description: "mic check"
 date: '2024-06-28'
 categories: [personal]
