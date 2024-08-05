@@ -7,6 +7,7 @@ categories: [R, kaggle]
 featured: no
 execute:
   warning: false
+draft: true
 ---
 
 Today's excercise is an attempt to replicate the customer segmentation applied in [Winarta's blog](https://rpubs.com/wiwiekwin/585082)
