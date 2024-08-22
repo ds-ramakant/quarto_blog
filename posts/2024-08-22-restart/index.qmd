@@ -1,0 +1,17 @@
+---
+title: "Restart"
+subtitle: "..."
+description: "mic check"
+date: '2024-08-22'
+categories: [personal]
+featured: no
+execute:
+  warning: false
+Draft: false
+---
+
+Been a busy year away from the blog. Checking in to see if all systems are running ok.
+
+![Shuru kare leke prabhu ka naam](restart-start-again-y.gif){fig-align="left"}
+
+*minor edit (22-Aug): checking for github deployment, lowercasing folder name*
