@@ -7,6 +7,27 @@
     "text": "I am a media professional with a natural curiosity towards media and technology. I’ve worked across broadcast and OTT companies since 2008 with a wide experience across Content, Business & Marketing. In my last role at MX Player, I worked on cross-functional initiatives to help boost platform growth and engagement. I am fluent in English, Hindi & Telugu. My favourite weekend activity is to switch off the laptop and listen to vinyls with my daughter 👨‍👩‍👧"
   },
   {
+    "objectID": "about.html#why-the-null-hypothesis",
+    "href": "about.html#why-the-null-hypothesis",
+    "title": "About Me",
+    "section": "Why the Null Hypothesis?",
+    "text": "Why the Null Hypothesis?\nBritish Nobel-laureate Ronald Coase famously said “If you torture the data long enough, it will confess to anything.” True words that ring loudly in any digital-first company. As someone who’s cut their teeth in quantitative research, I firmly it is consumer behaviour & insight that is sacred and we must seek it out with the help of data (big or small).\nIn statistics, the null hypothesis conjecture is the first step to begin any inferential analysis. Similarly, I begin every growth project with a null hypothesis to help me understand consumer behaviour better. In some ways this blog is an attempt at trying a growth hack on myself. I’ve been passionately teaching myself new tools to make more meaningful impact towards business. I hope to document and share my learnings through this journal.\nFeel free to leave a message using the tab on the right👉🏼"
+  },
+  {
+    "objectID": "about.html#skills",
+    "href": "about.html#skills",
+    "title": "About Me",
+    "section": "Skills",
+    "text": "Skills\n\n\n\n\n\n\n\n\n\n\nR Programming\n\nPython Programming\n\nStatistics & Machine Learning\n\n\n\nConsumer Research\n\nGrowth Marketing\n\nBusiness Management"
+  },
+  {
+    "objectID": "about.html#qualifications",
+    "href": "about.html#qualifications",
+    "title": "About Me",
+    "section": "Qualifications",
+    "text": "Qualifications\n\nWorkEducationCertificationsTeaching\n\n\nMX Player (Feb ’20 - Oct ’22)\nDirector, Consumer Insights & Strategy\n\nHeading the Consumer Insights division and leading a team of data scientists/analysts to centralize all data requirements across departments (such as SVOD, Marketing, Content & Product)\nDoubled the platform share of acquired shows and drove launch strategy of 35+ acquired shows cross-functionally with Product, Programming and Marketing teams\nDevised 5x growth of International dubbed category MX VDESI; responsible for GTM strategies that led to growth in user retention & consumption\n\nViu India (Sep ’16 - Feb ’20)\nAssociate Director, Growth Marketing\n\nSpearheaded the platform growth with 6x increase in user base & 7x increase in app installs. Managing annual marketing budgets and building the OTT audience acquisition models\nDeveloped Marketing Measurement Model to optimize TV GRP-to-new installs. This modelling mix was increased marketing efficiencies by 15%\n20% reduction in marketing costs by geo-mapping user consumption density at zip-code level thereby building more focused media plan for Telugu markets\n\nSony Pictures Network India (Jun ’08 - Sep ’15)\nManagment Trainee to Sr. Manager\n\nMultiple roles in the company with wide experience across Strategy, Research, Marketing, Revenue Planning and Content Acquisition\n\n\n\n Post Graduate Diploma in Communications, 2008\n\nMICA (Mudra Institute of Communications, Ahmedabad)\n\n B.E (Computer Science & Engineering), 2006\n\nVasavi College of Engineering (affiliated to Osmania University), Hyderabad\n\n\n\n\nIBM Data Science Professional Certificate, Sep’22\nMachine learning, Feb ’21 (Stanford University)\n\nExecutive Program in Strategic Digital Marketing, Dec’19 (University of Cambridge Judge Business School)\nProfessional Certificate Programme in Business Negotiation, Feb ’22 (SP Jain Institute of Management & Research)\n\n\n\nVisiting Faculty at\n\nFlame University, Pune\nSNDT Women’s University, Mumbai"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "The Null Hypothesis",
@@ -61,20 +82,6 @@
     "title": "What a wonderful ‘wordle’!",
     "section": "Which words can be the best Worlde openers?",
     "text": "Which words can be the best Worlde openers?\nArmed with the above knowledge, we now can filter out the commonly occurring words. Also I use a naive method to rank these words basis the occurrence of the letters. For instance, in the picture above, the word S A I N T seems to be a valid word comprising of the top occurring letters.\nAdmittedly, I use a pretty crude method to determine the best openers. Known drawbacks of this methodology are:\n\nDoesn’t consider the future path of the word (number of steps to get to the right word)\nOnly considers the rank of the letters and not the actual probability of occurrence\n\nWith that out of the way, I was able to determine that there are 39 words that can be formed with the top 5 occurring letters in each position. I’ve created a score that is determined by the rank of each letter within its position. For instance, S A I N T gets a score of 9 by summing up 1 (S in first position) + 1 (A in second position) + 2 (I in third) + 2 (N in fourth) + 3 (T in fifth). The lower the score, the higher the frequency of occurrences. Scroll below to read the rest of the words.\n\n\nCode\n#function to pick the top 5 letters\ntop5_selection <- function(x)\n{x %>% arrange(desc(x[2])) %>% head(5) %>% select(1)}\n#defining null table\nfinal_grid <- tibble(ranking = 1:5)\n\nfor(i in 2:length(freq_table)){\n  t <- top5_selection(select(freq_table,1,all_of(i)))\n  final_grid <- cbind(final_grid,t)\n  colnames(final_grid)[i] = paste0(\"p\",i-1)\n}\ntopwords <- position_word_list %>% \nfilter(p1 %in% final_grid$p1,\n       p2 %in% final_grid$p2,\n       p3 %in% final_grid$p3,\n       p4 %in% final_grid$p4,\n       p5 %in% final_grid$p5) \n\n#finding consolidated score of each word\ntopwords %<>%\n  rowwise() %>% \n  mutate(p1_rank = which(p1 == final_grid$p1),\n         p2_rank = which(p2 == final_grid$p2),\n         p3_rank = which(p3 == final_grid$p3),\n         p4_rank = which(p4 == final_grid$p4),\n         p5_rank = which(p5 == final_grid$p5))\n\ntopwords2 <- topwords %>% \n  transmute(word = paste0(p1,p2,p3,p4,p5),\n         score = sum(p1_rank, p2_rank,p3_rank, p4_rank, p5_rank)) %>% \n  arrange(score)\n\nkable(topwords2, \n      format = \"html\",\n      caption = \"Top 39 words\") %>%\n    kable_styling() %>%\n    scroll_box(width = \"50%\", height = \"400px\") %>% \n  kable_classic()\n\n\n\n\nTop 39 words\n \n  \n    word \n    score \n  \n \n\n  \n    SAINT \n    9 \n  \n  \n    CRANE \n    9 \n  \n  \n    COAST \n    11 \n  \n  \n    BRINE \n    11 \n  \n  \n    CEASE \n    11 \n  \n  \n    CRONE \n    11 \n  \n  \n    CAUSE \n    12 \n  \n  \n    CRIER \n    12 \n  \n  \n    BRINY \n    12 \n  \n  \n    BOAST \n    12 \n  \n  \n    TAINT \n    12 \n  \n  \n    CRONY \n    12 \n  \n  \n    TEASE \n    13 \n  \n  \n    POISE \n    13 \n  \n  \n    TOAST \n    13 \n  \n  \n    PAINT \n    13 \n  \n  \n    BOOST \n    14 \n  \n  \n    POINT \n    14 \n  \n  \n    COUNT \n    14 \n  \n  \n    PRONE \n    14 \n  \n  \n    BEAST \n    14 \n  \n  \n    PRINT \n    15 \n  \n  \n    PAUSE \n    15 \n  \n  \n    TAUNT \n    15 \n  \n  \n    PROSE \n    15 \n  \n  \n    CREST \n    15 \n  \n  \n    CRUST \n    16 \n  \n  \n    BRIAR \n    16 \n  \n  \n    BOULE \n    16 \n  \n  \n    POESY \n    16 \n  \n  \n    CRUEL \n    16 \n  \n  \n    PRUNE \n    16 \n  \n  \n    BRUNT \n    16 \n  \n  \n    TRUER \n    17 \n  \n  \n    TREAT \n    18 \n  \n  \n    TRIAL \n    18 \n  \n  \n    TRUST \n    18 \n  \n  \n    TRULY \n    19 \n  \n  \n    TROLL \n    20 \n  \n\n\n\n\n\nThere we have it. My take on the best opening words.\nI’ve used words such as SAINT, CRANE, COAST etc and they’ve been reasonably useful to me.\nWhich are your favourite opening words? Please do leave a comment to let me know!"
-  },
-  {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
-    "section": "",
-    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
-  },
-  {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
-    "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
   },
   {
     "objectID": "posts/2022-06-01-tidytuesday-nyt-bestsellers-list/index.en.html",
@@ -138,27 +145,6 @@
     "title": "Holiday break for #50daysofkaggle",
     "section": "",
     "text": "Diwali is here\nIts festive season and I’ve been really tied up with a bunch of things\n\n4 day long weekend where it was just about family and festivities. frankly one of the most rejuvenating and happy experiences to spend time with my daughter. She’s at the stage where she’s old enough to keep herself occupied alone. Its a pleasure to just watch her paint, draw, sing, role-play, read and whatever it is she loves doing.\nJob hunting has been taken up by a notch. Four major initiatives:\n\napplying more aggresively on applying to more companies in a day (spread across sites such as linkedin, iimjobs and naukri)\nOpening up the longlist to include SEA markets (Phillipines, Vietnam, Singapore, Indonesia)\nvolunteered to take up a course at FLAME starting in December. Its a 30 hour course that’s going to be quite gruelling to deliver. So will need to really start preparing as early as possible\nbuilding longlist of contacts for outreach. Downloaded LinkedIn contacts lists and sorted in order of priority\n\n\nCurrently pausing blog related updates to focus on picking up the job hunt search. Hopefully, post-Diwali there will be some action once people are back in offices!\nedit: enabled comments using hypothes.is as enabling Disqus is going to take some more effort"
-  },
-  {
-    "objectID": "about.html#why-the-null-hypothesis",
-    "href": "about.html#why-the-null-hypothesis",
-    "title": "About Me",
-    "section": "Why the Null Hypothesis?",
-    "text": "Why the Null Hypothesis?\nBritish Nobel-laureate Ronald Coase famously said “If you torture the data long enough, it will confess to anything.” True words that ring loudly in any digital-first company. As someone who’s cut their teeth in quantitative research, I firmly it is consumer behaviour & insight that is sacred and we must seek it out with the help of data (big or small).\nIn statistics, the null hypothesis conjecture is the first step to begin any inferential analysis. Similarly, I begin every growth project with a null hypothesis to help me understand consumer behaviour better. In some ways this blog is an attempt at trying a growth hack on myself. I’ve been passionately teaching myself new tools to make more meaningful impact towards business. I hope to document and share my learnings through this journal.\nFeel free to leave a message using the tab on the right👉🏼"
-  },
-  {
-    "objectID": "about.html#skills",
-    "href": "about.html#skills",
-    "title": "About Me",
-    "section": "Skills",
-    "text": "Skills\n\n\n\n\n\n\n\n\n\n\nR Programming\n\nPython Programming\n\nStatistics & Machine Learning\n\n\n\nConsumer Research\n\nGrowth Marketing\n\nBusiness Management"
-  },
-  {
-    "objectID": "about.html#qualifications",
-    "href": "about.html#qualifications",
-    "title": "About Me",
-    "section": "Qualifications",
-    "text": "Qualifications\n\nWorkEducationCertificationsTeaching\n\n\nMX Player (Feb ’20 - Oct ’22)\nDirector, Consumer Insights & Strategy\n\nHeading the Consumer Insights division and leading a team of data scientists/analysts to centralize all data requirements across departments (such as SVOD, Marketing, Content & Product)\nDoubled the platform share of acquired shows and drove launch strategy of 35+ acquired shows cross-functionally with Product, Programming and Marketing teams\nDevised 5x growth of International dubbed category MX VDESI; responsible for GTM strategies that led to growth in user retention & consumption\n\nViu India (Sep ’16 - Feb ’20)\nAssociate Director, Growth Marketing\n\nSpearheaded the platform growth with 6x increase in user base & 7x increase in app installs. Managing annual marketing budgets and building the OTT audience acquisition models\nDeveloped Marketing Measurement Model to optimize TV GRP-to-new installs. This modelling mix was increased marketing efficiencies by 15%\n20% reduction in marketing costs by geo-mapping user consumption density at zip-code level thereby building more focused media plan for Telugu markets\n\nSony Pictures Network India (Jun ’08 - Sep ’15)\nManagment Trainee to Sr. Manager\n\nMultiple roles in the company with wide experience across Strategy, Research, Marketing, Revenue Planning and Content Acquisition\n\n\n\n Post Graduate Diploma in Communications, 2008\n\nMICA (Mudra Institute of Communications, Ahmedabad)\n\n B.E (Computer Science & Engineering), 2006\n\nVasavi College of Engineering (affiliated to Osmania University), Hyderabad\n\n\n\n\nIBM Data Science Professional Certificate, Sep’22\nMachine learning, Feb ’21 (Stanford University)\n\nExecutive Program in Strategic Digital Marketing, Dec’19 (University of Cambridge Judge Business School)\nProfessional Certificate Programme in Business Negotiation, Feb ’22 (SP Jain Institute of Management & Research)\n\n\n\nVisiting Faculty at\n\nFlame University, Pune\nSNDT Women’s University, Mumbai"
   },
   {
     "objectID": "posts/2023-02-17-migrating-to-quarto/index.html",
@@ -259,13 +245,6 @@
     "text": "Random Forest\nIts the same code, but we alter the number of predicted variables to \\(m= 6\\) which is the mtry parameter\n\n\nDefault settings for randomForest()\nfor regression analysis, \\(m = p/3\\)\nfor classification analysis, \\(m = \\sqrt p\\)\n\n\nCode\nset.seed(1)\nrf.boston <- randomForest(medv ~ . , data = Boston, \n                           subset = train.boston, \n                           mtry = 6, # m = p/2\n                           importance = T)\nrf.boston\n\n\n\nCall:\n randomForest(formula = medv ~ ., data = Boston, mtry = 6, importance = T,      subset = train.boston) \n               Type of random forest: regression\n                     Number of trees: 500\nNo. of variables tried at each split: 6\n\n          Mean of squared residuals: 10.09466\n                    % Var explained: 86.87\n\n\n\n\nCode\nyhat.rf <- predict(rf.boston, newdata = Boston[-train.boston, ])\nplot(yhat.rf, test.boston)\nabline(0,1,col = \"red\")\n\n\n\n\n\nPredicted v/s Actuals for Boston test data using RandomForest\n\n\n\n\nWhat’s the MSE here?\n\n\nCode\nmean((yhat.rf - test.boston)^2)\n\n\n[1] 20.06644\n\n\n.. and therefore RMSE is:\n\n\nCode\nmean((yhat.rf - test.boston)^2)^0.5\n\n\n[1] 4.479558\n\n\nThat’s ±$4480 from the mean predicted values - which is better than $4839 by using the Bagging method.\nBefore moving ahead, we can also check the importance() function to determine key predictors\n\n\nCode\nimportance(rf.boston)\n\n\n          %IncMSE IncNodePurity\ncrim    19.435587    1070.42307\nzn       3.091630      82.19257\nindus    6.140529     590.09536\nchas     1.370310      36.70356\nnox     13.263466     859.97091\nrm      35.094741    8270.33906\nage     15.144821     634.31220\ndis      9.163776     684.87953\nrad      4.793720      83.18719\ntax      4.410714     292.20949\nptratio  8.612780     902.20190\nlstat   28.725343    5813.04833\n\n\nWhat are these columns?\n\n%IncMSE: Avg decrease in accuracy of predictions on out-of-bag samples when given variable is calculated\nIncNodePurity:Total decrease in node purity that results from split on that variable averaged over all trees.\n\nin regression trees, the node impurity measured by the training Residual Sum of Squares(RSS)\nin classification trees, it is the deviance\n\n\n\n\nCode\nvarImpPlot(rf.boston)\n\n\n\n\n\nPredicted v/s Actuals for Boston test data using Bagging\n\n\n\n\nThis shows that the two most important variables are rm (average number of rooms per dwelling) and lstat (lower status of the population in %)"
   },
   {
-    "objectID": "posts/2023-03-02-ISLRv2-Decision-Trees/index.html#partial-dependence-plots-interaction-plot",
-    "href": "posts/2023-03-02-ISLRv2-Decision-Trees/index.html#partial-dependence-plots-interaction-plot",
-    "title": "ISLR Lab - Decision Trees",
-    "section": "partial dependence plots & Interaction plot",
-    "text": "partial dependence plots & Interaction plot\nThese plots illustrate the asflkjdsa;lfdsj marginal effect\n\n\nCode\npar(mfrow = c(1,2))\nplot(boost.boston, i = \"rm\")\n\n\n\n\n\nRelation between predictors rm and lstat to outcome medv\n\n\n\n\nCode\nplot(boost.boston, i = \"lstat\")\n\n\n\n\n\nRelation between predictors rm and lstat to outcome medv\n\n\n\n\n\n\nCode\n.caption_text{\n  margin: auto;\n  text-align: center;\n}"
-  },
-  {
     "objectID": "posts/2023-03-02-ISLRv2-Decision-Trees/index.html#partial-dependence-plots",
     "href": "posts/2023-03-02-ISLRv2-Decision-Trees/index.html#partial-dependence-plots",
     "title": "ISLR Lab - Decision Trees",
@@ -285,13 +264,6 @@
     "title": "ISLR Lab - Decision Trees",
     "section": "Adding regularisation parameter 𝛌",
     "text": "Adding regularisation parameter 𝛌\nAlso referred as the shrinkage parameter, the default value is 0.001 but we will change this to 0.01\n\n\nCode\nset.seed(1)\nboost.boston2 <- gbm(medv ~ ., data = Boston[train,], \n                    distribution = \"gaussian\",\n                    n.trees = 5000,\n                    interaction.depth = 4, \n                    shrinkage = 0.01)\nyhat.boost2 <- predict(boost.boston2, newdata = Boston[-train.boston,], \n                      n.trees = 5000)\n\n\nThe resulting MSE therefore is calculated as:\n\n\nCode\nmean((yhat.boost2 - test.boston)^2)^0.5\n\n\n[1] 3.593472\n\n\nNow we’ve got it even lower at ±$3593"
-  },
-  {
-    "objectID": "posts/2023-03-04-day-14-of-50daysofkaggle/index.html",
-    "href": "posts/2023-03-04-day-14-of-50daysofkaggle/index.html",
-    "title": "Day 14 of #50daysofKaggle",
-    "section": "",
-    "text": "Today’s post is an attempt to use the tidymodels framework to screen multiple models. Inspiration for this post comes from"
   },
   {
     "objectID": "posts/2023-03-04-day-13-of-50daysofkaggle/index.html",
@@ -327,13 +299,6 @@
     "title": "Day 14 of #50daysofKaggle",
     "section": "Creating a custom grouping",
     "text": "Creating a custom grouping\nThe ticket is going to be broken up into ticket_tail (the last character) and ticket_head (all but the last character). Then we merge surname and ticket_head to create a group_id\n\n\nCode\ntitanic_data <- titanic_data %>% \n  mutate(ticket_head = substr(ticket, 1, nchar(ticket)-1),\n         ticket_tail = substr(ticket, nchar(ticket), nchar(ticket)),\n         group_id = paste0(surname, \"_\", ticket_head)) \n\n\nCreating columns that indicate the number of people and other flags\n\n\nCode\ntitanic_data <- titanic_data %>% \n  add_count(group_id) %>% rename(pax_in_group = n)\n\ntitanic_data <- titanic_data %>% \n  mutate(flag = case_when ((family_count==1 & pax_in_group==1) ~ \"1_solo\",\n                           family_count == pax_in_group ~ \"2_family_full\",\n                           !(family_count == pax_in_group) ~ \"3_clubbed\",\n                           .default = \"x\"))\n\ntitanic_data <- titanic_data %>% \n  add_count(ticket_head) %>% \n  rename(pax_in_ticket_head = n)\n\n# how many instances of the same ticket having multiple groups? \ntitanic_data <- titanic_data %>% \n  group_by(ticket) %>% \n  mutate(groups_in_ticket = n_distinct(group_id)) %>% ungroup()\n\n# which tickets that have more than 1 groups in them? \n#     these passengers will have ticket_grouping precedence as they may include \n#     nannies, relatives & friends that don't share the same surname\nticket_with_multiple_groups <- titanic_data %>% \n  filter(!groups_in_ticket==1) %>% \n  count(ticket, sort = T)\n\ntitanic_data <- titanic_data %>% \n  mutate(final_grouping = if_else(ticket %in% ticket_with_multiple_groups$ticket, \n                             ticket, group_id),\n         final_label = if_else(ticket %in% ticket_with_multiple_groups$ticket,\n                         \"4_ticket_grouping\", flag)) \n\n\nSince the code now has become a bit too long and I’m creating a checkpost here with a new df called titanic_data2\n\n\nCode\ntitanic_data2 <- titanic_data %>% \n  select(source, passenger_id, survived,  sex, age, fare, pclass, embarked, \n         family_count, pax_in_group, pax_in_ticket_head, groups_in_ticket,\n         final_grouping) %>% \n  mutate(final_grouping = as_factor(final_grouping),\n         survived = as_factor(survived),\n         pclass = as_factor(pclass),\n         sex = as_factor(sex),\n         embarked = as_factor(embarked))\nglimpse(titanic_data2)\n\n\nRows: 1,309\nColumns: 13\n$ source             <chr> \"train\", \"train\", \"train\", \"train\", \"train\", \"train…\n$ passenger_id       <int> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, …\n$ survived           <fct> 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, …\n$ sex                <fct> male, female, female, female, male, male, male, mal…\n$ age                <dbl> 22, 38, 26, 35, 35, 22, 54, 2, 27, 14, 4, 58, 20, 3…\n$ fare               <dbl> 22, 38, 26, 35, 35, 22, 54, 2, 27, 14, 4, 58, 20, 3…\n$ pclass             <fct> 3, 1, 3, 1, 3, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, …\n$ embarked           <fct> S, C, S, S, S, Q, S, S, S, C, S, S, S, S, S, S, Q, …\n$ family_count       <dbl> 2, 2, 1, 2, 1, 1, 1, 5, 3, 2, 3, 1, 1, 7, 1, 1, 6, …\n$ pax_in_group       <int> 1, 2, 1, 2, 1, 1, 1, 5, 3, 2, 3, 1, 1, 7, 1, 1, 6, …\n$ pax_in_ticket_head <int> 5, 14, 2, 8, 1, 1, 6, 5, 4, 4, 3, 14, 1, 22, 8, 1, …\n$ groups_in_ticket   <int> 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …\n$ final_grouping     <fct> Braund_A/5 2117, Cumings_PC 1759, Heikkinen_STON/O2…\n\n\nNow this is the part I don’t get. Why does Kaggle call it train and test when it can be easily told to be given_data and to_predict data?\n\n\nCode\nto_predict <- titanic_data2 %>% \n  filter(source == \"test\") %>% select(-survived, -source)\ngiven_data <- titanic_data2 %>% \n  filter(source == \"train\") %>% select(-source)\n\n\ngiven_data has all the necessary columns we need to train the algo on\n\n\nCode\nglimpse(given_data)\n\n\nRows: 891\nColumns: 12\n$ passenger_id       <int> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, …\n$ survived           <fct> 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, …\n$ sex                <fct> male, female, female, female, male, male, male, mal…\n$ age                <dbl> 22, 38, 26, 35, 35, 22, 54, 2, 27, 14, 4, 58, 20, 3…\n$ fare               <dbl> 22, 38, 26, 35, 35, 22, 54, 2, 27, 14, 4, 58, 20, 3…\n$ pclass             <fct> 3, 1, 3, 1, 3, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, …\n$ embarked           <fct> S, C, S, S, S, Q, S, S, S, C, S, S, S, S, S, S, Q, …\n$ family_count       <dbl> 2, 2, 1, 2, 1, 1, 1, 5, 3, 2, 3, 1, 1, 7, 1, 1, 6, …\n$ pax_in_group       <int> 1, 2, 1, 2, 1, 1, 1, 5, 3, 2, 3, 1, 1, 7, 1, 1, 6, …\n$ pax_in_ticket_head <int> 5, 14, 2, 8, 1, 1, 6, 5, 4, 4, 3, 14, 1, 22, 8, 1, …\n$ groups_in_ticket   <int> 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …\n$ final_grouping     <fct> Braund_A/5 2117, Cumings_PC 1759, Heikkinen_STON/O2…\n\n\nto_predict dataframe has everything else except survived column that needs to be predicted.\n\n\nCode\nglimpse(to_predict)\n\n\nRows: 418\nColumns: 11\n$ passenger_id       <int> 892, 893, 894, 895, 896, 897, 898, 899, 900, 901, 9…\n$ sex                <fct> male, female, male, male, female, male, female, mal…\n$ age                <dbl> 34.5, 47.0, 62.0, 27.0, 22.0, 14.0, 30.0, 26.0, 18.…\n$ fare               <dbl> 34.5, 47.0, 62.0, 27.0, 22.0, 14.0, 30.0, 26.0, 18.…\n$ pclass             <fct> 3, 3, 2, 3, 3, 3, 3, 2, 3, 3, 3, 1, 1, 2, 1, 2, 2, …\n$ embarked           <fct> Q, S, Q, S, S, S, Q, S, C, S, S, S, S, S, S, C, Q, …\n$ family_count       <dbl> 1, 2, 1, 1, 3, 1, 1, 3, 1, 3, 1, 1, 2, 2, 2, 2, 1, …\n$ pax_in_group       <int> 1, 1, 1, 1, 2, 1, 1, 3, 1, 3, 1, 1, 2, 2, 2, 2, 1, …\n$ pax_in_ticket_head <int> 3, 1, 1, 6, 11, 3, 3, 6, 16, 4, 10, 3, 2, 2, 2, 4, …\n$ groups_in_ticket   <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, …\n$ final_grouping     <fct> Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31515,…\n\n\nPhew. finally done with the pre-processing. Thanks for sticking around. Here have a gif."
-  },
-  {
-    "objectID": "posts/2023-03-06-day-14-of-50daysofkaggle/index.html#the-recipe",
-    "href": "posts/2023-03-06-day-14-of-50daysofkaggle/index.html#the-recipe",
-    "title": "Day 14 of #50daysofKaggle",
-    "section": "The Recipe",
-    "text": "The Recipe"
   },
   {
     "objectID": "posts/2023-03-06-day-14-of-50daysofkaggle/index.html#step-1-creating-resampling-folds",
@@ -413,31 +378,10 @@
     "text": "Manually generated plot\nWith the data in a rectangular tidy format, the rest of the magic is handled by ggplot\ncracks knuckles\n\n\nCode\ntidy_titanic_rs2 %>% \nggplot(aes(x = reorder(wf, desc(value_mean)), \n             y = values, \n             color = wf))+\n  geom_errorbar(aes(ymax = value_max, ymin = value_min), \n                width = 0.1)+\n  geom_point(aes(y= value_mean))+\n  scale_y_continuous(breaks = seq(0.65, 0.9, 0.05),\n                     limits = c(0.65, 0.9))+\n  theme(legend.position = \"none\")+\n  labs(x = NULL, y = NULL)+\n  facet_wrap(~metrics)\n\n\n\n\n\nAnd here once again is the auto-generated plot. Not bad, eh?\n\n\nCode\nautoplot(titanic_rs)\n\n\n\n\n\n\n\n\nOooh yeeah!"
   },
   {
-    "objectID": "posts/2024-06-28-Back-after-a-while/index.html",
-    "href": "posts/2024-06-28-Back-after-a-while/index.html",
-    "title": "Back after a while",
-    "section": "",
-    "text": "Been a busy year and have been away from the blog for a while now. Publishing a new post to see if all systems are working as I last remember them to be.\n\n\n\nknock knock"
-  },
-  {
-    "objectID": "posts/2023-05-22-Clustering-PCA-Kmeans/index.html",
-    "href": "posts/2023-05-22-Clustering-PCA-Kmeans/index.html",
-    "title": "Day 15 of #50daysofKaggle",
-    "section": "",
-    "text": "Today’s excercise is an attempt to replicate the customer segmentation applied in Winarta’s blog\n\n\nCode\nlibrary(tidyverse)\nlibrary(FactoMineR)\nlibrary(factoextra)\nlibrary(animation)"
-  },
-  {
-    "objectID": "posts/20240-08-05-Restart/index.html",
-    "href": "posts/20240-08-05-Restart/index.html",
-    "title": "Restart",
-    "section": "",
-    "text": "Been a busy year away from the blog. Checking in to see if all systems are running ok.\n\n\n\nShuru kare leke prabhu ka naam"
-  },
-  {
     "objectID": "posts/2024-08-05-Restart/index.html",
     "href": "posts/2024-08-05-Restart/index.html",
     "title": "Restart",
     "section": "",
-    "text": "Been a busy year away from the blog. Checking in to see if all systems are running ok.\n\n\n\nShuru kare leke prabhu ka naam"
+    "text": "Been a busy year away from the blog. Checking in to see if all systems are running ok.\n\n\n\nShuru kare leke prabhu ka naam\n\n\nminor edit (22-Aug): checking for github deployment"
   }
 ]
