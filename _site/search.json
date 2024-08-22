@@ -378,13 +378,6 @@
     "text": "Manually generated plot\nWith the data in a rectangular tidy format, the rest of the magic is handled by ggplot\ncracks knuckles\n\n\nCode\ntidy_titanic_rs2 %>% \nggplot(aes(x = reorder(wf, desc(value_mean)), \n             y = values, \n             color = wf))+\n  geom_errorbar(aes(ymax = value_max, ymin = value_min), \n                width = 0.1)+\n  geom_point(aes(y= value_mean))+\n  scale_y_continuous(breaks = seq(0.65, 0.9, 0.05),\n                     limits = c(0.65, 0.9))+\n  theme(legend.position = \"none\")+\n  labs(x = NULL, y = NULL)+\n  facet_wrap(~metrics)\n\n\n\n\n\nAnd here once again is the auto-generated plot. Not bad, eh?\n\n\nCode\nautoplot(titanic_rs)\n\n\n\n\n\n\n\n\nOooh yeeah!"
   },
   {
-    "objectID": "posts/2024-08-05-Restart/index.html",
-    "href": "posts/2024-08-05-Restart/index.html",
-    "title": "Restart",
-    "section": "",
-    "text": "Been a busy year away from the blog. Checking in to see if all systems are running ok.\n\n\n\nShuru kare leke prabhu ka naam\n\n\nminor edit (22-Aug): checking for github deployment"
-  },
-  {
     "objectID": "posts/2024-08-22-restart/index.html",
     "href": "posts/2024-08-22-restart/index.html",
     "title": "Restart",
