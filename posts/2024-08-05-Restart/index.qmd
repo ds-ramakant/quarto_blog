@@ -14,4 +14,4 @@ Been a busy year away from the blog. Checking in to see if all systems are runni
 
 ![Shuru kare leke prabhu ka naam](restart-start-again-y.gif){fig-align="left"}
 
-*minor edit (22-Aug): checking for github deployment*
+*minor edit (22-Aug): checking for github deployment and lowercasing folder name*
