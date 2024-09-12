@@ -20,7 +20,7 @@ commments:
   hypothesis: true
 ---
 
-I am a media professional with a natural curiosity towards media and technology. I've worked across broadcast and OTT companies since 2008 with a wide experience across Content, Business & Marketing. In my last role at MX Player, I worked on cross-functional initiatives to help boost platform growth and engagement. I am fluent in English, Hindi & Telugu. My favourite weekend activity is to switch off the laptop and listen to vinyls with my daughter 👨‍👩‍👧
+I am a marketing professional with a natural curiosity towards consumer and data. I've worked across B2C companies since 2008 with a wide experience across Marketing, Business & Analytics. I am based in Bengaluru and work for a Series-A startup called Turno. We work closely with 3-wheeler EV manufacturers to sell and finance their vehicles across the country. As the Head of Marketing, I spend my time between speaking to consumers, building campaigns and devising growth loops to improve our margins. Previously, I've worked with renowned OTT companies like MX Player & Viu to build their userbase in India. I am fluent in English, Hindi & Telugu. My favourite weekend activity is to switch off the laptop and rush to spend time with my family in Mumbai 👨‍👩‍👧
 
 ## Why the Null Hypothesis?
 
@@ -30,18 +30,22 @@ In statistics, the null hypothesis conjecture is the first step to begin any inf
 
 Feel free to leave a message using the tab on the right👉🏼
 
-## Skills
+## Executive Competencies
 
 ::: {.column-body-outset style="border: none"}
-+:-----------------------------------:+:--------------------------------:+:-----------------------------:+
-| {{< fa brands r-project size=2x >}} | {{< fa brands python size=2x >}} | {{< fa chart-line size=2x >}} |
-|                                     |                                  |                               |
-| R Programming                       | Python Programming               | Statistics & Machine Learning |
-+-------------------------------------+----------------------------------+-------------------------------+
-| {{< fa eye size=2x >}}              | {{< fa rocket size=2x >}}        | {{< fa book size=2x >}}       |
-|                                     |                                  |                               |
-| Consumer Research                   | Growth Marketing                 | Business Management           |
-+-------------------------------------+----------------------------------+-------------------------------+
++:------------------------------------:+:-----------------------------------:+:-------------------------:+
+| {{< fa indian-rupee-sign size=2x >}} | {{< fa eye size=2x >}}              | {{< fa rocket size=2x >}} |
+|                                      |                                     |                           |
+| Marketing P&L                        | Consumer Research                   | Growth Marketing          |
++--------------------------------------+-------------------------------------+---------------------------+
+| {{< fa pen-nib size=2x >}}           | {{< fa brands r-project size=2x >}} | {{< fa book size=2x >}}   |
+|                                      |                                     |                           |
+| Creative Strategy                    | Analytics                           | Business Management       |
++--------------------------------------+-------------------------------------+---------------------------+
+|                                      | {{< fa person-rays size=2x >}}      |                           |
+|                                      |                                     |                           |
+|                                      | Team Mentorship                     |                           |
++--------------------------------------+-------------------------------------+---------------------------+
 :::
 
 ## Qualifications
