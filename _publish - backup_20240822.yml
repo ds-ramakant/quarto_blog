@@ -1,0 +1,4 @@
+- source: project
+  netlify:
+    - id: b8288f52-0c2f-4326-8298-bf235531600b
+      url: 'https://comforting-speculoos-cf7ff6.netlify.app'

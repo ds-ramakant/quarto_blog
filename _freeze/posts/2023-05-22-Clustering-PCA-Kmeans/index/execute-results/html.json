@@ -1,0 +1,14 @@
+{
+  "hash": "096899321abb930b4f086ecfb45cc584",
+  "result": {
+    "markdown": "---\ntitle: \"Day 15 of #50daysofKaggle\"\nsubtitle: \"Audience Segmentation\"\ndescription: \"using PCA with KMeans\"\ndate: '2023-05-22'\ncategories: [R, kaggle]\nfeatured: no\nexecute:\n  warning: false\n---\n\n\nToday's excercise is an attempt to replicate the customer segmentation applied in [Winarta's blog](https://rpubs.com/wiwiekwin/585082)\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nlibrary(FactoMineR)\nlibrary(factoextra)\nlibrary(animation)\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
