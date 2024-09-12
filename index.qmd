@@ -20,12 +20,12 @@ format:
 
 Hi there 👋🏼
 
-My name is Ramakant and I am a digital marketing enthusiast with a natural curiosity towards data and technology. I started this blog as a way to sharpen my data science skills and occasionally pour out those creative juices.
+My name is Ramakant and I am a marketing enthusiast with a natural curiosity towards consumer, data and technology. Welcome to my personal blog of random musings on marketing & other stuff.
 
-Feel free to explore the topics below - possibly a fraction what's on my mind these days. (rest are in the drafts.. or worse - unwritten😄). [The page "About Me"](https://www.ds-ramakant.com/about.html)has more details about my professional qualifications and my motivation to create this site.
+You will find more [about me on this page](https://www.ds-ramakant.com/about.html).
 
 ## Get In Touch ✍️
 
-I'm always on the lookout for a good conversation. Feel free to mail me at `d.s.ramakant@gmail.com` or check out my [Linkedin profile](https://www.linkedin.com/in/dsramakant/). If you'd like to leave comments, please click the vertical bar on the right 👉🏼
+Feel free to mail me at `d.s.ramakant@gmail.com` or check out my [Linkedin profile](https://www.linkedin.com/in/dsramakant/). If you'd like to leave comments, please click the vertical bar on the right 👉🏼
 
 ## Blog Posts

@@ -8,6 +8,7 @@ featured: no
 execute:
   warning: false
 Draft: false
+image: icons8-restart-96.png
 ---
 
 Been a busy year away from the blog. Checking in to see if all systems are running ok.

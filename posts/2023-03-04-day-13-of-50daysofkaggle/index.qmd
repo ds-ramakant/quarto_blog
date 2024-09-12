@@ -7,14 +7,8 @@ categories: [personal, kaggle]
 featured: no
 execute:
   warning: false
-image: giphy.gif
+image: peace.jpg
 ---
-
-![](/posts/2023-03-04-day-13-of-50daysofkaggle/lost_map.gif){fig-align="center" width="25%"}
-
-# Checking in at the checkpoint
-
-As none of you are wondering, I'm taking this Saturday evening to update myself on what I've been trying to do with all the work so far. And since none of you have commented, I'm going to pretend I'm talking to my invisible reader and assuage none of their concerns. 🙈
 
 # Where am I right now?
 

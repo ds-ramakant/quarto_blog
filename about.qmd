@@ -20,13 +20,13 @@ commments:
   hypothesis: true
 ---
 
-I am a marketing professional with a natural curiosity towards consumer and data. I've worked across B2C companies since 2008 with a wide experience across Marketing, Business & Analytics. I am based in Bengaluru and work for a Series-A startup called Turno. We work closely with 3-wheeler EV manufacturers to sell and finance their vehicles across the country. As the Head of Marketing, I spend my time between speaking to consumers, building campaigns and devising growth loops to improve our margins. Previously, I've worked with renowned OTT companies like MX Player & Viu to build their userbase in India. I am fluent in English, Hindi & Telugu. My favourite weekend activity is to switch off the laptop and rush to spend time with my family in Mumbai 👨‍👩‍👧
+I am a marketing professional 16+ years experience across Marketing, Business & Analytics teams in consumer companies. Through my professional journey I've helped businesses solve for user acquisition, engagement and revenue - from entertainment powerhouses like MX Player & Viu to smaller, nimble footed startups selling Electric Vehicles. I am passionate about being at the intersection of consumer insights and analytics while working alongside teams to bring growth ideas to life. I am fluent in English, Hindi & Telugu. My favourite weekend activity is to switch off the laptop and rush to spend time with my family in Mumbai 👨‍👩‍👧
 
 ## Why the Null Hypothesis?
 
 British Nobel-laureate Ronald Coase famously said **"If you torture the data long enough, it will confess to anything."** True words that ring loudly in any digital-first company. As someone who's cut their teeth in quantitative research, I firmly it is consumer behaviour & insight that is sacred and we must seek it out with the help of data (big or small).
 
-In statistics, the null hypothesis conjecture is the first step to begin any inferential analysis. Similarly, I begin every growth project with a null hypothesis to help me understand consumer behaviour better. In some ways this blog is an attempt at trying a growth hack on myself. I've been passionately teaching myself new tools to make more meaningful impact towards business. I hope to document and share my learnings through this journal.
+In statistics, the null hypothesis conjecture is the first step to begin any inferential analysis. Similarly, I begin every growth project with a null hypothesis to help me understand the consumer better. The hope is to document and share my learnings through this journal.
 
 Feel free to leave a message using the tab on the right👉🏼
 
@@ -53,23 +53,40 @@ Feel free to leave a message using the tab on the right👉🏼
 ::: panel-tabset
 ### Work
 
+**Turno** *(May'23 - Present)*
+
+[Head of Marketing]{.underline}
+
+-   [Transformed the acquisition strategy on Commercial Vehicle business by scaling paid digital channels, lowering unit economics and improving contribution margins by 40%. Hands-on expertise in team building that contributes to 95% of vehicle sales]{.my-jobexp}
+-   Built the Marketing Analytics platform that captures the full consumer journey in continuous collaboration with Analytics & Tech teams. Resulted in lowering CAC by 50% to maximise cost efficient channels (affiliates, biddable & non-biddable networks)
+-   Managed and forecasted \~INR 3 cr annual marketing budget to scale digital marketing channels across Search, Display, Video campaigns. Started leveraging first-party data (online and offline events) and proceeded to use deep-funnel events for conversion rate optimisation
+-   Enabled A/B experimentations across acquisition and activation stages (80+ hypothesis every quarter iterating on creatives, landing pages, campaign parameters, sales scripts) resulting in identifying high-impact winner creative communication + TG
+
 **MX Player** *(Feb '20 - Oct '22)*
 
-[Director, Consumer Insights & Strategy]{.underline}
+[Director, Insights & Growth Strategy]{.underline}
 
--   [Heading the Consumer Insights division and leading a team of data scientists/analysts to centralize all data requirements across departments (such as SVOD, Marketing, Content & Product)]{.my-jobexp}
--   [Doubled the platform share of acquired shows and drove launch strategy of 35+ acquired shows cross-functionally with Product, Programming and Marketing teams]{.my-jobexp}
--   [Devised 5x growth of International dubbed category MX VDESI; responsible for GTM strategies that led to growth in user retention & consumption]{.my-jobexp}
+-   [Devised the launch campaigns and strategies for 40+ MX original web series including localised campaigns (Hindi, Telugu, Tamil, Marathi, Punjabi among others)]{.my-jobexp}
+
+-   Grew MX movie catalogue (in Hindi and 9+ languages - India's 2nd largest AVOD collection) by 30% using engagement-optimised experiments
+
+-   Conceptualised and executed "MX Vdesi Wednesdays" - first-in-OTT branding initiative that brought gripping localised dramas from Turkey, S. Korea, China, Ukraine, Russia, UK, USA. Boosted the userbase by 40% with footprint across 80 towns
+
+-   Developed on & off platform campaigns for INR 400cr acquired content portfolio \[contributed to 85%+ of watchtime minutes\]
+
+-   Instituted long term retention & remarketing growth loops involving cross-functional teams from Content, Product, Tech
 
 **Viu India** *(Sep '16 - Feb '20)*
 
 [Associate Director, Growth Marketing]{.underline}
 
--   [Spearheaded the platform growth with 6x increase in user base & 7x increase in app installs. Managing annual marketing budgets and building the OTT audience acquisition models]{.my-jobexp}
--   [Developed Marketing Measurement Model to optimize TV GRP-to-new installs. This modelling mix was increased marketing efficiencies by 15%]{.my-jobexp}
--   [20% reduction in marketing costs by geo-mapping user consumption density at zip-code level thereby building more focused media plan for Telugu markets]{.my-jobexp}
+-   Managed USD 15M annual marketing plan and spearheaded platform growth achieving remarkable 10x growth - from 0.5M to 5M MAU in span of 14 months - through brand, paid, organic and offline marketing channels (SEM, SEO, SM, Influencers, performance marketing, brand digital etc)
 
-**Sony Pictures Network India** (Jun '08 - Sep '15)
+-   Built Google, Facebook and affiliate accounts for app-install, display and search campaigns that improved Cost Per Install by 40% across 9 months - outcome after running 15+ monthly digital conversion experiments across geos
+
+-   Successfully drove Viu Originals’ launch brand campaigns across Hindi, Telugu, and Tamil markets. Responsible for cross-media campaigns, agencies relations , user-acquisition, creative teams - outcomes measured using Quarterly Brand Studies
+
+**Sony Pictures Network India** (Jun '08 - Sep '16)
 
 [Managment Trainee to Sr. Manager]{.underline}
 
