@@ -1,0 +1,23 @@
+---
+title: "Monday Motivation"
+subtitle: "Entry #1"
+description: "My weekly check-in"
+date: '2024-09-16'
+categories: [personal, monday-motivation]
+featured: no
+execute:
+  warning: false
+Draft: false
+image: ../MondayMotivation.png
+---
+
+Robert Louis Stevenson said very rightly:
+
+> *Don't judge each day by the harvest you reap but by the seeds you plant*
+
+At this point in time, its about putting in effort daily and not even thinking about the results.
+
+Here's what keeping me motivated this week:
+
+-   Cracked my personal best 10k with a surprisingly good performance. Shaved off 4 full minutes from two weeks ago. This came at the cost of very high HR. Serious area of concern.
+-   Sustained micro-journaling is helping me make most use of my day as productively as possible. Next bet is on content generation on this site.
