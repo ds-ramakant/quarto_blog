@@ -1,7 +1,7 @@
 ---
 title: "Monday Motivation"
-subtitle: "Entry #1"
-description: "My weekly check-in"
+subtitle: "Beginner's Luck"
+description: "Why do we get things right the first time?"
 date: '2024-09-16'
 categories: [personal, monday-motivation]
 featured: no
@@ -11,13 +11,38 @@ Draft: false
 image: ../MondayMotivation.png
 ---
 
-Robert Louis Stevenson said very rightly:
+# Monday Motivation: Beginner's Luck
 
-> *Don't judge each day by the harvest you reap but by the seeds you plant*
+Ever tried something for the first time and nailed it? Wonder why that happens?
 
-At this point in time, its about putting in effort daily and not even thinking about the results.
+Recently, I revisited Paulo Coehlo's "The Alchemist" and I still find pearls of wisdom scattered in his story. Early in the book, Santiago's fortune changes when he meets an old man who calls himself the King of Salem. The old man asks him to meet him the next day at noon with a tenth of his flock. The boy does as instructed but is surprised to note how easy it was for him to sell the remaining sheep. The old man tells him about the power of "Beginner's Luck" or "Principle of Favourability"
 
-Here's what keeping me motivated this week:
+> *"...when you play for the first time, you are almost sure to win. Beginner's luck"*
+>
+> *"Why is that?"*
+>
+> ***"Because there is a force that wants you to realize your destiny; it whets your appetite with a taste of success"***
 
--   Cracked my personal best 10k with a surprisingly good performance. Shaved off 4 full minutes from two weeks ago. This came at the cost of very high HR. Serious area of concern.
--   Sustained micro-journaling is helping me make most use of my day as productively as possible. Next bet is on content generation on this site.
+What a beautiful way of explaining such a strong notion to a child.
+
+![](alchemist.jpg){width="50%"}
+
+# Why does this happen? 
+
+But why does the "Principle of Favourability" even exist? Here's my hot take on the psychological forces behind the magic.
+
+1.  **Fresh Perspective:** More often than not, a new set of eyes on any problem will point out to solution that would have been overlooked by others. Whenever a team has been struggling with a project for prolonged periods of time, they wouldn't mind taking a newcomer's opinion
+2.  **No Fear of Failure:** Its such a refreshing feeling not to be burdened by failure. More often than not we're shy of trying out something new because past experience or our social circle tells us that it doesn't work. There is a much lesser threshold of expectations with a newcomer
+3.  **Positive energy:** Always an important part of the solution that is never given enough credence. Sometimes the sheer enthusiasm and exuberance of a newcomer generates positive vibes leading to unexpected success
+4.  **Experimental mindset:** Beginners are yet to learn the rules of engagement and would be inclined to try unconventional approaches
+5.  **"The Universe is guiding you":** Some may call it mumbo-jumbo, but Paulo Coelho terms it simply as a way of the Universe trying to motivate you in not giving up. If you were to lose patience and confidence in the first attempt, that would be the end of the road. But now that you've tasted succeess, you must now persevere to achieve the end goal. It's a spiritual argument rather than a rational one - but I have qualms in believing in it 😁
+
+# How do I make use of this? 
+
+1.  **Keep the momentum:** Super critical - one good deed will lead to another. Stopping or getting distracted by something else will make it appear as another flash in the pan. There's a good chance that if you're smart enough, you'd have learnt something new to get the next attempt right
+2.  **Stay Curious:** "Think like a child" - absorb and soak in new experiences to maintain that fresh perspective and creativity
+3.  **Stay humble & learn from your wins:** Universe and all that is fine but its always advisable to critically analyse what went right. Understanding your strengths will help in replicating the right outcomes. No need to get cocky about getting it right the first time. No-one said beginner's luck lasts forever🙂
+4.  **Maintain the positivity:** Retaining the winning attitude is important. High probability that the next set of challenges will only be more daunting than the first, therefore keep that optimism. It will help attracting supportive relationships and favourable circumstances.
+5.  **Trust the process:** My favourite and oft-repeated phrase. Keep putting in the effort and don't worry about the outcomes. Believe that this early success is a sign that you're on the right path. Trust your instincts and the process, even when things get tough later.
+
+Literally every time I've started a new project, I've seen the "Principle of Favourability" play out in front of me. Do you have an instance to share as well? Let me know in the comments on the right➡️
