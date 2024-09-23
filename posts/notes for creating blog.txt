@@ -1,0 +1,461 @@
+2024 09 12
+
+Rstudio not opening 
+https://stackoverflow.com/questions/74883944/rstudio-is-not-opening-just-shows-the-rstudio-logo
+uninstalled R For Windows 4.2.3 from the system
+go to windows explorer and find rstudio.exe > right-click and go to 'compatability' tab> click on 'run compatability troubleshooter' > selected 64-bit R 4.4.1  > apply recommended settings
+
+
+2024 08 22
+site is still down. going thru netlify forums. here are some key threads
+https://answers.netlify.com/t/support-guide-compiled-build-and-deploy-resources-start-here/50679
+
+finally got it to work. but I published it directly from R terminal using the following command
+	quarto publish netlify --id 4eb6da0d-6b9b-4d20-ac33-ce0cc533b48
+
+check this link https://quarto.org/docs/publishing/netlify.html#continuous-integration
+
+
+unfortunately seemed to have created a new website by mistake (https://comforting-speculoos-cf7ff6.netlify.app/) 
+
+button greying out. use manual push
+https://forum.posit.co/t/push-and-pull-buttons-for-git-are-not-enabled-in-rstudio/19842/4
+
+now a new problem has surfaced. thought it was about using uppercase in the folder name. so deleted bad folder and created a new folder with today's date and lowercase. Problem is the new folder is not visible in the github repo. able to see commit messages but the folder is missing
+
+SOLVED IT!!! 
+most probably some kind of client issue with RStudio. use the following commands
+	git status 
+		\\ find files that are untracked. most recent post is not being commited for 	some reason
+		\\ latest post needs to be visible in 'posts' and '_site'
+	git add posts/2024-08-22-restart
+	git add _site/posts/2024-08-22-restart
+	git commit -a --message "using git add in terminal"
+	git push origin main
+
+worked immediately after this. alternatively try:
+	git add -A
+	git add --all
+	git add .
+https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/git-add-index-stage-file-staging-commit-combine-untracked-staging-status#:~:text=Untracked%20files%20present%20error,and%20perform%20the%20commit%20again.
+
+
+also check this stackoverflow answer to add uncommited files in git using 
+	git add -i
+https://stackoverflow.com/a/7446711/27300182
+	
+	
+	
+
+
+2024 08 05
+
+trying to restart the blog from neha's college Dell laptop. managed to update R & Rstudio and make changes to the most recent post. however, the last two posts "Day 15..." and "Back after a while" are still facing 404 errors. trying to setup the git account and faced invalid username/pwd error at time of pushing on git
+
+Personal Access Token : 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
+
+something doesn't seem to be working. deleted a folder and created another one. but still the last 2 posts are showing 404 error. these two posts were published on quarto blog after Apr '24
+
+
+Went to Netlify Site Configuration settings. Changed node.js version from 16.x to 18.x under 'Dependency Management'
+https://app.netlify.com/sites/ds-ramakant/configuration/deploys#content
+
+opened terminal. rendered the entire site again using this command
+	quarto render
+	
+Something seems to be wrong with the publishing. the site is getting rendered perfectly in the local host
+(http://localhost:4621/posts/2024-08-05-Restart/index.html). Same is visible on the git hub page but not on netlify. still incomplete as of 20240805. here are the resources that I last checked
+
+https://quarto.org/docs/publishing/netlify.html
+https://quarto.org/docs/publishing/netlify.html#github-action //what is this? 
+https://docs.github.com/en/actions/about-github-actions/understanding-github-actions //github actions? 
+https://answers.netlify.com/search?q=404%20error%20github%20order%3Alatest // netlify support
+
+
+2024 06 28
+Writing a function to create a new blogpost
+
+logging into github after a year. got this message when i tried gitcreds_get(). Looks like i'm still logged in
+> gitcreds::gitcreds_get()
+<gitcreds>
+  protocol: https
+  host    : github.com
+  username: ds-ramakant
+  password: <-- hidden -->
+
+unable to commit because getting this error
+//
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'Admin@Ramakant.(none)')
+//
+
+checking this page --> https://happygitwithr.com/hello-git
+git config --global user.name "ds-ramakant"
+git config --global user.email "d.s.ramakant@gmail.com"
+
+use name and the email associated with your GitHub account.
+
+created a qmd file. then rendered it. seemed to be working ok. 
+tried this next from the terminal:
+git commit -a --message "attempt #5 from terminal"
+git push origin main
+
+these two pushed the latest blog posts. it is see only on the homepage but the main posts don't seem to be working. need to check on this later in the weekend. 
+
+
+
+https://themockup.blog/posts/2022-11-08-use-r-to-generate-a-quarto-blogpost/
+
+
+2023 02 17 
+steps to shift the github repo on netlify
+1) goto site settings. click on "build and deploy" https://app.netlify.com/sites/ds-ramakant/settings/deploys
+2) click on edit settings
+3) follow the instructions mentioned here --> https://quarto.org/docs/publishing/netlify.html#publish-from-git-provider
+	a) leave "build command" empty [chatgpt was wrong about this]
+	b) in publish directory enter "_site" 
+that's it. blog is live now!
+also check --> https://techstacker.com/how-to-switch-site-git-repository-netlify/
+
+Google analytics
+1) created a new property called Quarto RStudio
+	Measurement ID:G-T5T39KBDW1
+2) added that with single quotes in the _quarto.yaml file 
+
+Enabling comments using Hypothes.is
+To enable Disqus on quarto would mean tweaking around with some JS code. Too much of work for me. 
+Hypothes.is (https://quarto.org/docs/output-formats/html-basics.html#commenting) as suggested in the Quarto docmumentation is a super clean alternative. It is cleaner to look (comments and needs sign-in to post. 
+
+
+
+
+2023 02 16
+https://rstudio-conf-2022.github.io/get-started-quarto/materials/04-static-documents.html#/css
+ppt from rstudio workshop to build quarto document
+
+Figured a super cool way to change the font type in quarto document. 
+first method is to do an inline using following code:
+	[insert text here]{style = "font-family: serif; font-size: 14px"}
+	check YT video that this doc made just for me! --> https://www.youtube.com/watch?v=O2WJqxhT8sc
+second method is to create a custom class ID in the styles.css file. follow these steps
+	a) make a custom class in the styles.css file like this 
+			.my-jobexp {
+					  font-family: serif; 
+					  font-size: 14px
+					}
+	b) go to the quarto document (about.qmd) and add this in the YAML header with indentation
+		output:
+			quarto::html_document:
+				css: styles.css
+	c) use the custom class in this syntax
+		-   [text 1]{style= "font-family: courier; color: blue; font-size: 12px"}
+		-   [text 2]{.my-jobexp}
+		-   [text 3]
+text1 will be in blue color
+text2 will be as defined in the styles.css file
+text3 will be default text
+>>>>>NOTE: UNABLE TO REPRODUCE ABOVE 3 EXAMPLES IN THE SAME DOCUMENT BECAUSE INLINE CSS FORMATTING IS NOT WORKING ONCE styles.css IS DECALRED IN YAML HEADER<<<<< 
+
+
+2023 02 15
+Inheriting YAML headers. put defaults in the _metadata.yaml file as recommended here --> https://blog.djnavarro.net/posts/2022-04-20_porting-to-quarto/#inheriting-yaml-settings
+
+FontAwesome icons for Quarto --> https://github.com/quarto-ext/fontawesome
+
+changing body column -->  https://quarto.org/docs/authoring/article-layout.html#body-column
+:::{.column-body-outset}
+Outset content...
+:::
+
+
+2023 01 27
+trying my hand at re-building and moving to Quarto blog. Why?
+	a) python code & visualisation don't seem to be appearing correctly in Rmarkdown 
+	b) Quarto seems neater
+	c) catalyst to do something with the blog
+
+Step 1: download Quarto. update R & RStudio
+Step 2: create Quartopub account. (ds-ramakant)
+Step 3: create new blog project in Rstudio
+
+other customisations:
+index.qmd
+	added brief summary along with contact info
+about.qmd
+	more details here https://quarto.org/docs/websites/website-about.html#templates
+
+2023 01 29	
+Completed git integration using documentation in Happy Git
+Next steps:
+	1) migrate old posts to new blog (rmd to qmd)
+	2) 
+reading material for quarto blog creation
+https://www.andreashandel.com/posts/2022-10-01-hugo-to-quarto-migration/
+https://livefreeordichotomize.com/posts/2022-09-19-migrating-from-hugo-to-quarto/
+liked this layout --> https://hamel.dev/
+https://ivelasq.quarto.pub/building-a-blog-with-quarto/lets-build-a-quarto-blog/
+https://www.jumpingrivers.com/blog/quarto-rmarkdown-comparison/
+
+this guy has lot more features covered --> https://albert-rapp.de/posts/13_quarto_blog_writing_guide/13_quarto_blog_writing_guide.html#comment-sections
+
+Another interesting blog post--> https://www.njtierney.com/post/2022/04/11/rmd-to-qmd/
+
+official documentation. use the search button for manual searches --> https://quarto.org/docs/output-formats/html-themes.html#table-of-contents
+
+
+2023 01 29 
+Commit faster using terminal by typing following message as mentioned here --> https://stackoverflow.com/a/2419270
+$ git add -A && git commit -m "Your Message"
+
+
+-------------------------------------------------------------------------------------------------------
+
+
+https://wowchemy.com/docs/getting-started/page-builder/
+other resources:
+https://www.apreshill.com/blog/2020-12-new-year-new-blogdown/
+https://dcosme.github.io/2018/06/10/websites-in-rstudio/
+https://bookdown.org/yihui/blogdown/other-themes.html
+
+https://www.jacobmpeterson.com/blog/website/creating-a-website-with-hugo-rstudio-github-and-netlify/#introduction
+https://www.caitlincasar.com/post/blogdown/  <-- with git and blogdown instructions
+https://rmarkdown.rstudio.com/authoring_basics.html <-- r markdown basics
+https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet <-- markdown cheatsheet
+
+
+changes made in the following documents:
+
+/config/_default/params.yaml
+	theme: coffee 	#finalised and changed on 2022 02 28 
+					#also edited the contact details
+/config/_default/menus.yaml
+	Main / name: About #displays the sections on the top menu 
+/config/_default/config.yaml
+	title: 'The Null Hypothesis' #finalised and changed on 2022 02 28 
+
+changed the "favicon" by replacing the icon.png in this folder
+E:\Personal\G Drive\Weekends in Mumbai\Blog\Rstudio-WIP-folder\blog_v02\ds-ramakant\themes\github.com\wowchemy\wowchemy-hugo-modules\wowchemy\v5\assets\media
+
+/config/_default/params.yaml
+comments:
+  provider: 'disqus' #default was empty
+  commentable:
+    post: true
+    book: true
+    project: true
+    publication: true
+    event: true
+  disqus:
+    shortname: 'ds-ramakant'
+    show_count: false # Show comment count in page header? default was true
+font_size: M #default = L #changed on 18th Aug 2022
+	
+/content/home/hero.md
+	active: false
+/content/home/demo.md
+	active: false
+	headless: false #not yet sure what this does
+/content/home/demo.md
+	active: false
+/content/home/publications.md
+	active: false
+/content/home/featured.md
+	active: false
+/content/home/gallery.md
+	active: false	
+/content/home/tags.md
+	active: false #default = true
+/content/home/talks.md
+	active: false #default = true
+/content/authors/admin
+	#place photo as avatar.jpg
+
+
+
+/content/admin/_index.md
+	#changes in the text which are the first thing seen on the website next to the photo
+	#about myself
+	#why "The Null Hypothesis"? 
+	#bio is a small 2-liner that appears at the end of every blog post
+/content/home/skills.md
+	#added 6 skills
+	#no idea how the icon_pack worked. spent lots of time on this one
+
+------------------------------------------------------------------------------------------------------
+
+2022 08 18
+github token expired? read this :: https://happygitwithr.com/https-pat.html#tldr
+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
+
+
+
+2022 05 13
+code folding: https://www.jepusto.com/code-folding-update/
+https://statnmap.com/2017-11-13-enable-code-folding-in-bookdown-and-blogdown/
+
+adding google analytics
+https://jlaw.netlify.app/2021/07/14/celebrating-the-blog-s-first-birthday-with-googleanalyticsr/ <--well analysed
+
+
+
+
+2022 05 09
+
+checking PAT credentials for github: https://happygitwithr.com/https-pat.html#tldr
+since the push/pull buttons keep getting greyed out, i type the following commands in the terminal
+git remote -v #checks for the origin path to fetch and push
+git push origin main #git push [remote-name] [branch-name]
+
+normally these two commands do the trick as all the files get uploaded on the github immediately
+
+2022 04 09
+shortcodes in hugo
+https://gohugo.io/content-management/shortcodes/#what-a-shortcode-is
+
+
+
+2022 04 08: removing messages in the blog post
+https://stackoverflow.com/questions/45399587/how-to-remove-warning-messages-in-r-markdown-document
+
+If you want to turn off messages and warnings in the whole document you can use this code chunk right after the yaml portion.
+
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+
+
+2022 04 04
+registered website  'www.ds-ramakant.com' on godaddy.com
+working with git on rstudio is very broken. push/pull buttons are greyed out so typing git commands thru the terminal 
+https://happygitwithr.com/troubleshooting.html#pushpull-buttons-greyed-out-in-rstudio
+https://swcarpentry.github.io/git-novice/14-supplemental-rstudio/index.html#:~:text=Grayed%20out%20Push%2FPull%20commands,Then%20restart%20RStudio
+rstudio either keeps hanging/ doesn't quit/ history window is empty. another problem is when i made a small change to the readme.txt file on the git repo and wasn't able to pull and then push leading to 'Your branch is ahead of 'origin/master' by 1 commit' error. Answers on this query were insightful
+
+https://stackoverflow.com/questions/10169328/git-your-branch-is-ahead-of-origin-master-by-1-commit
+
+integrated the git repository with netlify. some important links
+https://docs.netlify.com/domains-https/custom-domains/configure-external-dns/
+
+while delegating to netlify, the only change i made was on the 'Name Servers'
+dns1.p01.nsone.net
+dns2.p01.nsone.net
+dns3.p01.nsone.net
+dns4.p01.nsone.net
+check 'Name Servers' at https://app.netlify.com/teams/d-s-ramakant/dns/ds-ramakant.com
+
+added disqus comments on the site. registered and chose the free version. followed the instructions posted here
+https://wowchemy.com/docs/hugo-tutorials/comments/
+shortname entered in the params.yaml file is 'ds-ramakant'
+
+its done now!! my personal website is now up and running!!!  <-2022 04 04
+
+
+2022 04 01
+#ran the following command in console
+	blogdown::check_site()
+
+ [TODO] Found 2 files marked as drafts. To un-draft, run the command:
+
+  blogdown::edit_draft(c(
+  "content/privacy.md",
+  "content/terms.md"
+  ))
+
+  and change a file's YAML from 'draft: true' to 'draft: false' or delete it
+
+#changed config.yaml to add following lines. refer to https://github.com/rstudio/blogdown/issues/447
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+Mismatch found:
+  blogdown is using Hugo version (0.92.0) to build site locally.
+  netlify.toml is using Hugo version (0.91.2) to build site.
+● [TODO] Option 1: Change HUGO_VERSION = "0.92.0" in netlify.toml to match local version.
+● [TODO] Option 2: Use blogdown::install_hugo("0.91.2") to match the version in netlify.toml, and set options(blogdown.hugo.version = "0.91.2") in .Rprofile to pin this Hugo version (also remember to restart R).
+
+#went with option 1. changed HUGO_VERSION in netlify.toml
+
+● [TODO] Found 1 file with a future publish date:
+
+  content/event/example/index.md
+#deleted the 'example' folder
+
+| Checking for the unnecessary 'content/' directory in theme...
+● [TODO] Found one! You may delete it unless it was created by you. Run:
+
+  unlink("themes/starter-hugo-academic/content", recursive = TRUE)
+#executed the above statement
+
+restarting R again
+
+blogdown::check_site()
+
+| Checking for the unnecessary 'content/' directory in theme...
+● [TODO] Found one! You may delete it unless it was created by you. Run:
+
+  unlink("themes/starter-hugo-academic/content", recursive = TRUE)
+
+#deleted folder 'content' under themes/starter-hugo-academic
+
+#restarting RStudio
+
+#nothing still getting pushed. all files are committed though. 
+#as per https://happygitwithr.com/existing-github-last.html , ran the following command
+usethis::use_github()
+#returned this error 
+i Defaulting to 'https' Git protocol
+√ Setting active project to 'E:/Personal/G Drive/Weekends in Mumbai/Blog/Rstudio-WIP-folder/blog_v02/ds-ramakant'
+Error: This repo already has an 'origin' remote, with value 'https://github.com/ds-ramakant/ds-ramakant.git'.
+You can remove this setting with:
+usethis::use_git_remote("origin", url = NULL, overwrite = TRUE)
+#received following error message. didn't work. access denied!
+Error in libgit2::git_remote_delete : 
+  failed rmdir - 'E:/Personal/G Drive/Weekends in Mumbai/Blog/Rstudio-WIP-folder/blog_v02/ds-ramakant/.git/logs/refs/remotes/origin/' is locked: Access is denied.
+
+
+
+#didn't work. access denied
+
+https://github.com/ds-ramakant/ds-ramakant.git
+
+#followed step by step process in https://happygitwithr.com/troubleshooting.html#pushpull-buttons-greyed-out-in-rstudio
+#push and pull buttons are greyed out but typing commands in the terminal solves the issue. 
+
+#SITE IS LIVE NOW! 
+
+https://ds-ramakant.netlify.app/
+
+#NEXT STEP IS FILLING HER UP !!!
+
+
+
+2022 03 31
+https://www.apreshill.com/blog/2020-12-new-year-new-blogdown/#using-github
+started process pushing to github
+
+2022 03 01
+to change:
+1) interests
+2) skills - R, Consumer Research, Growth Hacking, Business Planning
+3) Experience - copy from resume
+4) Accomplishments - Cambridge Judge, Coursera, SP Jain 
+5) projects, gallery, recent talks, popular topics <--remove
+
+	
+2021 01 16
+1) finalise the homepage content 
+2) creating posts
+
+2022 02 28: RStudio how to create a blog https://www.youtube.com/watch?v=MrW5XFf7aps
+config.toml (for themes)

@@ -1,0 +1,512 @@
+head(final_predictons)
+head(final_predictions)
+write.csv(final_predictions, row.names = F,
+file = ".\\posts\\2023-03-06-day-14-of-50daysofkaggle\\submissions.csv")
+final_predictions <- final_predictions %>%
+rename(Survived = .pred_class) %>%
+bind_cols(PassengerId = to_predict$passenger_id)
+head(final_predictions)
+write.csv(final_predictions, row.names = F,
+file = ".\\posts\\2023-03-06-day-14-of-50daysofkaggle\\submissions.csv")
+write.csv(final_predictions, row.names = F,
+file = ".\\posts\\2023-03-06-day-14-of-50daysofkaggle\\submissions.csv")
+write.csv(final_predictions, row.names = F,
+file = ".\\posts\\2023-03-06-day-14-of-50daysofkaggle\\xx.csv")
+getwd()
+write.csv(final_predictions, row.names = F,
+file = ".\\posts\\2023-03-06-day-14-of-50daysofkaggle\\xx.csv")
+write.csv(final_predictions, "xx.csv")
+write.csv(final_predictions, row.names = F,
+file = "submissions.csv")
+tidy_titanic_rs <- tibble(wf = rep(unique(titanic_rs$wflow_id), 10*2),
+metrics = rep(c(rep("accuracy", 4),
+rep("roc_auc",4)),
+10),
+values = rep(NA, 4*10*2))
+tidy_titanic_rs
+head(tidy_titanic_rs)
+head(tidy_titanic_rs, 20)
+str(titanic_rs)
+class(titanic_rs)
+names(titanic_rs)
+titanic_rs
+titanic_rs
+titanic_rs
+titanic_rs$result
+titanic_rs$result
+class(titanic_rs$result)
+length(titanic_rs$result)
+dim(titanic_rs$result)
+dimnames(titanic_rs$result)
+nrow(titanic_rs$result)
+ncol(titanic_rs$result)
+attr(titanic_rs$result)
+attributes(titanic_rs$result)
+class(titanic_rs$result)
+titanic_rs$result[[1]]
+titanic_rs$result[[1]]$.metrics[[1]]
+titanic_rs$result[[1]]$.metrics[[1]]
+tidy_titanic_rs <- tibble(wf = rep(unique(titanic_rs$wflow_id), 15*2),
+metrics = rep(c(rep("accuracy", 4),
+rep("roc_auc",4)),
+15),
+values = rep(NA, 4*15*2))
+head(tidy_titanic_rs, 8)
+dim(tidy_titanic_rs)
+bigtable <- purrr:::pluck(titanic_rs, 4)
+wflow_id_titanic <- unique(titanic_rs$wflow_id)
+for(i in 1:length(wflow_id_titanic)){
+wflow_id <- wflow_id_titanic[i]
+smalltable <- bigtable[[i]]
+for(j in 1:length(smalltable$.metrics)){
+smallertable <- purrr::pluck(smalltable$.metrics, j)
+tidy_titanic_rs$values[(tidy_titanic_rs$wf==wflow_id &
+tidy_titanic_rs$metrics=="accuracy")][j] <- smallertable$.estimate[smallertable$.metric == "accuracy"]
+tidy_titanic_rs$values[(tidy_titanic_rs$wf==wflow_id &
+tidy_titanic_rs$metrics=="roc_auc")][j] <- smallertable$.estimate[smallertable$.metric == "roc_auc"]
+}
+}
+tidy_titanic_rs
+tidy_titanic_rs
+tidy_titanic_rs2 <- tidy_titanic_rs %>%
+group_by(wf, metrics) %>%
+summarise(value_min = mean(values) - 0.5*sd(values),
+value_max = mean(values) + 0.5*sd(values),
+value_mean = mean(values)) %>% ungroup() %>%
+right_join(tidy_titanic_rs, by = c("wf", "metrics"))
+View(tidy_titanic_rs2)
+tidy_titanic_rs2 %>%
+ggplot(aes(x = reorder(wf, desc(value_mean)),
+y = values,
+color = wf))+
+geom_errorbar(aes(ymax = value_max, ymin = value_min),
+width = 0.1)+
+geom_point(aes(y= value_mean))+
+scale_y_continuous(breaks = seq(0.65, 0.9, 0.05),
+limits = c(0.65, 0.9))+
+theme(legend.position = "none")+
+labs(x = NULL, y = NULL)+
+facet_wrap(~metrics)
+autoplot(titanic_rs)
+autoplot(titanic_rs)
+library(tidyverse)
+library(tidymodels)
+load("D:/Ramakant/Personal/Weekends in Mumbai/Blog/quarto_blog/.RData")
+final_fit %>% pull_workflow_fit() %>% vip()
+library(vip)
+final_fit %>% pull_workflow_fit() %>% vip()
+rf_model <- rand_forest(trees = 1000) %>%
+set_engine("ranger", importance = "permutation") %>%
+set_mode("classification")
+rf_model2 <- rand_forest(trees = 1000) %>%
+set_engine("ranger", importance = "permutation") %>%
+set_mode("classification")
+workflow() %>%
+add_recipe(base_recipe) %>%
+add_model(rf_model2) %>%
+fit(given_data) %>%
+pull_workflow_fit() %>%
+vip(aesthetics = list(alpha= 0.8, color = "green"))
+workflow() %>%
+add_recipe(base_recipe) %>%
+add_model(rf_model2) %>%
+fit(given_data) %>%
+pull_workflow_fit() %>%
+vip(aesthetics = list(alpha= 0.8, fill = "green"))
+workflow() %>%
+add_recipe(base_recipe) %>%
+add_model(rf_model2) %>%
+fit(given_data) %>%
+pull_workflow_fit() %>%
+vip(aesthetics = list(alpha= 0.8, fill = "green"))
+titanic_data %>%
+count(embarked, sort = T)
+titanic_data %>%
+count(embarked, sort = T)
+library(tidyverse)
+library(tidymodels)
+autoplot(titanic_rs)
+version
+load("D:/Ramakant/Personal/Weekends in Mumbai/Blog/quarto_blog/.RData")
+library(tidyverse)
+titanic_data %>%
+count(embarked, sort = T)
+titanic_data %>%
+count(embarked, sort = T)
+names(titanic_data)
+titanic_data %>%
+count(embarked, sort = T)
+View(titanic_data)
+reprex:::reprex_addin()
+reprex()
+library(reprex)
+reprex()
+reprex("titanic_data %>% count(embarked, sort = T)")
+reprex(titanic_data %>% count(embarked, sort = T))
+reprex:::reprex_addin()
+install.packages("reprex")
+install.packages("reprex")
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+library(tidyverse)
+library(tidymodels)
+titanic_train <- read.csv("train.csv", header = T)
+#adding column to identify source
+titanic_train <- titanic_train %>%
+mutate(source = "train")
+titanic_test <- read.csv("test.csv", header = T)
+#adding column to identify source
+titanic_test <- titanic_test %>%
+mutate(Survived = NA,
+source = "test")
+#merging the data. step1 starts here
+titanic_data <- bind_rows(titanic_train, titanic_test)
+glimpse(titanic_data)
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+titanic_data %>%
+count(embarked, sort = T)
+titanic_data <- titanic_data %>%
+mutate(family_count = SibSp+Parch+1) %>%
+janitor::clean_names()
+names(titanic_data)
+titanic_data %>%
+count(embarked, sort = T)
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+options(width = 80)
+opts_chunk$set(comment = "", warning = FALSE, message = FALSE, echo = TRUE, tidy = TRUE, size="small")
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+```{r, out.width=100% }
+```{r out.width=100% }
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+#| my-chunk, out.width = 200%
+#| cap = "long table"
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+#| my-chunk, resize.width = 200%
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+#| my-chunk, resize.width = 99999
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+#| my-chunk, resize.width = 999px
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+#| my-chunk, resize.width = 200%
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+#| my-chunk, out.width = 400%
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+#| my-chunk, out.width = 400%
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+#| my-chunk, out.width = 40%
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+#| my-chunk, out.width = 100px
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+#| my-chunk, out.width = 100px
+titanic_data %>%
+group_by(source) %>%
+summarise_all(~ sum(is.na(.)))
+library(tidyverse)
+library(ISLR2)
+glimpe(Smarket)
+glimpse(Smarket)
+summary(Smarket)
+df <- Smarket
+View(df)
+df %>%
+group_by(Year) %>%
+count(Direction)
+df %>%
+count(Year)
+head(df[,-9])
+cor(df)
+cor(df[,-9])
+attach(df)
+plot(Volume)
+?glm
+glm.fits <- glm(Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag4 + Lag5 + Volume,
+data = df, family = binomial)
+summary(glm.fits)
+coeff(glm.fits)
+coef(glm.fits)
+summary(coef(glm.fits))
+summary(glm.fits)
+summary(glm.fits)$coef
+plot(df) %>% plotly()
+library(plotly)
+plot(df) %>% plotly()
+plot(df)
+plot(df$Volume)
+plot(df$Volume) %>% plotly()
+library(tidyverse)
+library(ISLR2)
+library(plotly)
+glimpse(Smarket)
+summary(Smarket)
+df <- Smarket
+df %>%
+group_by(Year) %>%
+count(Direction)
+df %>%
+count(Year)
+cor(df[,-9])
+plot(df$Volume)
+glm.fits <- glm(Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag4 + Lag5 + Volume,
+data = df, family = binomial)
+summary(glm.fits)
+summary(glm.fits)$coef
+summary(glm.fits)$coef[4]
+summary(glm.fits)$coef[,4]
+glm.probs <- predict(glm.fits, type = "response")
+levels(df$Direction)
+contrasts(df$Direction)
+nrow(df)
+glm.pred <- rep("Down", nrow(df))
+glm.pred[glm.probs >0.5] = "Up"
+table(glm.pred, df$Direction)
+mean(glm.pred== df$Direction)
+summary(df$Year)
+# now we specifically want to create test data for 2005 and
+# train on all years before it
+attach(df)
+train <- (Year< 2005)
+df.2005 <- df[!train]
+df.2005 <- df[!train,]
+dim(df.2005)
+# creating a new glm by only considering 2 predictors
+glm.fits2 <- glm(Direction = Lag1 + Lag2,
+data = df, subset = train)
+# creating a new glm by only considering 2 predictors
+glm.fits2 <- glm(Direction ~ Lag1 + Lag2,
+data = df, subset = train)
+# creating a new glm by only considering 2 predictors
+glm.fits2 <- glm(Direction ~ Lag1 + Lag2, family = binomial,
+data = df, subset = train)
+# predicting on test 2005 data
+glm.probs2 <- predict(glm.fits2, df.2005, type = "response")
+# creating new output df
+glm.pred2 <- rep("Down", nrow(df.2005))
+glm.pred2[glm.probs2 > 0.5] = "Up"
+table(glm.pred2, Direction)
+table(glm.pred2, df.2005$Direction)
+mean(glm.pred2==df.2005$Direction)
+# using the same test & train data to create LDA model
+lda.fit <- lda(Direction ~ Lag1 + Lag2, subset = train,
+type = "response")
+# Linear Discriminant Analysis --------------------------------------------
+library(MASS)
+# using the same test & train data to create LDA model
+lda.fit <- lda(Direction ~ Lag1 + Lag2, subset = train,
+type = "response")
+lda.fit
+plot(lda.fit)
+# using the same test & train data to create LDA model
+lda.fit <- lda(Direction ~ Lag1 + Lag2, subset = train)
+lda.fit
+plot(lda.fit)
+names(lda.fit)
+lda.fit$lev
+lda.fit$N
+lda.fit$call
+lda.fit$terms
+lda.fit$xlevels
+lda.fit$prior
+lda.fit$counts
+lda.fit
+lda.fit$means
+lda.fit$scaling
+# The predict() function returns a list with three elements. The first element,
+# class, contains LDA’s predictions about the movement of the market.
+# The second element, posterior, is a matrix whose kth column contains the
+# posterior probability that the corresponding observation belongs to the kth
+# class, computed from (4.15). Finally, x contains the linear discriminants,
+# described earlier.
+lda.pred <- predict(lda.fit, df.2005)
+names(lda.pred)
+lda.pred
+names(lda.pred)
+lda.pred$class
+names(lda.pred)
+head(lda.pred$posterior)
+head(lda.pred$x)
+head(lda.pred$class)
+# checking the accuracy
+table(lda.pred$class, df.2005$Direction)
+mean(lda.pred$class==df.2005$Direction)
+qda.fit <- qda(Direction ~ Lag1+ Lag2, subset = train)
+qda.fit
+lda.fit
+qda.pred <- predict(qda.fit, df.2005)
+qda.pred
+table(qda.pred$class, df.2005$Direction)
+mean(qda.pred$class== df.2005$Direction)
+# Naive Bayes -------------------------------------------------------------
+install.packages("e1707")
+library(e1707)
+# Naive Bayes -------------------------------------------------------------
+install.packages("e1071")
+library(e1071)
+nb.fit <- naiveBayes(Direction ~ Lag1 + Lag2, subset = train)
+nb.fit <- naiveBayes(Direction ~ Lag1 + Lag2,
+subset = train, data = df)
+summary(nb.fit)
+nb.fit
+mean(Lag1[train])
+mean(Lag1[train][Direction== "Up"])
+mean(Lag1[train][Direction[train]== "Down"])
+head(Lag1[train])
+head(Lag1[train][Direction[train]== "Down"])
+head(Lag1[train & Direction[train]== "Down"])
+head(Lag1[train][Direction[train]== "Down"])
+head(Lag1[train][Direction[train]== "Down"])
+sd(Lag1[train][Direction[train]== "Down"])
+# predicting the output
+nb.pred <- predict(nb.fit, df.2005)
+head(nb.pred)
+names(nb.pred)
+table(nb.pred, df.2005$Direction)
+mean(nb.pred ==df.2005$Direction)
+# Poisson Regression ------------------------------------------------------
+# using the Bikeshare dataset
+attach(Bikeshare)
+glimpse(Bikeshare)
+# task is to predict `hr` which is stored as a factor (number between 0 to 10)
+hr
+levels(hr)
+table(hr)
+count(hr)
+head(bikers)
+summary(bikers)
+table(bikers)
+hist(bikers)
+# begin by fitting ordinary least sqares regression aka linear regression
+model.lm <- lm(bikers ~ mnth + hr + workingday + temp + weathersit,
+data = Bikeshare)
+summary(model.lm)
+?contr.sum
+contrasts(Bikeshare$hr) = contr.sum(24)
+contrasts(Bikeshare$mth) = contr.sum(12)
+contrasts(Bikeshare$mnth) = contr.sum(12)
+# this part i don't understand
+contrasts(Bikeshare$hr) = contr.sum(24)
+contrasts(Bikeshare$mnth) = contr.sum(12)
+summary(Bikeshare$hr)
+head(Bikeshare$hr)
+head(Bikeshare$mnth)
+model.lm2 <- lm(bikers ~ mnth + hr + workingday + temp + weathersit,
+data = Bikeshare)
+summary(model.lm2)
+# It is important to realize that the choice of coding really does not matter,
+# provided that we interpret the model output correctly in light of the coding
+# used. For example, we see that the predictions from the linear model are
+# the same regardless of coding:
+all.equal(predict(model.lm), predict(model.lm2))
+coef(model.lm2)[2:12]
+sum(coef(model.lm2)[2:12])
+coef_months = c(coef(model.lm2)[2:12], sum(coef(model.lm2)[2:12]))
+plot(coef_months, xlab = "Month", ylab = "coefficients",
+xaxt = "n", col = "blue", pch = 19, type= "o")
+plot(coef_months, xlab = "Month", ylab = "coefficients",
+col = "blue", pch = 19, type= "o")
+plot(coef_months, xlab = "Month", ylab = "coefficients",
+xaxt = "y", # removes the x-axis labels
+col = "blue", pch = 19, type= "o")
+plot(coef_months, xlab = "Month", ylab = "coefficients",
+xaxt = NA, # removes the x-axis labels
+col = "blue", pch = 19, type= "o")
+plot(coef_months, xlab = "Month", ylab = "coefficients",
+xaxt = "n", # removes the x-axis labels
+col = "blue", pch = 19, type= "o")
+plot(coef_months, xlab = "Month", ylab = "coefficients",
+xaxt = "n", # removes the x-axis labels
+col = "blue", pch = 19, type= "o")
+axis(side = 1, at = 1:12, # adding month names to the above plot
+labels = c("J", "F", "M", "A","M", "J", "J", "A", "S", "O", "N", "D"))
+# now trying poisson regression
+model.poiss <- glm(bikers ~ mnth + hr + workingday + temp + weathersit,
+data = Bikeshare, family = poisson)
+rm(model.poiss)
+# now trying poisson regression
+model.pois <- glm(bikers ~ mnth + hr + workingday + temp + weathersit,
+data = Bikeshare, family = poisson)
+summary(model.pois)
+plot(predict(model.lm2), predict(model.pois, type = "response"))
+abline(0,1, col  =2, lwd = 3)
+pois.pred <- predict(model.pois, type = "response")
+pois.pred
+summary(pois.pred)
+head(pois.pred)
+pois.pred <- predict(model.pois)
+head(pois.pred)
+p1 <- plot(predict(model.lm2), predict(model.pois, type = "response"))
+p1+abline(0,1, col  =2, lwd = 3)
+p1 + abline(0,1, col  =2, lwd = 3)
+p1
+plot(predict(model.lm2), predict(model.pois, type = "response"))
+abline(0,1, col  =2, lwd = 3)
+plot(predict(model.lm2), predict(model.pois))
+abline(0,1, col  =2, lwd = 3)
+plot(predict(model.lm2), predict(model.pois, type = "response"))
+abline(0,1, col  =2, lwd = 3)
+library(tidyverse)
+install.packages("tidyverse")
+library(tidyverse)
+install.packages(c("FactoMineR", "factoextra", "animation"))
+library(c("FactoMineR", "factoextra", "animation")
+library(c("FactoMineR", "factoextra", "animation")
+)
+library(c("FactoMineR", "factoextra", "animation"))
+library(FactoMineR)
+library(factoextra)
+library(animation)
+library(tidyverse)
+library(FactoMineR)
+library(factoextra)
+library(animation)
+gitcreds::gitcreds_get()
+install.packages("gitcreds")
+gitcreds::gitcreds_get()
+gitcreds::gitcreds_get()
+git config --global user.name "ds-ramakant"
+gitcreds::gitcreds_set()
+gitcreds::gitcreds_get()

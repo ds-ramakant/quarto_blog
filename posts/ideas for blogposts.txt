@@ -1,0 +1,75 @@
+inspiration resources:
+1) reforge newsletter / artifacts
+2) avinash kaushik newsletter
+3) growthx #curious slack channel
+
+
+
+2024 09 17
+-> Based on random comment on LI
+https://www.linkedin.com/feed/update/urn:li:ugcPost:7240644213791412226?commentUrn=urn%3Ali%3Acomment%3A%28ugcPost%3A7240644213791412226%2C7240717712560177152%29&dashCommentUrn=urn%3Ali%3Afsd_comment%3A%287240717712560177152%2Curn%3Ali%3AugcPost%3A7240644213791412226%29
+	what is the true purpose of education? - to teach you rules & prepare you for a VUCA world where no rules exist
+	1) too much background noise
+	2) Embrace unpredictablity
+	3) Take control
+	4) Break the conditioning
+	5) degrees are only crutches
+
+-> something about bengaluru startup culture that idolizes a generation of entrepreneurs that are very specific to that city. At the risk of sounding a bit controversial but I don't see many of these names coming up in mumbai
+
+
+blog post ideas
+2022 08 24
+spirograms in R
+https://twitter.com/geokaramanis/status/1551195745839067137?s=20&t=Sb8g6VYNrqx5y5086O8Zqg
+
+UTM link builder by Google
+https://ga-dev-tools.web.app/campaign-url-builder/
+
+2022 08 24
+creating sankey diagram for box office collections
+https://r-charts.com/flow/sankey-diagram-ggplot2/
+https://plotly.com/r/sankey-diagram/
+reference charts
+https://www.reddit.com/r/apple/comments/1b1gtg/apples_money_in_and_out_awesome_chart/
+https://www.reddit.com/r/dataisbeautiful/comments/otxlbo/apples_latest_quarter_visualized_oc/
+
+
+
+2022 08 22
+inspiration for tidytuesday: https://rsangole.netlify.app/posts/2021-01-11-tidytuesday-transit-costs/2021-01-11-tidytuesday-transit-costs
+
+
+
+2022 04 14:
+Wordle 
+1. position of first letter as vowel
+2. Second and fourth letter are vowels?
+3. Common words as the first try
+4. Words with max vowels
+https://artofproblemsolving.com/blog/articles/the-math-of-winning-wordle
+https://github.com/sejaldua/wordle-analysis
+https://rviews.rstudio.com/2022/02/21/wordle-data-analysis/
+https://blog.ephorie.de/wordle-solve-wordle-with-r
+https://towardsdatascience.com/wordle-a-frequency-analysis-approach-9989c3d7be5f
+
+
+
+2022 03 25
+notes on job hunting:
+1) be clear about your own strenghts and weaknesses
+2) shut off linkedin for a few days - you'll only end up wondering why everyone is smarter than you or how everyone are getting these jobs
+3) get help
+4) open word doc and write your resume from scratch
+5) 
+
+
+
+2022 03 03
+https://www.youtube.com/watch?v=F4c-rEFfJpQ
+
+crossing(),
+coord_polar(),
+
+
+
