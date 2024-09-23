@@ -296,8 +296,6 @@ font_size: M #default = L #changed on 18th Aug 2022
 
 2022 08 18
 github token expired? read this :: https://happygitwithr.com/https-pat.html#tldr
-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
-
 
 
 2022 05 13
