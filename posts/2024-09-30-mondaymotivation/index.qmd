@@ -1,0 +1,48 @@
+---
+title: "Monday Motivation"
+subtitle: "Boring work is boring"
+description: "Why does monotonous work weigh us down? "
+date: '2024-09-30'
+categories: [personal, monday-motivation]
+featured: no
+execute:
+  warning: false
+Draft: false
+image: ../MondayMotivation.png
+---
+
+# Monday Motivation: The Boring Stuff post
+
+Why does monotonous work weigh us down?
+
+Here's a parable I never get tired of telling my team - A thief tries to steal from a chinese monastery but is caught. The monks are furious and want to teach him a lesson with the harshest punishment. The head priest asks him to be tied up to a chair so that he can't move his limbs. A pot of cold water is hung from the ceiling with a tiny crack so that only a single drop falls on the thief's down at any moment. That's it.. that's the punishment. The chinese water torture doesn't seem like much in the beginning but the weight of each drop feels like a mountain over a period of time.
+
+![](water pot.jpg){width="50%"}
+
+Sound familiar? Boring stuff is boring because it kills excrutiatingly slowly. I know it 'cos I've been there myself. Why does this happen?
+
+1.  Loss of any meaning or goal
+
+2.  Doesn't feel challenging
+
+3.  Super hard to focus and the mind drifts away to other thoughts which seem more important
+
+4.  Lack of autonomy - (we were told to do things in this way, therefore its the only way to do it)
+
+5.  poor work environment doesn't value change
+
+#5 is the bitter truth. Many times its a rite of passage that we all have to go through.
+
+How do you escape this rut?
+
+1.  Acknowledge that its boring and enjoy the monotony. Sometimes its just good to build muscle memory through boring stuff and get done with it.
+
+2.  Break it down into smaller tasks and see if there are ways to automate or replace them.
+
+3.  Find out why these tasks matter in the larger scheme of things. There's probably someone somewhere in the organisation it matters more than you think. Address the big picture and see how you contribute to make it more meaningful.
+
+4.  Learn something new - no kidding. this is an instant way to shake the rhythm. Use these mundane tasks as a way to test your knowledge of something new you may have learnt. A coding language or a skill that needs sharpening, maybe?
+
+5.  Collaborate with others and see if these tasks can be shared. If you're really good at sticking around, you may even delegate this! (LOL.. j/k. Try not to make someone else miserable!)
+
+Let us talk more the comments on the right➡️
