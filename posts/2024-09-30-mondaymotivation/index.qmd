@@ -17,7 +17,7 @@ Why does monotonous work weigh us down?
 
 Here's a parable I never get tired of telling my team - A thief tries to steal from a chinese monastery but is caught. The monks are furious and want to teach him a lesson with the harshest punishment. The head priest asks him to be tied up to a chair so that he can't move his limbs. A pot of cold water is hung from the ceiling with a tiny crack so that only a single drop falls on the thief's down at any moment. That's it.. that's the punishment. The chinese water torture doesn't seem like much in the beginning but the weight of each drop feels like a mountain over a period of time.
 
-![](water pot.jpg){width="50%"}
+![](water%20pot.jpg){width="50%"}
 
 Sound familiar? Boring stuff is boring because it kills excrutiatingly slowly. I know it 'cos I've been there myself. Why does this happen?
 

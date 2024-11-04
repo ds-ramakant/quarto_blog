@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2023-03-20">
 <meta name="description" content="Screening multiple models using workflows">
 
-<title>The Null Hypothesis - Day 14 of #50daysofKaggle</title>
+<title>Day 14 of #50daysofKaggle – The Null Hypothesis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,11 +20,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -35,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -49,43 +50,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -111,7 +82,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -120,8 +97,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-T5T39KBDW1"></script>
@@ -134,6 +113,11 @@ gtag('js', new Date());
 gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 </script>
 <script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -142,36 +126,38 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">The Null Hypothesis</span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About Me</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/ds-ramakant"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/ds-ramakant"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/dsramakant/"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/dsramakant/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -199,7 +185,7 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Ramakant </p>
+               <p><a href="https://www.ds-ramakant.com/about.html">Ramakant</a> </p>
             </div>
     </div>
       
@@ -265,6 +251,7 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 
 
 
+
 <p>How hard is it to evaluate multiple models when working on a given data problem?</p>
 <p>If you’re using the <code>tidymodels</code> package, the answer is surprisingly simple.</p>
 <p>Today’s post is an attempt to use the <code>tidymodels</code> framework to screen multiple models. Inspiration for this post comes from the <a href="https://www.tmwr.org/workflow-sets.html">Ch 15 of the Tidymodels with R textbook</a> along with two more noteworthy blogs</p>
@@ -278,7 +265,7 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <h1>Loading the data</h1>
 <p><code>test</code> and <code>train</code> data is inputted and merged into a single dataframe</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
@@ -323,7 +310,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <h2 class="anchored" data-anchor-id="cleaning-data">Cleaning data</h2>
 <p>Checking for <code>NA</code> values in the full df tells us that Age column has 86 missing in <code>test</code> &amp; 177 missing values in <code>train</code> while there’s 1 missing NA value in Fare. The 418 missing values in Survived in <code>test</code> are the ones we need to predict.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(source) <span class="sc">%&gt;%</span> </span>
@@ -343,7 +330,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <h3 class="anchored" data-anchor-id="janitorclean_names">Janitor::clean_names()</h3>
 <p>Now i’ve got a thing about keeping column names clean so summoning <code>janitor</code> with a magic wand:</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">family_count =</span> SibSp<span class="sc">+</span>Parch<span class="sc">+</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
@@ -362,7 +349,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <h3 class="anchored" data-anchor-id="imputing-na-values-in-embarked">Imputing <code>NA</code> values in <code>embarked</code></h3>
 <p>Now under <strong>embarked</strong> there are two rows that don’t have <code>NA</code> but are blank. That’s a bit odd🤨</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(embarked, <span class="at">sort =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -377,7 +364,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 </div>
 <p>Since it is only 2 such rows, I’ll be replacing the <code>NA</code> values with the most repeated <strong>embarked</strong> value. So now zero empty values in <strong>embarked</strong></p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mode_embarked <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(embarked, <span class="at">sort =</span> T) <span class="sc">%&gt;%</span> </span>
@@ -405,7 +392,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <p>The <strong>age</strong> column has a bunch of missing values. My approach today is to substitute them with the median values when grouped by <strong>sex</strong> and <strong>class</strong>. Here’s a function written to impute within the test and train data accordingly.</p>
 <p><em>note: Feature engineering functions can be addressed in the <code>tidymodels</code></em> <em>framework at recipe stage.</em></p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>median_age_calc <span class="ot">&lt;-</span> <span class="cf">function</span>(df){</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  median_ages <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
@@ -428,7 +415,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 </div>
 <p>Are there any <code>na</code> values in the titanic data now?</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(source, survived, sex, pclass, fare, age) <span class="sc">%&gt;%</span> </span>
@@ -445,7 +432,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 </div>
 <p>Phew. So <strong>age</strong> is covered but one <code>NA</code> in <strong>fare</strong>. What are the median age values now?</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pclass, sex) <span class="sc">%&gt;%</span></span>
@@ -469,7 +456,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <h3 class="anchored" data-anchor-id="imputing-na-values-for-fare">Imputing <code>NA</code> values for <code>fare</code></h3>
 <p>There’s this one person (passenger_id = 1044, male and pclass = 3) who has a <code>na</code> value in <strong>fare</strong> from <code>test</code> data. Replacing it with the median value.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(source, name, passenger_id, sex, age, pclass, fare) <span class="sc">%&gt;%</span> </span>
@@ -481,7 +468,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 </div>
 </div>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex, pclass) <span class="sc">%&gt;%</span> </span>
@@ -502,7 +489,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 </div>
 <p>Replacing in the main df</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fare =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(fare), </span>
@@ -512,7 +499,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 </div>
 <p>checking if has been replaced.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(source, name, passenger_id, sex, age, pclass, fare) <span class="sc">%&gt;%</span> </span>
@@ -532,7 +519,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <p>For this post, I’ve focussed on a different approach while predicting survival probabilities. The guiding principle here is to club passengers from the same family and/or the same ticket_ID. The <code>titanic</code> dataset poses the challenge of having people within the same family purchase different tickets while at the same time so <strong>surnames</strong> really are not always the best grouping feature.</p>
 <p>One such example is the Cacic family:</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, sex,age, ticket, survived) <span class="sc">%&gt;%</span> </span>
@@ -549,7 +536,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <p>How about only clubbing with only <strong>surname</strong>? Well, that also gets tricky because sometimes we have instances of people within the same <strong>ticket</strong> sharing multiple <strong>surnames.</strong></p>
 <p>Case in point is ticket 1601:</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, sex, age, ticket, survived) <span class="sc">%&gt;%</span> </span>
@@ -574,7 +561,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <p>With absolutely no guilt, I confess that this took me almost an entire day to figure out. And am I glad to have done it. The best thing about the tidyverse approach is the onus on making readable data. For that I’m grateful to discover functions like <code>seperate_wider_regex</code>.</p>
 <p>Essentially, it is a delimiter that breaks up columns based on the string patterns. So neat!</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>names_with_splchar <span class="ot">&lt;-</span> <span class="fu">regex</span>(<span class="st">"[A-Za-z]+[</span><span class="sc">\\</span><span class="st">'</span><span class="sc">\\</span><span class="st">-</span><span class="sc">\\</span><span class="st">s]+[A-Za-z]+"</span>)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>names_with_3words <span class="ot">&lt;-</span> <span class="fu">regex</span>(<span class="st">"[A-Za-z]+</span><span class="sc">\\</span><span class="st">s[A-Za-z]+</span><span class="sc">\\</span><span class="st">s[A-Za-z]+"</span>)</span>
@@ -624,7 +611,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 </div>
 <p>What is the break-up of titles now?</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(title, <span class="at">sort=</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -658,7 +645,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 <h2 class="anchored" data-anchor-id="creating-a-custom-grouping">Creating a custom grouping</h2>
 <p>The <strong>ticket</strong> is going to be broken up into <strong>ticket_tail</strong> (the last character) and <strong>ticket_head</strong> (all but the last character). Then we merge <strong>surname</strong> and <strong>ticket_head</strong> to create a <strong>group_id</strong></p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ticket_head =</span> <span class="fu">substr</span>(ticket, <span class="dv">1</span>, <span class="fu">nchar</span>(ticket)<span class="sc">-</span><span class="dv">1</span>),</span>
@@ -668,7 +655,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 </div>
 <p>Creating columns that indicate the number of people and other flags</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>titanic_data <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_count</span>(group_id) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">pax_in_group =</span> n)</span>
@@ -704,7 +691,7 @@ $ source      &lt;chr&gt; "train", "train", "train", "train", "train", "train", 
 </div>
 <p>Since the code now has become a bit too long and I’m creating a checkpost here with a new df called <code>titanic_data2</code></p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>titanic_data2 <span class="ot">&lt;-</span> titanic_data <span class="sc">%&gt;%</span> </span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(source, passenger_id, survived,  sex, age, fare, pclass, embarked, </span>
@@ -737,7 +724,7 @@ $ final_grouping     &lt;fct&gt; Braund_A/5 2117, Cumings_PC 1759, Heikkinen_STO
 </div>
 <p>Now this is the part I don’t get. Why does Kaggle call it <code>train</code> and <code>test</code> when it can be easily told to be <code>given_data</code> and <code>to_predict</code> data?</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>to_predict <span class="ot">&lt;-</span> titanic_data2 <span class="sc">%&gt;%</span> </span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(source <span class="sc">==</span> <span class="st">"test"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>survived, <span class="sc">-</span>source)</span>
@@ -747,7 +734,7 @@ $ final_grouping     &lt;fct&gt; Braund_A/5 2117, Cumings_PC 1759, Heikkinen_STO
 </div>
 <p><code>given_data</code> has all the necessary columns we need to train the algo on</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(given_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -770,7 +757,7 @@ $ final_grouping     &lt;fct&gt; Braund_A/5 2117, Cumings_PC 1759, Heikkinen_STO
 </div>
 <p><code>to_predict</code> dataframe has everything else except <strong>survived</strong> column that needs to be predicted.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(to_predict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -821,7 +808,7 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 <section id="step-1-creating-resampling-folds" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-creating-resampling-folds">Step 1: creating resampling folds</h2>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2023</span>)</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>titanic_folds <span class="ot">&lt;-</span> <span class="fu">bootstraps</span>(<span class="at">data =</span> given_data, </span>
@@ -855,7 +842,7 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 <h2 class="anchored" data-anchor-id="step-2-recipe">Step 2: Recipe</h2>
 <p>Creating the <code>base_recipe</code> object that has only 3 steps</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>base_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(survived <span class="sc">~</span> ., <span class="at">data =</span> given_data) <span class="sc">%&gt;%</span> </span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">update_role</span>(passenger_id, <span class="at">new_role =</span> <span class="st">"id_variable"</span>) <span class="sc">%&gt;%</span> </span>
@@ -866,7 +853,7 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 </div>
 <p>Or if one would like to see it in a <code>tidy</code> format.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(base_recipe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -883,7 +870,7 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 <h2 class="anchored" data-anchor-id="step-3-model-definitions">Step 3: Model definitions</h2>
 <p>All the four models are defined as:</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#logistic regression</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>glm_model <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span> </span>
@@ -911,7 +898,7 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 <h2 class="anchored" data-anchor-id="step-4-workflow-set">Step 4: Workflow set</h2>
 <p>Just as you would with a single model, the workflow combines the base recipe with the multiple models by using lists when declaring the object.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>titanic_wf_set <span class="ot">&lt;-</span> <span class="fu">workflow_set</span>(</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(base_recipe),</span>
@@ -937,7 +924,7 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 <h2 class="anchored" data-anchor-id="step-5-fitting-on-resampled-folds">Step 5: Fitting on resampled folds</h2>
 <p>So this part of it needs to be dealt with care. Resampling may take a while…</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2023</span>)</span>
@@ -952,7 +939,7 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 </div>
 <p>… which is …</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -962,7 +949,7 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 </div>
 <p>Hmm… So moving on. What does the workflow_set object look like now?</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>titanic_rs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -981,7 +968,7 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 <h2 class="anchored" data-anchor-id="step-6-finding-the-winning-model">Step 6: Finding the winning model</h2>
 <p>This is how the <code>tidymodels</code> package all fits in. If you’ve got all the steps covered this far, the decision making shouldn’t take much effort</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1002,7 +989,7 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 </div>
 <p>Since we’re looking at classification, lets see which one of the models resulted in the best <code>roc_auc</code>?</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">collect_metrics</span>(titanic_rs) <span class="sc">%&gt;%</span> </span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"roc_auc"</span>) <span class="sc">%&gt;%</span> </span>
@@ -1023,12 +1010,16 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 <p><img src="https://media.giphy.com/media/dZLx6Lf738Jy46tUR4/giphy.gif" class="img-fluid" width="360"></p>
 <p>Another wonderful way it all ties in together is the visualisation with a single line of code.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Pieces of code that just fit into each other feels like a spoon-full of ice cream!</p>
@@ -1037,7 +1028,7 @@ $ final_grouping     &lt;fct&gt; Kelly_33091, Wilkes_36327, Myles_24027, Wirz_31
 <h2 class="anchored" data-anchor-id="step-7-8-fitting-the-winner-and-predictions">Step 7 &amp; 8: Fitting the winner and predictions</h2>
 <p>From the object <code>titanic_rs</code> we need to pick the winning model and fit to <code>to_predict</code></p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>final_fit <span class="ot">&lt;-</span> <span class="fu">extract_workflow</span>(titanic_rs, </span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"recipe_rand_forest"</span>) <span class="sc">%&gt;%</span> </span>
@@ -1075,7 +1066,7 @@ OOB prediction error (Brier s.):  0.1386875 </code></pre>
 </div>
 <p>Creating a new dataframe for predictions</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>final_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> final_fit, </span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">new_data =</span> to_predict)</span>
@@ -1102,7 +1093,7 @@ OOB prediction error (Brier s.):  0.1386875 </code></pre>
 <h2 class="anchored" data-anchor-id="step-9-submit-to-kaggle">Step 9: Submit to Kaggle</h2>
 <p>Converting the <code>final_predictions</code> to csv and uploading to kaggle</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(final_predictions, <span class="at">row.names =</span> F, </span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">file =</span> <span class="st">"submissions.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1114,7 +1105,7 @@ OOB prediction error (Brier s.):  0.1386875 </code></pre>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://media.giphy.com/media/7zYKTVt3vvbj7SC2Bl/giphy.gif" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">.. And so did you, dear reader!!</figcaption><p></p>
+<figcaption>.. And so did you, dear reader!!</figcaption>
 </figure>
 </div>
 </section>
@@ -1124,7 +1115,7 @@ OOB prediction error (Brier s.):  0.1386875 </code></pre>
 <p>Since we’ve got a random forest winner, I wanted to take a look at the importance of the variables used.</p>
 <p>Inspired from Julia’s <a href="https://juliasilge.com/blog/ikea-prices/">Tidy Tuesday on Ikea Prices</a>. For a ranger model, we do need to go back to the model specification itself and update the engine with <code>importance = "permutation"</code> in order to compute feature importance. This means fitting the model one more time.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1140,7 +1131,11 @@ OOB prediction error (Brier s.):  0.1386875 </code></pre>
 <span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vip</span>(<span class="at">aesthetics =</span> <span class="fu">list</span>(<span class="at">alpha=</span> <span class="fl">0.8</span>, <span class="at">fill =</span> <span class="st">"green"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This is interesting to me. While I was expecting the <strong>gender</strong> and <strong>class</strong> predictors to play an important part in the model, other grouped columns like <strong>family_count, pax_in_group &amp; pax_in_ticket_head</strong> also added in improving the accuracy.</p>
@@ -1156,7 +1151,7 @@ OOB prediction error (Brier s.):  0.1386875 </code></pre>
 <p>The manner in which all of this is done within a single object is sublime. Information is stored in tibbles within tibbles!</p>
 <p>For instance, let us look at the class of <code>titanic_rs</code></p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1166,7 +1161,7 @@ OOB prediction error (Brier s.):  0.1386875 </code></pre>
 </div>
 <p>It is a tibble with 4 columns out of which <code>results</code> is a list object consisting of more tibbles.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>titanic_rs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1182,7 +1177,7 @@ OOB prediction error (Brier s.):  0.1386875 </code></pre>
 </div>
 <p>What does the first tibble in the <code>results</code> list look like? This corresponds to the logistic regression model as shown in the table above.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>titanic_rs<span class="sc">$</span>result[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1217,7 +1212,7 @@ Run `show_notes(.Last.tune.result)` for more information.</code></pre>
 </div>
 <p>What does the <code>.metrics</code> list contain?</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>titanic_rs<span class="sc">$</span>result[[<span class="dv">1</span>]]<span class="sc">$</span>.metrics[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1234,7 +1229,7 @@ Run `show_notes(.Last.tune.result)` for more information.</code></pre>
 <p>Now I wasn’t able to check the code for <code>autoplot()</code> and I’m pretty certain there’s a more elegant method out there. Hit me up if you feel there’s a better way to extract data from within tibbles in the comments here 👉🏼</p>
 <p>First step is to create an empty tibble consisting of 4 models, 2 metrics and 80 empty cells that need to be filled in from <code>titanic_rs</code> object.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>tidy_titanic_rs <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">wf =</span> <span class="fu">rep</span>(<span class="fu">unique</span>(titanic_rs<span class="sc">$</span>wflow_id), <span class="dv">15</span><span class="sc">*</span><span class="dv">2</span>),</span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">metrics =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"accuracy"</span>, <span class="dv">4</span>), </span>
@@ -1259,7 +1254,7 @@ Run `show_notes(.Last.tune.result)` for more information.</code></pre>
 </div>
 <p>Dimensions of this empty table?</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(tidy_titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1273,7 +1268,7 @@ Run `show_notes(.Last.tune.result)` for more information.</code></pre>
 <h2 class="anchored" data-anchor-id="extracting-the-tibbles">Extracting the tibbles</h2>
 <p><code>pluck</code> has got to be the coolest function I’ve ever come across!</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>bigtable <span class="ot">&lt;-</span> purrr<span class="sc">:::</span><span class="fu">pluck</span>(titanic_rs, <span class="dv">4</span>)</span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>wflow_id_titanic <span class="ot">&lt;-</span> <span class="fu">unique</span>(titanic_rs<span class="sc">$</span>wflow_id)</span>
@@ -1307,7 +1302,7 @@ Run `show_notes(.Last.tune.result)` for more information.</code></pre>
 <p>With the data in a rectangular tidy format, the rest of the magic is handled by <code>ggplot</code></p>
 <p><strong><em>cracks knuckles</em></strong></p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>tidy_titanic_rs2 <span class="sc">%&gt;%</span> </span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(wf, <span class="fu">desc</span>(value_mean)), </span>
@@ -1323,23 +1318,31 @@ Run `show_notes(.Last.tune.result)` for more information.</code></pre>
 <span id="cb77-12"><a href="#cb77-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>And here once again is the auto-generated plot. Not bad, eh?</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(titanic_rs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://media.giphy.com/media/3oEduKVQdG4c0JVPSo/giphy.gif" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Oooh yeeah!</figcaption><p></p>
+<figcaption>Oooh yeeah!</figcaption>
 </figure>
 </div>
 </section>
@@ -1378,12 +1381,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
     }
-  });
-  clipboard.on('success', function(e) {
+    return false;
+  }
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1415,11 +1421,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1429,8 +1474,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1442,9 +1496,245 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1485,6 +1775,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ramakant">
 <meta name="dcterms.date" content="2022-04-05">
 
-<title>The Null Hypothesis - What a wonderful ‘wordle’!</title>
+<title>What a wonderful ‘wordle’! – The Null Hypothesis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -34,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,8 +96,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-T5T39KBDW1"></script>
@@ -133,7 +112,11 @@ gtag('js', new Date());
 gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 </script>
 <script async="" src="https://hypothes.is/embed.js"></script>
-
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 <script src="../../site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="../../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
@@ -144,36 +127,38 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">The Null Hypothesis</span>
     </a>
   </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About Me</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About Me</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/ds-ramakant"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/ds-ramakant"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/dsramakant/"><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/dsramakant/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -233,6 +218,7 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 
 
 
+
 <p>Who ever thought that a bunch of <a href="https://www.nytimes.com/games/wordle/index.html">black and green boxes</a> would bring out the logophile in us all? With friends and family groups sharing their progress, I find this to be an entertaining mind-puzzle to kickstart the day.</p>
 <p>And I was not alone in my quest for 5 letter words. Wordle has tickled the fascination of many in the data science community. I found <a href="https://rviews.rstudio.com/2022/02/21/wordle-data-analysis/">Arthur Holtz’s lucid breakdown of the Wordle dataset</a> quite interesting. Of course, there is 3B1B’s incredibly detailed videos on applying Information Theory to this 6-by-5 grid. (<a href="https://youtu.be/v68zYyaEmEA">original video</a> as well as the <a href="https://youtu.be/fRed0Xmc2Wg">follow-up errata</a>)</p>
 <p>Others have simulated the wordle game (<a href="https://datascienceplus.com/how-i-selected-my-starting-word-for-wordle-using-simulations-and-r/">like here</a>) or even solved it for you (<a href="https://blog.ephorie.de/wordle-solve-wordle-with-r">like this blog</a>). I’ve read at least <a href="https://theconversation.com/want-to-master-wordle-heres-the-best-strategy-for-your-first-guess-176325">one blog post</a> that has an academic take on the matter.</p>
@@ -256,14 +242,14 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Wordle sample share.jpg" class="img-fluid figure-img" width="267"></p>
-<p></p><figcaption class="figure-caption">Sample world share</figcaption><p></p>
+<figcaption>Sample world share</figcaption>
 </figure>
 </div>
 <p>…And if your family too has been bitten hard by the Wordle bug, then you would be familiar with group messages like this!</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="wordle share whatsapp.jpg" class="img-fluid figure-img" width="134"></p>
-<p></p><figcaption class="figure-caption">World share in whatsapp</figcaption><p></p>
+<figcaption>World share in whatsapp</figcaption>
 </figure>
 </div>
 </section>
@@ -272,7 +258,7 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <p><a href="https://rviews.rstudio.com/2022/02/21/wordle-data-analysis/">Arthur Hotlz’s blog</a> is a good place to start for extracting and loading the Official Wordle list. After parsing and cleaning the data, here’s all the words broken down into a single rectangular dataframe <code>word_list</code> .</p>
 <p><em>Update 29th Jan ’23: NYT’s .js file is not retrieving any list for some reason. I’ve referred to <a href="https://dagshub.com/arjvik/wordle-wordlist">Arjun Vikram’s repo</a> on dagshub</em></p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">warning =</span> <span class="cn">FALSE</span>, <span class="at">message =</span> <span class="cn">FALSE</span>) </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>({ </span>
@@ -318,7 +304,7 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2310    1</code></pre>
 </div>
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(wordle_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -335,7 +321,7 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <p>Modification to the above is another dataframe with each of the characters separated into columns which we’ll call <code>position_word_list</code></p>
 <p><em>The line <code>select(-x)</code> removes the empty column that is created due to the <code>seperate()</code> function</em></p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>position_word_list <span class="ot">&lt;-</span> wordle_list <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(word, </span>
@@ -360,7 +346,7 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 </div>
 <p>Now onto some frequency analysis. Here’s a breakdown of all the letters in the wordle list sorted by number of occurrences stored in <code>letter_list</code> and creating a simple bar graph.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>letter_list <span class="ot">&lt;-</span> wordle_list <span class="sc">%&gt;%</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.character</span>() <span class="sc">%&gt;%</span></span>
@@ -385,12 +371,16 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Frequency of letters in Official Wordle list"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="index.en_files/figure-html/graph-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="index.en_files/figure-html/graph-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This is interesting. Now I’m curious to know the top words by each position. To do this, I created a single table called <code>freq_table</code> that provides me with the frequency of occurrences by position for each letter. To iterate this process across all the 5 places, I used a <code>for</code> loop. Output is generated via the <code>kableExtra</code> package which provides a neat scrollable window</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#declaring null table</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>freq_table <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">alpha =</span> LETTERS)</span>
@@ -424,236 +414,237 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:70%;  font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;" class=" lightable-classic"><table class="table" style="margin-left: auto; margin-right: auto;">
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; overflow-x: scroll; width:70%;  font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;" class=" lightable-classic">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Frequency Table</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> alpha </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> p1 </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> p2 </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> p3 </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> p4 </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> p5 </th>
-  </tr>
- </thead>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">alpha</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">p1</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">p2</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">p3</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">p4</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">p5</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> A </td>
-   <td style="text-align:right;"> 140 </td>
-   <td style="text-align:right;"> 304 </td>
-   <td style="text-align:right;"> 306 </td>
-   <td style="text-align:right;"> 162 </td>
-   <td style="text-align:right;"> 63 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> B </td>
-   <td style="text-align:right;"> 173 </td>
-   <td style="text-align:right;"> 16 </td>
-   <td style="text-align:right;"> 56 </td>
-   <td style="text-align:right;"> 24 </td>
-   <td style="text-align:right;"> 11 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> C </td>
-   <td style="text-align:right;"> 198 </td>
-   <td style="text-align:right;"> 40 </td>
-   <td style="text-align:right;"> 56 </td>
-   <td style="text-align:right;"> 150 </td>
-   <td style="text-align:right;"> 31 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> D </td>
-   <td style="text-align:right;"> 111 </td>
-   <td style="text-align:right;"> 20 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 69 </td>
-   <td style="text-align:right;"> 118 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> E </td>
-   <td style="text-align:right;"> 72 </td>
-   <td style="text-align:right;"> 241 </td>
-   <td style="text-align:right;"> 177 </td>
-   <td style="text-align:right;"> 318 </td>
-   <td style="text-align:right;"> 422 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 135 </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 25 </td>
-   <td style="text-align:right;"> 35 </td>
-   <td style="text-align:right;"> 26 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> G </td>
-   <td style="text-align:right;"> 115 </td>
-   <td style="text-align:right;"> 11 </td>
-   <td style="text-align:right;"> 67 </td>
-   <td style="text-align:right;"> 76 </td>
-   <td style="text-align:right;"> 41 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> H </td>
-   <td style="text-align:right;"> 69 </td>
-   <td style="text-align:right;"> 144 </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 28 </td>
-   <td style="text-align:right;"> 137 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> I </td>
-   <td style="text-align:right;"> 34 </td>
-   <td style="text-align:right;"> 201 </td>
-   <td style="text-align:right;"> 266 </td>
-   <td style="text-align:right;"> 158 </td>
-   <td style="text-align:right;"> 11 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> J </td>
-   <td style="text-align:right;"> 20 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> K </td>
-   <td style="text-align:right;"> 20 </td>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:right;"> 55 </td>
-   <td style="text-align:right;"> 113 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> L </td>
-   <td style="text-align:right;"> 87 </td>
-   <td style="text-align:right;"> 200 </td>
-   <td style="text-align:right;"> 112 </td>
-   <td style="text-align:right;"> 162 </td>
-   <td style="text-align:right;"> 155 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> M </td>
-   <td style="text-align:right;"> 107 </td>
-   <td style="text-align:right;"> 38 </td>
-   <td style="text-align:right;"> 61 </td>
-   <td style="text-align:right;"> 68 </td>
-   <td style="text-align:right;"> 42 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> N </td>
-   <td style="text-align:right;"> 37 </td>
-   <td style="text-align:right;"> 87 </td>
-   <td style="text-align:right;"> 137 </td>
-   <td style="text-align:right;"> 182 </td>
-   <td style="text-align:right;"> 130 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> O </td>
-   <td style="text-align:right;"> 41 </td>
-   <td style="text-align:right;"> 279 </td>
-   <td style="text-align:right;"> 243 </td>
-   <td style="text-align:right;"> 132 </td>
-   <td style="text-align:right;"> 58 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> P </td>
-   <td style="text-align:right;"> 141 </td>
-   <td style="text-align:right;"> 61 </td>
-   <td style="text-align:right;"> 57 </td>
-   <td style="text-align:right;"> 50 </td>
-   <td style="text-align:right;"> 56 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Q </td>
-   <td style="text-align:right;"> 23 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> R </td>
-   <td style="text-align:right;"> 105 </td>
-   <td style="text-align:right;"> 267 </td>
-   <td style="text-align:right;"> 163 </td>
-   <td style="text-align:right;"> 150 </td>
-   <td style="text-align:right;"> 212 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> S </td>
-   <td style="text-align:right;"> 365 </td>
-   <td style="text-align:right;"> 16 </td>
-   <td style="text-align:right;"> 80 </td>
-   <td style="text-align:right;"> 171 </td>
-   <td style="text-align:right;"> 36 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 149 </td>
-   <td style="text-align:right;"> 77 </td>
-   <td style="text-align:right;"> 111 </td>
-   <td style="text-align:right;"> 139 </td>
-   <td style="text-align:right;"> 253 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> U </td>
-   <td style="text-align:right;"> 33 </td>
-   <td style="text-align:right;"> 185 </td>
-   <td style="text-align:right;"> 165 </td>
-   <td style="text-align:right;"> 82 </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> V </td>
-   <td style="text-align:right;"> 43 </td>
-   <td style="text-align:right;"> 15 </td>
-   <td style="text-align:right;"> 49 </td>
-   <td style="text-align:right;"> 45 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> W </td>
-   <td style="text-align:right;"> 82 </td>
-   <td style="text-align:right;"> 44 </td>
-   <td style="text-align:right;"> 26 </td>
-   <td style="text-align:right;"> 25 </td>
-   <td style="text-align:right;"> 17 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> X </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 14 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 8 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 22 </td>
-   <td style="text-align:right;"> 29 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 364 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Z </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 11 </td>
-   <td style="text-align:right;"> 20 </td>
-   <td style="text-align:right;"> 4 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">304</td>
+<td style="text-align: right;">306</td>
+<td style="text-align: right;">162</td>
+<td style="text-align: right;">63</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">173</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">31</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">111</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">118</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">241</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">318</td>
+<td style="text-align: right;">422</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">115</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">41</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">137</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">201</td>
+<td style="text-align: right;">266</td>
+<td style="text-align: right;">158</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">113</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">162</td>
+<td style="text-align: right;">155</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">42</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">137</td>
+<td style="text-align: right;">182</td>
+<td style="text-align: right;">130</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">279</td>
+<td style="text-align: right;">243</td>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">58</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">56</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">267</td>
+<td style="text-align: right;">163</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">212</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">S</td>
+<td style="text-align: right;">365</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">171</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">T</td>
+<td style="text-align: right;">149</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">111</td>
+<td style="text-align: right;">139</td>
+<td style="text-align: right;">253</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">U</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">185</td>
+<td style="text-align: right;">165</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">V</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">W</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Y</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">364</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Z</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">4</td>
+</tr>
 </tbody>
-</table></div>
+</table>
+</div>
 
 </div>
 </div>
 <p>This table looks good. However, for my visualisation, I want to plot the top 10 letters in each position. For this, I’m going to use <code>pivot_longer()</code> to make it easier to generate the viz.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>freq_table_long10 <span class="ot">&lt;-</span> freq_table <span class="sc">%&gt;%</span> </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>alpha, <span class="at">names_to =</span> <span class="st">"position"</span>, <span class="at">values_to =</span> <span class="st">"freq"</span>) <span class="sc">%&gt;%</span> </span>
@@ -670,269 +661,270 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px;  font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;" class=" lightable-classic"><table class="table" style="margin-left: auto; margin-right: auto;">
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px;  font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;" class=" lightable-classic">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Top 10 letters within each position</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> position </th>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> alpha </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> freq </th>
-  </tr>
- </thead>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">position</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">alpha</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">freq</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> p1 </td>
-   <td style="text-align:left;"> S </td>
-   <td style="text-align:right;"> 365 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p1 </td>
-   <td style="text-align:left;"> C </td>
-   <td style="text-align:right;"> 198 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p1 </td>
-   <td style="text-align:left;"> B </td>
-   <td style="text-align:right;"> 173 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p1 </td>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 149 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p1 </td>
-   <td style="text-align:left;"> P </td>
-   <td style="text-align:right;"> 141 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p1 </td>
-   <td style="text-align:left;"> A </td>
-   <td style="text-align:right;"> 140 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p1 </td>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 135 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p1 </td>
-   <td style="text-align:left;"> G </td>
-   <td style="text-align:right;"> 115 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p1 </td>
-   <td style="text-align:left;"> D </td>
-   <td style="text-align:right;"> 111 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p1 </td>
-   <td style="text-align:left;"> M </td>
-   <td style="text-align:right;"> 107 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p2 </td>
-   <td style="text-align:left;"> A </td>
-   <td style="text-align:right;"> 304 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p2 </td>
-   <td style="text-align:left;"> O </td>
-   <td style="text-align:right;"> 279 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p2 </td>
-   <td style="text-align:left;"> R </td>
-   <td style="text-align:right;"> 267 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p2 </td>
-   <td style="text-align:left;"> E </td>
-   <td style="text-align:right;"> 241 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p2 </td>
-   <td style="text-align:left;"> I </td>
-   <td style="text-align:right;"> 201 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p2 </td>
-   <td style="text-align:left;"> L </td>
-   <td style="text-align:right;"> 200 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p2 </td>
-   <td style="text-align:left;"> U </td>
-   <td style="text-align:right;"> 185 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p2 </td>
-   <td style="text-align:left;"> H </td>
-   <td style="text-align:right;"> 144 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p2 </td>
-   <td style="text-align:left;"> N </td>
-   <td style="text-align:right;"> 87 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p2 </td>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 77 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p3 </td>
-   <td style="text-align:left;"> A </td>
-   <td style="text-align:right;"> 306 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p3 </td>
-   <td style="text-align:left;"> I </td>
-   <td style="text-align:right;"> 266 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p3 </td>
-   <td style="text-align:left;"> O </td>
-   <td style="text-align:right;"> 243 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p3 </td>
-   <td style="text-align:left;"> E </td>
-   <td style="text-align:right;"> 177 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p3 </td>
-   <td style="text-align:left;"> U </td>
-   <td style="text-align:right;"> 165 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p3 </td>
-   <td style="text-align:left;"> R </td>
-   <td style="text-align:right;"> 163 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p3 </td>
-   <td style="text-align:left;"> N </td>
-   <td style="text-align:right;"> 137 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p3 </td>
-   <td style="text-align:left;"> L </td>
-   <td style="text-align:right;"> 112 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p3 </td>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 111 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p3 </td>
-   <td style="text-align:left;"> S </td>
-   <td style="text-align:right;"> 80 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p4 </td>
-   <td style="text-align:left;"> E </td>
-   <td style="text-align:right;"> 318 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p4 </td>
-   <td style="text-align:left;"> N </td>
-   <td style="text-align:right;"> 182 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p4 </td>
-   <td style="text-align:left;"> S </td>
-   <td style="text-align:right;"> 171 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p4 </td>
-   <td style="text-align:left;"> A </td>
-   <td style="text-align:right;"> 162 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p4 </td>
-   <td style="text-align:left;"> L </td>
-   <td style="text-align:right;"> 162 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p4 </td>
-   <td style="text-align:left;"> I </td>
-   <td style="text-align:right;"> 158 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p4 </td>
-   <td style="text-align:left;"> C </td>
-   <td style="text-align:right;"> 150 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p4 </td>
-   <td style="text-align:left;"> R </td>
-   <td style="text-align:right;"> 150 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p4 </td>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 139 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p4 </td>
-   <td style="text-align:left;"> O </td>
-   <td style="text-align:right;"> 132 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p5 </td>
-   <td style="text-align:left;"> E </td>
-   <td style="text-align:right;"> 422 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p5 </td>
-   <td style="text-align:left;"> Y </td>
-   <td style="text-align:right;"> 364 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p5 </td>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 253 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p5 </td>
-   <td style="text-align:left;"> R </td>
-   <td style="text-align:right;"> 212 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p5 </td>
-   <td style="text-align:left;"> L </td>
-   <td style="text-align:right;"> 155 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p5 </td>
-   <td style="text-align:left;"> H </td>
-   <td style="text-align:right;"> 137 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p5 </td>
-   <td style="text-align:left;"> N </td>
-   <td style="text-align:right;"> 130 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p5 </td>
-   <td style="text-align:left;"> D </td>
-   <td style="text-align:right;"> 118 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p5 </td>
-   <td style="text-align:left;"> K </td>
-   <td style="text-align:right;"> 113 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> p5 </td>
-   <td style="text-align:left;"> A </td>
-   <td style="text-align:right;"> 63 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">p1</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: right;">365</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p1</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">198</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p1</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">173</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p1</td>
+<td style="text-align: left;">T</td>
+<td style="text-align: right;">149</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p1</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">141</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p1</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">140</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p1</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">135</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p1</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">115</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p1</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">111</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p1</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">107</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p2</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">304</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p2</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">279</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p2</td>
+<td style="text-align: left;">R</td>
+<td style="text-align: right;">267</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p2</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">241</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p2</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">201</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p2</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">200</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p2</td>
+<td style="text-align: left;">U</td>
+<td style="text-align: right;">185</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p2</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">144</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p2</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">87</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p2</td>
+<td style="text-align: left;">T</td>
+<td style="text-align: right;">77</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p3</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">306</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p3</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">266</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p3</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">243</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p3</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">177</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p3</td>
+<td style="text-align: left;">U</td>
+<td style="text-align: right;">165</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p3</td>
+<td style="text-align: left;">R</td>
+<td style="text-align: right;">163</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p3</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">137</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p3</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">112</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p3</td>
+<td style="text-align: left;">T</td>
+<td style="text-align: right;">111</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p3</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p4</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">318</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p4</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">182</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p4</td>
+<td style="text-align: left;">S</td>
+<td style="text-align: right;">171</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p4</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">162</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p4</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">162</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p4</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">158</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p4</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p4</td>
+<td style="text-align: left;">R</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p4</td>
+<td style="text-align: left;">T</td>
+<td style="text-align: right;">139</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p4</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">132</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p5</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">422</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p5</td>
+<td style="text-align: left;">Y</td>
+<td style="text-align: right;">364</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p5</td>
+<td style="text-align: left;">T</td>
+<td style="text-align: right;">253</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p5</td>
+<td style="text-align: left;">R</td>
+<td style="text-align: right;">212</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p5</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">155</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p5</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">137</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p5</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">130</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p5</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">118</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p5</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">113</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">p5</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">63</td>
+</tr>
 </tbody>
-</table></div>
+</table>
+</div>
 
 </div>
 </div>
@@ -941,7 +933,7 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <h3 class="anchored" data-anchor-id="side-note-on-reordering-within-facets">Side note on reordering within facets</h3>
 <p><em>I tried my best to understand why I was unable to sort within each facet in spite of using <code>free_y</code>. Apparently that’s a known issue and a workaround has been discussed by <a href="https://github.com/dgrtwo/drlib/blob/master/R/reorder_within.R">David Robinson</a>, <a href="https://juliasilge.github.io/tidytext/reference/reorder_within.html">Julia Silger</a> and <a href="https://trinkerrstuff.wordpress.com/2016/12/23/ordering-categories-within-ggplot2-facets/">Tyler Rinker</a>. To achieve this, two more functions need to be created <code>reorder_within</code> and <code>scale_y_reordered</code></em></p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>reorder_within <span class="ot">&lt;-</span> <span class="cf">function</span>(x, by, within, <span class="at">fun =</span> mean, <span class="at">sep =</span> <span class="st">"___"</span>, ...) {</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  new_x <span class="ot">&lt;-</span> <span class="fu">paste</span>(x, within, <span class="at">sep =</span> sep)</span>
@@ -967,7 +959,11 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"D.S.Ramakant Raju</span><span class="sc">\n</span><span class="st">www.linkedin.com/in/dsramakant/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="index.en_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="index.en_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Aha! Things are starting to get more clearer. Highly common letters in the 1st position are <strong>S, C, B, T and P</strong> - notice there’s only 1 vowel (<strong>A</strong>) that occurs in the top 10. Vowels appear more frequently in the 2nd and 3rd positions. Last position has a higher occurrence of <strong>E, Y, T, R &amp; L</strong></p>
@@ -983,7 +979,7 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 </ol>
 <p>With that out of the way, I was able to determine that there are <strong>39 words</strong> that can be formed with the top 5 occurring letters in each position. I’ve created a <strong>score</strong> that is determined by the rank of each letter within its position. For instance, <strong>S A I N T</strong> gets a score of 9 by summing up 1 (S in first position) + 1 (A in second position) + 2 (I in third) + 2 (N in fourth) + 3 (T in fifth). The lower the score, the higher the frequency of occurrences. Scroll below to read the rest of the words.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#function to pick the top 5 letters</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>top5_selection <span class="ot">&lt;-</span> <span class="cf">function</span>(x)</span>
@@ -1025,174 +1021,175 @@ gtag('config', 'G-T5T39KBDW1', { 'anonymize_ip': true});
 <span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:50%;  font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;" class=" lightable-classic"><table class="table" style="margin-left: auto; margin-right: auto;">
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:50%;  font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;" class=" lightable-classic">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Top 39 words</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"> word </th>
-   <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> score </th>
-  </tr>
- </thead>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF;">word</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF;">score</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> SAINT </td>
-   <td style="text-align:right;"> 9 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CRANE </td>
-   <td style="text-align:right;"> 9 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> COAST </td>
-   <td style="text-align:right;"> 11 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> BRINE </td>
-   <td style="text-align:right;"> 11 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CEASE </td>
-   <td style="text-align:right;"> 11 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CRONE </td>
-   <td style="text-align:right;"> 11 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CAUSE </td>
-   <td style="text-align:right;"> 12 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CRIER </td>
-   <td style="text-align:right;"> 12 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> BRINY </td>
-   <td style="text-align:right;"> 12 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> BOAST </td>
-   <td style="text-align:right;"> 12 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> TAINT </td>
-   <td style="text-align:right;"> 12 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CRONY </td>
-   <td style="text-align:right;"> 12 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> TEASE </td>
-   <td style="text-align:right;"> 13 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> POISE </td>
-   <td style="text-align:right;"> 13 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> TOAST </td>
-   <td style="text-align:right;"> 13 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> PAINT </td>
-   <td style="text-align:right;"> 13 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> BOOST </td>
-   <td style="text-align:right;"> 14 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> POINT </td>
-   <td style="text-align:right;"> 14 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> COUNT </td>
-   <td style="text-align:right;"> 14 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> PRONE </td>
-   <td style="text-align:right;"> 14 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> BEAST </td>
-   <td style="text-align:right;"> 14 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> PRINT </td>
-   <td style="text-align:right;"> 15 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> PAUSE </td>
-   <td style="text-align:right;"> 15 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> TAUNT </td>
-   <td style="text-align:right;"> 15 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> PROSE </td>
-   <td style="text-align:right;"> 15 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CREST </td>
-   <td style="text-align:right;"> 15 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CRUST </td>
-   <td style="text-align:right;"> 16 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> BRIAR </td>
-   <td style="text-align:right;"> 16 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> BOULE </td>
-   <td style="text-align:right;"> 16 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> POESY </td>
-   <td style="text-align:right;"> 16 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CRUEL </td>
-   <td style="text-align:right;"> 16 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> PRUNE </td>
-   <td style="text-align:right;"> 16 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> BRUNT </td>
-   <td style="text-align:right;"> 16 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> TRUER </td>
-   <td style="text-align:right;"> 17 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> TREAT </td>
-   <td style="text-align:right;"> 18 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> TRIAL </td>
-   <td style="text-align:right;"> 18 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> TRUST </td>
-   <td style="text-align:right;"> 18 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> TRULY </td>
-   <td style="text-align:right;"> 19 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> TROLL </td>
-   <td style="text-align:right;"> 20 </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">SAINT</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CRANE</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">COAST</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BRINE</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CEASE</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CRONE</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CAUSE</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CRIER</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BRINY</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BOAST</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TAINT</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CRONY</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TEASE</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">POISE</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TOAST</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PAINT</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BOOST</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">POINT</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">COUNT</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PRONE</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BEAST</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PRINT</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PAUSE</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TAUNT</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PROSE</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CREST</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CRUST</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BRIAR</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BOULE</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">POESY</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CRUEL</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PRUNE</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BRUNT</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRUER</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TREAT</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRIAL</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TRUST</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRULY</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TROLL</td>
+<td style="text-align: right;">20</td>
+</tr>
 </tbody>
-</table></div>
+</table>
+</div>
 
 </div>
 </div>
@@ -1231,12 +1228,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
     }
-  });
-  clipboard.on('success', function(e) {
+    return false;
+  }
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1268,11 +1268,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1282,8 +1321,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1295,9 +1343,245 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1338,6 +1622,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
