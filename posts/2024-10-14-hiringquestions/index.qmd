@@ -1,0 +1,36 @@
+---
+title: "Interview tips for Growth marketeers"
+subtitle: "Workplace chatter"
+description: "Recruitment advice to team leaders from personal experience"
+date: '2024-10-29'
+categories: [corporate, growth, team]
+featured: no
+execute:
+  warning: false
+Draft: false
+image: interview.png
+---
+
+# Interview tips for Growth marketeers
+
+How do you assess skills of an incoming candidate specifically in the field of marketing? And what should the interviewee prepare in advance? Sharing a few tips I've picked over the years.
+
+Apart from a plethora of others, here are some mandatory questions that creep into the interview rounds at one point or another. Would be glad to know what works for u as well in the comments.
+
+**🗣 Before the candidate starts to talk, I try setting the context of the job with regards to the category and the company. Then leave the floor open for them to understand their journey and curiosity towards the job profile.**
+
+👂 Listening for: Expression of interest towards the profile. Most times the homework is visiting the homepage - which is meant for customers and not prospective employees. Therefore any action apart from this is welcome (eg. visiting Linkedin, reading articles about the company, researching about founders/ CXO, speaking to ex-employees are all positive signs). Speaking to customers is an absolute win in my view!
+
+**🗣 tell me about a few other growth companies/ personalities/ resources that you admire? Any other companies doing similar work in the category?**
+
+👂 Listening for: industry knowledge. Cannot understate how important it is to stay up-to-date in the field of marketing (especially digital / growth). If you think growth is all about setting paid ads, then you're displaying your very limited knowledge base. Keep reading and soaking in information about all aspects of the marketing funnel. At the very least - please talk about how you're working on AARRR frameworks (not expanding here. google for yourself and thank me later!)
+
+**🗣 Tell me about a non-obvious growth experiment you ran. What were the results? What did you learn, and how did you use what you learned?**
+
+👂 Listening for: understanding how a candidate is able to think qualitatively and quantitatively about growth problems. Asking for a non-obvious example can help weed out candidates who simply follow best practices without thinking critically.
+
+**🗣 Tell me about an A/B test that completely failed. How did the failure lead to a win?**
+
+👂 Listening for: candidate's ability to analyse failures. it shows if the interviewee has ability to identify unexpected insights and translate those insights into actionable steps that can lead to positive outcomes. This is my fav question because strong growth marketers always seek out lessons from their failures as well.
+
+Let us talk more the comments on the right➡️

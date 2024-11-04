@@ -1,0 +1,60 @@
+---
+title: "Consumers Purchase Emotionally and Defend Rationally "
+subtitle: "Digital Marketing strategies"
+description: "Simple evergreen advice for conversion rate optimisation"
+date: '2024-11-04'
+categories: [corporate, growth, marketing]
+featured: no
+execute:
+  warning: false
+Draft: true
+image: ../growth-office.jpg
+---
+
+# Purchase Emotionally, Defend Rationally
+
+Once in a while, you encounter a nugget of wisdom that immediately puts in place a lot of experiential knowledge. While reading [Chris Goward's](https://www.linkedin.com/in/cgoward/) awesome book ["You Should Test That"](https://www.amazon.in/You-Should-Test-That-Optimization/dp/1118301307) I was struck by the this passage.
+
+![](chris-goward.jpg)
+
+What struck me the most were the words - "defends ... rationally". Why is the customer defending anything? Isn't the purchase made out of pure free-will? Did anyone coerce the customer to make the purchase?
+
+The answer lies in a Harvard Business School professor's Gerald Zaltman's book ["How Customer's Think"](https://amzn.in/d/ht9L7fx). Almost 95% of the the time, customers have decided subconciously that they need to buy a product. This is relayed to the concious mind as an emotion. [The concious mind now searches for rational reasons therefore completing this loop and allowing the customer to feel safe and secure](https://medium.com/@salesforce/neuroscience-proves-we-buy-on-emotion-and-justify-with-logic-but-with-a-twist-4ff965cdeed8#8407).
+
+Therefore when the customer has to re-visit their purchase action either by way of speaking about it to others or justify it themselves, it is these rational markers that recalled. However, the genesis has almost always been an emotional one.
+
+How does all this matter for **conversion rate optimisation**? For a marketeer, the key takeaway is to lace the purchase journey with emotional as well as rational markers. Begin first by identifying the tangible and intangible reasons for purchase.
+
+## Tangible reasons
+
+Simply put, what is the brand's Reasons To Buy that sets it apart from competition? List down all the features of the product/service that can be used to describe it.
+
+The second tangible reason are incentives and offers. Important to highlight that along with "Audience Targetting" and "Creative", the "Offer" stands out as a major lever in digital marketing campaigns. Price offers are hooks that can get customers into the funnel but one should test for the best combination not impact revenues. Some of the incentives and offers include:
+
+1.  Premiums
+2.  Discounts
+3.  Credits
+4.  Buy One, Get one
+5.  Bundling
+6.  Free Trial
+7.  Free Upgrade
+8.  Exclusive offer
+9.  Festive offer
+10. Loyalty programs etc
+
+## Intangible Reasons
+
+There are several conversion tactics to increase trust:
+
+1.  Professional reviews: screenshots of established trade figures with positive brand mentions
+2.  Media Mentions: Nothing like some old-school media mentions to add credibility
+3.  Awards & honors
+4.  Thought Leadership: displaying articles, white papers, books, blogs and other content marekting assets is a good way to build positive perception
+5.  Case Studies: previous wins and client reports describing how the service/ product has solved other customer problems
+6.  Social proof: showing number of customers especially if its big enough adds trust
+7.  Testimonials: age-old device to influence new customers. Showing consensus opinions of other people around them.
+8.  Client logos
+9.  Customer ratings and reviews
+10. Social media: this one is buried at the end but isn't it the most obvious one !
+
+Which one of these resonated with you and which didn't? Let us talk more the comments on the right➡️
