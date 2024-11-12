@@ -32,7 +32,7 @@ Feel free to leave a message using the tab on the right👉🏼
 
 ## Executive Competencies
 
-::: {.column-body-outset style="border: none"}
+::: {#competencies .column-body-outset style="border: none"}
 +:------------------------------------:+:-----------------------------------:+:-------------------------:+
 | {{< fa indian-rupee-sign size=2x >}} | {{< fa eye size=2x >}}              | {{< fa rocket size=2x >}} |
 |                                      |                                     |                           |
@@ -46,6 +46,15 @@ Feel free to leave a message using the tab on the right👉🏼
 |                                      |                                     |                           |
 |                                      | Team Mentorship                     |                           |
 +--------------------------------------+-------------------------------------+---------------------------+
+
+Following is test table. If you're reading this, then tell Ramakant asap!
++----------------------+----------------------+----------------------+
+| Marketing P&L        | Consumer Research    | Growth Marketing     |
++:====================:+:====================:+:====================:+
+| Creative Strategy    | Analytics            | Business Management  |
++----------------------+----------------------+----------------------+
+|                      | Team Mentorship      |                      |
++----------------------+----------------------+----------------------+
 :::
 
 ## Qualifications
@@ -53,7 +62,7 @@ Feel free to leave a message using the tab on the right👉🏼
 ::: panel-tabset
 ### Work
 
-**Turno** *(May'23 - Present)*
+**Turno** *(May'23 - Sep'24)*
 
 [Head of Marketing]{.underline}
 
