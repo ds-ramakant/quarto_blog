@@ -20,7 +20,9 @@ commments:
   hypothesis: true
 ---
 
-I am a marketing professional 16+ years experience across Marketing, Business & Analytics teams in consumer companies. Through my professional journey I've helped businesses solve for user acquisition, engagement and revenue - from entertainment powerhouses like MX Player & Viu to smaller, nimble footed startups selling Electric Vehicles. I am passionate about being at the intersection of consumer insights and analytics while working alongside teams to bring growth ideas to life. I am fluent in English, Hindi & Telugu. My favourite weekend activity is to switch off the laptop and rush to spend time with my family in Mumbai 👨‍👩‍👧
+I am an independent marketing consultant 16+ years experience across Marketing, Business & Analytics teams in consumer companies. I specialise in helping founders understand how to build revenue growth levers with marketing channels and remain invested in long term marketing efforts.
+
+Throughout my professional journey I've helped businesses solve for user acquisition, engagement and revenue - from entertainment powerhouses like MX Player & Viu to smaller, nimble footed startups like Turno selling Electric Vehicles. I am passionate about being at the intersection of marketing, consumer insights and analytics while working alongside teams to bring growth ideas to life. Fluent in English, Hindi & Telugu. My favourite weekend activity is to switch off the laptop and spend time with my family exploring Mumbai 👨‍👩‍👧
 
 ## Why the Null Hypothesis?
 
@@ -33,28 +35,39 @@ Feel free to leave a message using the tab on the right👉🏼
 ## Executive Competencies
 
 ::: {#competencies .column-body-outset style="border: none"}
-+:------------------------------------:+:-----------------------------------:+:-------------------------:+
-| {{< fa indian-rupee-sign size=2x >}} | {{< fa eye size=2x >}}              | {{< fa rocket size=2x >}} |
-|                                      |                                     |                           |
-| Marketing P&L                        | Consumer Research                   | Growth Marketing          |
-+--------------------------------------+-------------------------------------+---------------------------+
-| {{< fa pen-nib size=2x >}}           | {{< fa brands r-project size=2x >}} | {{< fa book size=2x >}}   |
-|                                      |                                     |                           |
-| Creative Strategy                    | Analytics                           | Business Management       |
-+--------------------------------------+-------------------------------------+---------------------------+
-|                                      | {{< fa person-rays size=2x >}}      |                           |
-|                                      |                                     |                           |
-|                                      | Team Mentorship                     |                           |
-+--------------------------------------+-------------------------------------+---------------------------+
+<!-- below table markdown is incorrect. replaced on 2025 03 06 -->
 
-Following is test table. If you're reading this, then tell Ramakant asap!
-+----------------------+----------------------+----------------------+
-| Marketing P&L        | Consumer Research    | Growth Marketing     |
-+:====================:+:====================:+:====================:+
-| Creative Strategy    | Analytics            | Business Management  |
-+----------------------+----------------------+----------------------+
-|                      | Team Mentorship      |                      |
-+----------------------+----------------------+----------------------+
+<!-- +:------------------------------------:+:-----------------------------------:+:-------------------------:+ -->
+
+<!-- | {{< fa indian-rupee-sign size=2x >}} | {{< fa eye size=2x >}}              | {{< fa rocket size=2x >}} | -->
+
+<!-- |                                      |                                     |                           | -->
+
+<!-- | Marketing P&L                        | Consumer Research                   | Growth Marketing          | -->
+
+<!-- +--------------------------------------+-------------------------------------+---------------------------+ -->
+
+<!-- | {{< fa pen-nib size=2x >}}           | {{< fa brands r-project size=2x >}} | {{< fa book size=2x >}}   | -->
+
+<!-- |                                      |                                     |                           | -->
+
+<!-- | Creative Strategy                    | Analytics                           | Business Management       | -->
+
+<!-- +--------------------------------------+-------------------------------------+---------------------------+ -->
+
+<!-- |                                      | {{< fa person-rays size=2x >}}      |                           | -->
+
+<!-- |                                      |                                     |                           | -->
+
+<!-- |                                      | Team Mentorship                     |                           | -->
+
+<!-- +--------------------------------------+-------------------------------------+---------------------------+ -->
+
+|                                                         |                                                     |                                                  |
+|:----------------------:|:----------------------:|:----------------------:|
+| {{< fa indian-rupee-sign size=2x >}} <br> Marketing P&L |    {{< fa eye size=2x >}} <br> Consumer Research    | {{< fa rocket size=2x >}} <br> Growth Marketing  |
+|    {{< fa pen-nib size=2x >}} <br> Creative Strategy    | {{< fa brands r-project size=2x >}} <br> Analytics  | {{< fa book size=2x >}} <br> Business Management |
+|                                                         | {{< fa person-rays size=2x >}} <br> Team Mentorship |                                                  |
 :::
 
 ## Qualifications
@@ -66,7 +79,7 @@ Following is test table. If you're reading this, then tell Ramakant asap!
 
 [Head of Marketing]{.underline}
 
--   [Transformed the acquisition strategy on Commercial Vehicle business by scaling paid digital channels, lowering unit economics and improving contribution margins by 40%. Hands-on expertise in team building that contributes to 95% of vehicle sales]{.my-jobexp}
+-   Transformed the acquisition strategy on Commercial Vehicle business by scaling paid digital channels, lowering unit economics and improving contribution margins by 40%. Hands-on expertise in team building that contributes to 95% of vehicle sales
 -   Built the Marketing Analytics platform that captures the full consumer journey in continuous collaboration with Analytics & Tech teams. Resulted in lowering CAC by 50% to maximise cost efficient channels (affiliates, biddable & non-biddable networks)
 -   Managed and forecasted \~INR 3 cr annual marketing budget to scale digital marketing channels across Search, Display, Video campaigns. Started leveraging first-party data (online and offline events) and proceeded to use deep-funnel events for conversion rate optimisation
 -   Enabled A/B experimentations across acquisition and activation stages (80+ hypothesis every quarter iterating on creatives, landing pages, campaign parameters, sales scripts) resulting in identifying high-impact winner creative communication + TG
@@ -75,7 +88,7 @@ Following is test table. If you're reading this, then tell Ramakant asap!
 
 [Director, Insights & Growth Strategy]{.underline}
 
--   [Devised the launch campaigns and strategies for 40+ MX original web series including localised campaigns (Hindi, Telugu, Tamil, Marathi, Punjabi among others)]{.my-jobexp}
+-   Devised the launch campaigns and strategies for 40+ MX original web series including localised campaigns (Hindi, Telugu, Tamil, Marathi, Punjabi among others)
 
 -   Grew MX movie catalogue (in Hindi and 9+ languages - India's 2nd largest AVOD collection) by 30% using engagement-optimised experiments
 
@@ -99,7 +112,7 @@ Following is test table. If you're reading this, then tell Ramakant asap!
 
 [Managment Trainee to Sr. Manager]{.underline}
 
--   [Multiple roles in the company with wide experience across Strategy, Research, Marketing, Revenue Planning and Content Acquisition]{.my-jobexp}
+-   Worked my way up the ladder across multiple roles in the company with wide experience across Strategy, Research, Marketing, Revenue Planning and Content Acquisition
 
 ### Education
 
