@@ -15,7 +15,7 @@ image: ../growth-office.jpg
 
 Growth Marketing has been around for roughly a decade now and there's a fair share of baggage to that word. A common phrase I've heard is "If everyone in the company is focussed on growth, why should 1 person/ team own that role?" Very true. I agree here. Fundamentally, it is marketing principles using different set of tools. Unfortunately, many people throw the term around without truly grasping its nuances. Here's my attempt to demistify some of myths I've come across.
 
-#### 1) Myth: Growth Marketing Is Just Another Name for Paid Acquisition. 
+#### 1) Myth: Growth Marketing Is Just Another Name for Paid Acquisition.
 
 Gotta admit. This is the easisest slope to slip on. More so, because traditional practices led by marketing teams seldom have such a high data visibility. Once we start spending on paid ads and watch the entire funnel come alive, it becomes very easy to say that Growth has been achieved. Alas, the messenger became the message. In my mind, it's a holistic approach that considers the entire customer journey, from initial awareness to long-term retention. While paid acquisition can be part of a growth strategy, it's just one piece of the puzzle.
 
@@ -23,11 +23,11 @@ Gotta admit. This is the easisest slope to slip on. More so, because traditional
 
 Seen those Instagram vids where marketing gurus explain 5 simple steps to grow your follower count. They sure did pull-off a growth hack. They hacked their way to get your attention! True growth marketing is not about chasing fleeting trends or viral gimmicks. It's about building sustainable growth engines through a deep understanding of your target audience, data-driven experimentation, and continuous optimisation. My biggest challenge in the initial days was thinking in frameworks. That's not an easy skill to master and this requires a long-term perspective, not a quick-fix mentality. To put it mildly, one needs to figure how to accelerate the ability to get your product into the hands of more users faster and communicate the value to the users over the usage period.
 
-#### 3) Myth: Growth Marketing Ignores Branding and Focuses Solely on Performance Metrics. 
+#### 3) Myth: Growth Marketing Ignores Branding and Focuses Solely on Performance Metrics.
 
 Sigh! If you're happy and you know it, park your brand budgets seperately. Happens in many places and it is genuinely unfair to blame anyone for this. While growth marketers are highly data-driven, they also recognise the importance of brand building. A strong brand enhances trust, loyalty, and ultimately, growth. A successful growth strategy aligns performance marketing efforts with a clear brand identity and messaging. They are literally two sides of the same coin and shouldn't be differentiated.
 
-#### 4) Myth: Growth Marketing Is Only Relevant for Early-Stage Startups. 
+#### 4) Myth: Growth Marketing Is Only Relevant for Early-Stage Startups.
 
 Whether its a small startup or an established enterprise, the pace with which the market is evolving always makes room for experimentation. The focus on frameworks built on data, iteration and customer-centricity can be practiced within small teams or across large organisations. Which strategy one employs depends on the company's stage of maturity. For instance, early-stage startups should focus on "big swings" by leveraging activation & engagement loops, while more mature companies can benefit from smaller optimisations at scale.
 
