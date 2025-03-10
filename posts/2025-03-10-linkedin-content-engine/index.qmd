@@ -139,9 +139,11 @@ With all this done, lets see what my prompt now looks like:
 
 ## Output
 
-[here's what my ideas looked like](https://chatgpt.com/share/67ce9232-815c-800e-b0aa-af19d010e6a0).
+[here's what my ideas looked like on ChatGPT](https://chatgpt.com/share/67ce9232-815c-800e-b0aa-af19d010e6a0).
 
 ![](linkedin%20content%20enging_ss.jpg)
+
+The best thing is that you get different ideas for Claude and Perplexity. There really is not dearth of ideas for u to keep trying out.
 
 Neat if you ask me. I've used this for a few weeks and I've been super impressed how easily I get inspired to write. Dip into your own personal memories to think about which topic you relate with. And most importantly, give yourself a time limit - typically 5 minutes or less to spend on coming up with a post idea. Spend the remainder of the time in actually crafting the post.
 
