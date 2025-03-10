@@ -1,0 +1,154 @@
+---
+title: "Building a content engine"
+subtitle: "Leverage AI tools to boosting Linkedin & personal profile "
+description: "Sharing my AI prompts that helped me write better (for FREE!)"
+date: '2025-03-10'
+categories: [marketing, AI]
+featured: no
+execute:
+  warning: false
+Draft: true
+image: content_engine.jpg
+---
+
+# Building a content engine
+
+Fun fact - did you know linkedin as a social network predates Facebook by a year? Implying that social networking for professionals was a much needed solution to an existing problem - How do I appear smart at work without really having to peddle my resume all the time?
+
+We all know the importance of maintaining a good linkedin profile. Helps in professional and personal circles to create awareness about what you're upto at work. I've had varying degrees of success with linkedin across the years. While job searches are a pain (more on that in a seperate blog!), I've been trying to post regularly since the past year or so – namely, once a week.
+
+Early Feb, I started tinkering around with Claude, Perplexity and ChatGPT to finetune my posting skills. Its pretty easy these days to spot an AI generated post. You know how they go:
+
+-   Tone is overly formal / generic : AI uses neutral or overtly formal tone. Human-written posts often have more nuances and a conversational style
+
+-   Perfect grammar and sentence structure: geez... did we all graduate with such perfect English?
+
+-   Generic gyaan: yah.. that's pretty obvious to spot.
+
+-   Lack of depth or any real analysis: so many posts appear real shallow without any perspective. just a bunch of public facts regurgitated to read nicely.
+
+-   Everything Is Written In Sentence Case For ChatGPT's Mimicing Their Neatly Formatted Training Data
+
+-   Bullet points everywhere for everything (gulp!)
+
+I wanted to try break out of this routine and create a framework that allows me to use AI tools to generate ideas but still at the same time devote some time to making it a naturally written post.
+
+This is what I did, so keep your notepad ready!
+
+# Framework for the prompt
+
+This entire framework is based on the [Anatomy of a prompt tweeted by OpenAI's cofounder](https://www.linkedin.com/posts/alphasignal_openai-co-founder-shares-how-to-write-the-activity-7297193300443176963-FGrH?utm_source=share&utm_medium=member_desktop&rcm=ACoAAADTfDcBt_hW-ynzjui3Gunjwk70xRIbhsM):
+
+![](anatomy%20of%20prompt.png){fig-align="center"}
+
+so lets try this on our content engine
+
+> *I want to create a linkedin content engine that targets the following segments of people with the intended responses as below:*
+>
+> -   *\<TG1\> and \<response1, response2\>*
+>
+> -   *\<TG2\> and \<response1, response2\>*
+>
+> -   *\<TG3\> and \<response1, response2\>*
+>
+> *Consider target segment and provide 5 ideas within each so that the desired effect can be generated*
+>
+> *Do not make it too generic nor should it sound as though written by an AI tool*
+>
+> *I am \<about myself and my work experience\>*
+>
+> *My goal is to \<personal & professional ambition\>*
+>
+> *The themes that I want to explore are \<list of themes\>*
+
+## Step 1: Define yourself - "tu beer hai"
+
+no.. you're not beer. You're a living breathing entity that just needs to write a post.
+
+So take that sarcasm a notch lower and try painting a picture of yourself within 100 words. My suggestion is as follows:
+
+> *I am a \<profession name\> specialising in the \<field of work\> since \<career start year\>. I have worked in companies such as \<company names\>. I specialise in \<skills and experties\>. I have a proven track record in \<results delivered\>. \<add more relevant data about the last role, positions held and mandates delivered. one sentence each on your career journey and how you progressed to bigger problems - breadth of work, team leadership, cxo discussions, budget management, vendor management and so on\>*
+
+First of all, make it **easy** to read **for yourself**. If you're like me - you'll really end up spending a lot of time on this... because we all have a very large view of ourselves! I know its difficult but you've got to be practical. Maybe you won't get it right the first time but try writing one for starters. You may be able to iterate as u go along.
+
+## Step 2: Defining the customers
+
+This one is relatively simpler. List down all the kinds of people that you want your post to be read. In marketing terms - *"u want to generate impressions within this target segment"*
+
+Don't forget to also mention the intended response from the TG you are expecting. The reason this needs to be specified is that in every campaign we use a certain measured outcome. Since this is language we're talking about, one needn't specificy a KPI but at least try articulating your expectation so that the AI tool can generate its answer accordingly.
+
+In my case, this is what I listed down:
+
+> 1.  *Recruiters and headhunters in Mumbai and Bengaluru region operating in the startup and digital-first companies.*
+>
+> -   *expected reaction after reading = need to consider me as a strong candidate to hire or recommend for a job*
+>
+> 2.  *D2C founders or head of marketing teams.*
+>
+> -   *expected reaction after reading = identify me as a marketing expert who can solve their business problems*
+>
+> 3.  *Peers who are around 10-15 years of experience in the similar life stage*
+>
+> -   *expected reaction after reading = engage and interact on the posts with their opinions and counter arguments*
+>
+> 4.  *Juniors from the industry with less than 5 years of experience.*
+>
+> -   *expected reaction after reading = reach out for career guidance, resume review, interview preperation or referral*
+>
+> 5.  *Academic/Training Institutions in my network*
+>
+> -   *expected reaction after reading = engage with me on academic pursuits, co-author white papers, invite for guest lectures*
+
+## Step 4: Build themes
+
+Don't just create arbitrary posts. Build some boundaries that you want your content to work within. In my case, here are the themes I chose:
+
+> *Trending topics regarding Marketing & digital tools*
+>
+> *Application & impact for brands*
+>
+> *Current affairs and opinions - non market related*
+>
+> *Humour*
+
+## Step 3: Stringing it all together
+
+With all this done, lets see what my prompt now looks like:
+
+> *I am a marketing professional specialising in the field of media and consumer marketing since 2008. I have worked in companies such as Sony Pictures Network India, Viu India, MX Player and Turno. I specialise in translating consumer insights into actionable growth levers for businesses. I have a proven track record in scaling consumer-facing platforms and generating revenues through digital and traditional marketing channels. In my last role as marketing head for a series-A startup, I handled the entire marketing P&L which involves growth, performance, brand and content marketing. Previously in my 16 years of industry experience, I’ve led roles to build platform and revenue growth at MX Player and Viu OTT apps. As a team leader, I work closely with CXO, Product, Tech and Sales heads to drive cross-functional initiatives that set and achieve business AOP goals.*
+>
+> *I want to create a linkedin content engine. Give me 5 ideas within each of the below target segment with the intended responses. Do not make it sound generic nor should it appear to have been written by an AI tool:*
+>
+> 1.  *recruiters and headhunters in Mumbai and Bengaluru region operating in the startup and digital-first companies.*
+>     -   *expected reaction after reading = need to consider me as a strong candidate to hire or recommend for a job*
+> 2.  *D2C founders or head of marketing teams.*
+>     -   *expected reaction after reading = identify me as a marketing expert who can solve their business problems*
+> 3.  *Peers who are around 10-15 years of experience in the similar life stage*
+>     -   *expected reaction after reading = engage and interact on the posts with their opinions and counter arguments*
+> 4.  *Juniors from the industry with less than 5 years of experience.*
+>     -   *expected reaction after reading = reach out for career guidance, resume review, interview preperation or referral*
+> 5.  *Academic/Training Institutions in my network*
+>     -   *expected reaction after reading = engage with me on academic pursuits, co-author white papers, invite for guest lectures*
+>
+> *the themes I want to explore are:*
+>
+> 1.  *Trending topics regarding Marketing & digital tools*
+> 2.  *Application & impact for brands*
+> 3.  *Current affairs and opinions - non market related*
+> 4.  *Humour*
+
+## Output
+
+[here's what my ideas looked like](https://chatgpt.com/share/67ce9232-815c-800e-b0aa-af19d010e6a0).
+
+![](linkedin%20content%20enging_ss.jpg)
+
+Neat if you ask me. I've used this for a few weeks and I've been super impressed how easily I get inspired to write. Dip into your own personal memories to think about which topic you relate with. And most importantly, give yourself a time limit - typically 5 minutes or less to spend on coming up with a post idea. Spend the remainder of the time in actually crafting the post.
+
+Now please just don't dump each idea into the prompt window and ask chatGPT to generate the post for you. Some hard work and thinking here will really help you stand out from the crowd!
+
+How does your content engine look like?
+
+Let us talk more the comments on the right➡️
+
+![](content_engine.jpg){width="60%"}
