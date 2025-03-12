@@ -1,0 +1,48 @@
+---
+title: "Marketing teams are evolving"
+subtitle: "Lessons for young marketers"
+description: ""
+date: '2025-03-12'
+categories: [marketing]
+featured: no
+execute:
+  warning: false
+Draft: true
+image: multiskills_marketing.jpg
+---
+
+# The Evolution of marketing teams
+
+The evolution of marketing teams: This one is for all youngsters trying to build a career in marketing.Over the past few years, I've started witnessing a very strong trend in the composition of marketing teams. Early in my career, while I worked with the larger companies, I would see individuals such as :
+
+1.  Media buying ninjas who negotiated deals with vendors
+
+2.  Campaign strategists collaborating with business teams and agencies
+
+3.  Creative directors orchestrating asset development
+
+4.  Communications experts managing social, PR, and on-ground activations
+
+5.  Market researchers uncovering consumer insights
+
+Ironically, as my career progressed, the companies I worked with became smaller—and that's when I witnessed a dramatic transformation in hiring preferences. Digital-first organizations began prioritizing entirely different skill sets:
+
+1.  Analytics experts who could translate data into stories
+
+2.  Data scientists building measurement and attribution models
+
+3.  Product marketers with tech-first thinking
+
+4.  CRM specialists optimizing customer journeys and retention
+
+5.  Growth hackers - project managers driving experiments using creativity with technical expertise
+
+In my last company, I was working directly with business development and sales teams on a daily level to optimise marketing campaigns. This shift isn't just about how smaller companies operate. It's a clear signal about where marketing is heading.
+
+To those fresh from business school or with less than 3 years of experience: marketing today demands versatility beyond a single specialized skill. My advice? Choose your category/ industry/ brand, then study the entire consumer journey. Identify every department that touches that journey and are in-charge of optimising it. Now ask yourself: "What would it take for me to learn what they're doing?"
+
+You don't need to replace entire teams, but high probability that some Gen AI tool might! This will rapidly create redundancies. **Cross-functional capabilities aren't optional luxuries—they're survival skills.**
+
+What marketing skills are you developing that sit outside your comfort zone?
+
+Let us talk more the comments on the right➡️
