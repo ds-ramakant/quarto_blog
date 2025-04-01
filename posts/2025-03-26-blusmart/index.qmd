@@ -1,0 +1,26 @@
+---
+title: "Blusmart: A fallen leader"
+subtitle: "A case study in the high-stakes world of EV ride-sharing"
+description: ""
+date: '2025-03-26'
+categories: [corporate, startups]
+featured: no
+execute:
+  warning: false
+Draft: true
+image: blusmart.jpg
+---
+
+# Blusmart: What went wrong
+
+Blusmart is going through a stormy patch in the rough & tumble world of ride-sharing. It occupies market share of \~10% in Delhi and Bengaluru (but 2% aross all India) distinguished by its EV-only fleet.If you've traveled to and from Bengaluru and Delhi airports, you can attest to the premium experience Blusmart offers: drivers are consistently professional, the booking process is seamless with zero cancellations, pickups are punctual and vehicle hygiene stands out as superior.
+
+I heard Punit Goyal, co-founder of Blusmart speak on Nikhil Kamath's WTF podcast, offer fascinating insights from his entrepreneurial journey in the solar energy sector and transitioning to electric mobility. The company operates an asset-light model, leasing around 6,000 cars—5,000 in the NCR/Delhi region and the rest in Bengaluru. Yet, as of January 2024, TechCrunch reported Blusmart was losing INR 600 per trip, despite each trip costing over INR 400, with significant maintenance and charging infrastructure costs adding pressure.
+
+Challenges at the parent company, Gensol Engineering, have quickly impacted operations. Blusmart was heavily dependent on Gensol as a leasing partner. The cash crunch at the parent company accelerated the fall of dominos in the last 8 weeks. In Feb, Mint recently noted Blusmart defaulted on INR 30 crore, though it settled the amount after delays. ValueResearch’s analysis of Gensol revealed deeper issues: stock price manipulation, a debt-to-equity ratio worsening from 0.3 in FY21 to 4.3 in FY24, and overhyped EV orders. Yesterday, Storyboard reports of high-level managerial exits with rumours of Uber acquiring it floating around.
+
+Blusmart’s arc from an innovator in mobility to grappling with existential crisis reflects the high-risk, high-reward nature of the EV and ride-sharing industries. What lessons can other mobility startups learn from BluSmart’s recent challenges? And can strategic pivots still save the day for BluSmart?
+
+Keen to hear different perspectives on this.
+
+Let us talk more the comments on the right➡️
